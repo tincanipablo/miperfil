@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Página profesional de Pablo Uruena Tincani, Ingeniero/Analista en Sistemas de Información.">
+    <title>Pablo Uruena Tincani</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 20px;
+            font-size: 24px;
+        }
+        .perfil-foto {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-top: 20px;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .boton-contacto {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #1a1a2e;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        #contacto {
+            background-color: #4a5c6a;
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #contacto form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #contacto input, #contacto textarea {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        #contacto button {
+            padding: 10px 20px;
+            background-color: #1a1a2e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        footer {
+            background-color: #1a1a2e;
+            color: white;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function enviarCorreo(event) {
+            event.preventDefault();
+            let email = document.getElementById('email').value;
+            let asunto = document.getElementById('asunto').value;
+            let mensaje = document.getElementById('mensaje').value;
+            window.location.href = `mailto:pablo.tincani@hotmail.com?subject=${encodeURIComponent(asunto)}&body=De: ${encodeURIComponent(email)}%0A%0A${encodeURIComponent(mensaje)}`;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Pablo Uruena Tincani</h1>
+    </header>
+    <section id="cv">
+        <h2>Mi Currículum Vitae</h2>
+        <img src="img/Pablo Alejandro Urueña Tincani 2025.png" alt="Currículum de Pablo Uruena Tincani">
+    </section>
+    <section id="diplomas">
+        <h2>Diplomas y Cursos</h2>
+        <div class="flipbook">
+            <iframe src="DiplomasCursos.pdf" width="100%" height="500px"></iframe>
+        </div>
+    </section>
+    <section id="contacto">
+        <h2>Contáctame</h2>
+        <form onsubmit="enviarCorreo(event)">
+            <input type="email" id="email" placeholder="Tu correo" required>
+            <input type="text" id="asunto" placeholder="Asunto" required>
+            <textarea id="mensaje" placeholder="Mensaje" rows="4" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+       
+    </section>
+    <footer>
+        <p>&copy; 2025 Pablo Uruena Tincani</p>
+    </footer>
+</body>
+</html>
