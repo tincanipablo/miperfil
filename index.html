@@ -108,7 +108,8 @@
     </section>
     <section id="contacto">
         <h2>Contáctame</h2>
-        <form onsubmit="enviarCorreo(event)">
+        <!--<form onsubmit="enviarCorreo(event)">-->
+			<form action="funciones.php" metod="post">
             <input type="email" id="email" placeholder="Tu correo" required>
             <input type="text" id="asunto" placeholder="Asunto" required>
             <textarea id="mensaje" placeholder="Mensaje" rows="4" required></textarea>
