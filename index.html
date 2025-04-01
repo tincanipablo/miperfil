@@ -82,28 +82,34 @@
             margin-top: 20px;
         }
     </style>
-	<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 	<script>
-		emailjs.init("LSDqUJW2BnvvAlLWl"); // Reemplaza "TU_ID_PUBLICO" con tu clave pública de EmailJS
-		function enviarCorreo() {
-			const serviceID = 'service_abjmnin'; // Configura el ID de tu servicio EmailJS
-			const templateID = 'template_yatsfwx'; // Usa el ID de tu plantilla en EmailJS
-			const parametros = {
-			email: document.getElementById('email').value,
-			asunto: document.getElementById('asunto').value,
-			comentario: document.getElementById('comentario').value,
-		};
-		emailjs.send(serviceID, templateID, parametros)
-		.then(() => {
-		alert("¡Correo enviado exitosamente!");
-		})
-		.catch(error => {
-		console.error("Error al enviar el correo:", error);
-		alert("Hubo un problema al enviar el correo.");
-		});
-}
+    emailjs.init({
+        publicKey: 'Va19qG_HEwHrqweMk',
+    });
 
-	</script>
+    function enviarCorreo() {
+        const serviceID = 'service_abjmnin';
+        const templateID = 'template_uybhc9i';
+
+        const parametros = {
+            email: document.getElementById('email').value,
+            asunto: document.getElementById('asunto').value,
+            comentario: document.getElementById('comentario').value,
+        };
+
+        console.log("Enviando con parámetros:", parametros);
+
+        emailjs.send(serviceID, templateID, parametros)
+            .then(() => {
+                alert("¡Correo enviado exitosamente!");
+            })
+            .catch(error => {
+                console.error("Error al enviar el correo:", error);
+                alert("Hubo un problema al enviar el correo.");
+            });
+    }
+</script>
 
 </head>
 <body>
