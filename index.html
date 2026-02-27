@@ -6,140 +6,92 @@
     <meta name="description" content="Página profesional de Pablo Uruena Tincani, Ingeniero/Analista en Sistemas de Información.">
     <title>Pablo Uruena Tincani</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #1a1a2e;
-            color: white;
-            padding: 20px;
-            font-size: 24px;
-        }
-        .perfil-foto {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-top: 20px;
-        }
-        section {
-            padding: 20px;
-            margin: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-		
-		.perfil-foto {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-top: 20px;
-        }
-        .boton-contacto {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #1a1a2e;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
-        #contacto {
-            background-color: #4a5c6a;
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-        #contacto form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        #contacto input, #contacto textarea {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-        }
-        #contacto button {
-            padding: 10px 20px;
-            background-color: #1a1a2e;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        footer {
-            background-color: #1a1a2e;
-            color: white;
-            padding: 10px;
-            margin-top: 20px;
-        }
+        body { font-family: Arial, sans-serif; background-color: #f0f0f0; color: #333; text-align: center; margin: 0; padding: 0; }
+        header { background-color: #1a1a2e; color: white; padding: 20px; font-size: 24px; }
+        section { padding: 20px; margin: 20px auto; max-width: 800px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+        #contacto { background-color: #4a5c6a; color: white; padding: 20px; border-radius: 10px; }
+        #contacto form { display: flex; flex-direction: column; align-items: center; }
+        #contacto input, #contacto textarea { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; }
+        #contacto button { padding: 12px 30px; background-color: #1a1a2e; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        #contacto button:disabled { background-color: #888; cursor: not-allowed; }
+        footer { background-color: #1a1a2e; color: white; padding: 15px; margin-top: 20px; }
+        #cvimg { width: 100%; max-width: 700px; height: auto; border-radius: 5px; }
     </style>
-	<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-	<script>
-    emailjs.init({
-        publicKey: 'Va19qG_HEwHrqweMk',
-    });
 
-    function enviarCorreo() {
-        const serviceID = 'service_abjmnin';
-        const templateID = 'template_uybhc9i';
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            // RECUERDA: Verifica este código en Account -> API Keys de tu NUEVA cuenta
+            emailjs.init("Va19qG_HEwHrqweMk"); 
+        })();
 
-        const parametros = {
-            email: document.getElementById('email').value,
-            title: document.getElementById('asunto').value,
-            message: document.getElementById('comentario').value,
-        };
+        window.onload = function() {
+            const form = document.getElementById('miFormulario');
+            const btn = document.getElementById('btn-enviar');
 
-        console.log("Enviando con parámetros:", parametros);
+            form.addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita que la página se recargue
 
-        emailjs.send(serviceID, templateID, parametros)
-            .then(() => {
-                alert("¡Correo enviado exitosamente!");
-            })
-            .catch(error => {
-                console.error("Error al enviar el correo:", error);
-                alert("Hubo un problema al enviar el correo.");
+                btn.innerText = 'Enviando...';
+                btn.disabled = true;
+
+                // IDs ACTUALIZADOS SEGÚN TUS CAPTURAS
+                const serviceID = 'service_xch5qk3'; 
+                const templateID = 'template_uybhc9i';
+
+                emailjs.sendForm(serviceID, templateID, this)
+                    .then(() => {
+                        alert('¡Mensaje enviado con éxito, Pablo!');
+                        form.reset(); // Limpia los campos
+                    }, (err) => {
+                        alert('Error al enviar: ' + JSON.stringify(err.text || err));
+                        console.error('Detalle del error:', err);
+                    })
+                    .finally(() => {
+                        btn.innerText = 'Enviar';
+                        btn.disabled = false;
+                    });
             });
-    }
-</script>
-
+        }
+    </script>
 </head>
 <body>
+
     <header>
         <h1>Pablo Uruena Tincani</h1>
     </header>
+
     <section id="cv">
         <h2>Mi Currículum Vitae</h2>
         <img id="cvimg" src="img/Pablo Alejandro Urueña Tincani 2025.png" alt="Currículum de Pablo Uruena Tincani">
     </section>
+
     <section id="diplomas">
         <h2>Diplomas y Cursos</h2>
         <div class="flipbook">
-            <iframe src="DiplomasCursos.pdf" width="100%" height="500px"></iframe>
+            <iframe src="DiplomasCursos.pdf" width="100%" height="500px" style="border:none;"></iframe>
         </div>
     </section>
+
     <section id="contacto">
         <h2>Contáctame</h2>
-    	<form id="miFormulario">
-			<label for="email">Email:</label>
-			<input type="email" id="email" name="email" required><br>
-			<label for="asunto">Asunto:</label>
-			<input type="text" id="asunto" name="asunto" required><br>
-			<label for="comentario">Comentario:</label>
-			<textarea id="comentario" name="comentario" required></textarea><br>
-			<button type="button" onclick="enviarCorreo()">Enviar</button>
-		</form>
+        <form id="miFormulario">
+            <label for="email">Tu Email:</label>
+            <input type="email" id="email" name="from_email" placeholder="ejemplo@correo.com" required>
+            
+            <label for="asunto">Asunto:</label>
+            <input type="text" id="asunto" name="subject" placeholder="Motivo del mensaje" required>
+            
+            <label for="comentario">Mensaje:</label>
+            <textarea id="comentario" name="message" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
+            
+            <button type="submit" id="btn-enviar">Enviar</button>
+        </form>
     </section>
+
     <footer>
-        <p>&copy; 2025 Pablo Uruena Tincani</p>
+        <p>&copy; 2026 Pablo Uruena Tincani</p>
     </footer>
+
 </body>
 </html>
