@@ -11,7 +11,7 @@
         section { padding: 20px; margin: 20px auto; max-width: 800px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
         #contacto { background-color: #4a5c6a; color: white; padding: 20px; border-radius: 10px; }
         #contacto form { display: flex; flex-direction: column; align-items: center; }
-        #contacto input, #contacto textarea { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; }
+        #contacto input, #contacto textarea { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; color: #333; }
         #contacto button { padding: 12px 30px; background-color: #1a1a2e; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; }
         #contacto button:disabled { background-color: #888; cursor: not-allowed; }
         footer { background-color: #1a1a2e; color: white; padding: 15px; margin-top: 20px; }
@@ -19,41 +19,6 @@
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        (function() {
-            // RECUERDA: Verifica este código en Account -> API Keys de tu NUEVA cuenta
-            emailjs.init("Va19qG_HEwHrqweMk"); 
-        })();
-
-        window.onload = function() {
-            const form = document.getElementById('miFormulario');
-            const btn = document.getElementById('btn-enviar');
-
-            form.addEventListener('submit', function(event) {
-                event.preventDefault(); // Evita que la página se recargue
-
-                btn.innerText = 'Enviando...';
-                btn.disabled = true;
-
-                // IDs ACTUALIZADOS SEGÚN TUS CAPTURAS
-                const serviceID = 'service_xch5qk3'; 
-                const templateID = 'template_uybhc9i';
-
-                emailjs.sendForm(serviceID, templateID, this)
-                    .then(() => {
-                        alert('¡Mensaje enviado con éxito, Pablo!');
-                        form.reset(); // Limpia los campos
-                    }, (err) => {
-                        alert('Error al enviar: ' + JSON.stringify(err.text || err));
-                        console.error('Detalle del error:', err);
-                    })
-                    .finally(() => {
-                        btn.innerText = 'Enviar';
-                        btn.disabled = false;
-                    });
-            });
-        }
-    </script>
 </head>
 <body>
 
@@ -93,5 +58,36 @@
         <p>&copy; 2026 Pablo Uruena Tincani</p>
     </footer>
 
+    <script>
+        // Inicialización con tu Public Key confirmada
+        emailjs.init("Va19qG_HEwHrqweMk");
+
+        const form = document.getElementById('miFormulario');
+        const btn = document.getElementById('btn-enviar');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            btn.innerText = 'Enviando...';
+            btn.disabled = true;
+
+            // IDs confirmados por tus capturas de pantalla
+            const serviceID = 'service_xch5qk3'; 
+            const templateID = 'template_uybhc9i';
+
+            emailjs.sendForm(serviceID, templateID, this)
+                .then(() => {
+                    btn.innerText = 'Enviar';
+                    btn.disabled = false;
+                    alert('¡Mensaje enviado con éxito, Pablo!');
+                    form.reset();
+                }, (err) => {
+                    btn.innerText = 'Enviar';
+                    btn.disabled = false;
+                    alert('Error: El servicio respondió con un error. Revisa que la Public Key siga activa.');
+                    console.error('Detalle técnico:', err);
+                });
+        });
+    </script>
 </body>
 </html>
