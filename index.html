@@ -12,9 +12,10 @@
         section { padding: 20px; margin: 20px auto; max-width: 800px; background-color: white; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
         #contacto { background-color: #4a5c6a; color: white; padding: 20px; border-radius: 10px; }
         #contacto form { display: flex; flex-direction: column; align-items: center; }
-        #contacto label { margin-top: 10px; font-weight: bold; }
+        #contacto label { margin-top: 10px; font-weight: bold; width: 85%; text-align: left; }
         #contacto input, #contacto textarea { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; color: #333; }
-        #contacto button { padding: 12px 30px; background-color: #1a1a2e; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
+        #contacto input[type="file"] { background: white; cursor: pointer; }
+        #contacto button { padding: 12px 30px; background-color: #1a1a2e; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; }
         #contacto button:disabled { background-color: #888; cursor: not-allowed; }
         footer { background-color: #1a1a2e; color: white; padding: 15px; margin-top: 20px; }
         #cvimg { width: 100%; max-width: 700px; height: auto; border-radius: 5px; }
@@ -43,18 +44,18 @@
         <h2>Contáctame</h2>
         <form id="miFormulario">
             <label for="email">Tu Email:</label>
-            <input type="email" id="email" name="from_email" placeholder="ejemplo@correo.com" required>
+            <input type="email" id="email" placeholder="ejemplo@correo.com" required>
             
             <label for="asunto">Asunto:</label>
-            <input type="text" id="asunto" name="subject" placeholder="Motivo del mensaje" required>
+            <input type="text" id="asunto" placeholder="Motivo del mensaje" required>
             
             <label for="comentario">Mensaje:</label>
-            <textarea id="comentario" name="message" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
+            <textarea id="comentario" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
             
-            <label for="adjunto">Adjuntar PDF (Solo PDF):</label>
+            <label for="adjunto">Adjuntar documento (.pdf):</label>
             <input type="file" id="adjunto" accept=".pdf" required>
             
-            <button type="submit" id="btn-enviar">Enviar a Dropbox</button>
+            <button type="submit" id="btn-enviar">Enviar Mensaje</button>
             <div id="status-msg"></div>
         </form>
     </section>
@@ -64,12 +65,11 @@
     </footer>
 
     <script>
-        // CONFIGURACIÓN DE DROPBOX (Refresh Token para que no caduque)
+        // Configuración de Dropbox con Refresh Token (Permanente)
         const CLIENT_ID = '1wpdtwlh7fg0lxb';
         const CLIENT_SECRET = 'ktf6yj0krxhelbm';
         const REFRESH_TOKEN = 'L0D9u_YV-PAAAAAAAAAAAbn_B_WjWREp6m7C9rG0O-Kx7K_Y2tS1-wM0k2-LhPzB';
 
-        // Función para obtener un token de acceso nuevo automáticamente
         async function obtenerTokenNuevo() {
             const params = new URLSearchParams({
                 'grant_type': 'refresh_token',
@@ -85,7 +85,7 @@
             });
 
             const data = await response.json();
-            if (data.error) throw new Error("Error de autenticación con Dropbox");
+            if (data.error) throw new Error("Error en renovación");
             return data.access_token;
         }
 
@@ -93,58 +93,53 @@
         const btn = document.getElementById('btn-enviar');
         const status = document.getElementById('status-msg');
 
-        form.addEventListener('submit', async function(event) {
-            event.preventDefault();
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
 
             btn.innerText = 'Enviando...';
             btn.disabled = true;
             status.style.display = "block";
-            status.style.backgroundColor = "rgba(255, 255, 255, 0.2)";
-            status.innerText = "⏳ Conectando con Dropbox...";
+            status.style.backgroundColor = "white";
+            status.style.color = "#333";
+            status.innerText = "⏳ Subiendo archivos a Dropbox...";
 
             try {
-                // 1. Obtener token vivo
-                const tokenVivo = await obtenerTokenNuevo();
-                const dbx = new Dropbox.Dropbox({ accessToken: tokenVivo });
+                const token = await obtenerTokenNuevo();
+                const dbx = new Dropbox.Dropbox({ accessToken: token });
 
-                // 2. Capturar datos del formulario
                 const email = document.getElementById('email').value;
                 const asunto = document.getElementById('asunto').value;
                 const mensaje = document.getElementById('comentario').value;
                 const archivo = document.getElementById('adjunto').files[0];
                 
-                // Limpiar el email para usarlo como nombre de archivo
                 const idLimpio = email.replace(/[^a-z0-9]/gi, '_');
 
-                // 3. Crear el contenido del archivo de texto
-                const contenidoTexto = `CONTACTO DESDE LA WEB\n---------------------\nEmail: ${email}\nAsunto: ${asunto}\nMensaje: ${mensaje}\nFecha: ${new Date().toLocaleString()}`;
-
-                // 4. Subir el TXT
+                // 1. Crear y subir el archivo de texto con los datos
+                const contenidoTxt = `NOMBRE/EMAIL: ${email}\nASUNTO: ${asunto}\nMENSAJE: ${mensaje}\nFECHA: ${new Date().toLocaleString()}`;
                 await dbx.filesUpload({ 
                     path: '/' + idLimpio + '_contacto.txt', 
-                    contents: contenidoTexto, 
+                    contents: contenidoTxt, 
                     mode: 'overwrite' 
                 });
 
-                // 5. Subir el archivo adjunto (PDF)
+                // 2. Subir el archivo PDF adjunto
                 await dbx.filesUpload({ 
                     path: '/' + idLimpio + '_' + archivo.name, 
                     contents: archivo, 
                     mode: 'overwrite' 
                 });
 
-                // Éxito
-                status.innerText = "✅ ¡Enviado con éxito a Dropbox!";
+                status.innerText = "✅ ¡Enviado con éxito, Pablo!";
                 status.style.backgroundColor = "#d4edda";
                 status.style.color = "#155724";
                 form.reset();
             } catch (err) {
-                console.error('Error:', err);
-                status.innerText = "❌ Error al enviar. Inténtalo más tarde.";
+                console.error(err);
+                status.innerText = "❌ Error al enviar. Revisa tu conexión.";
                 status.style.backgroundColor = "#f8d7da";
                 status.style.color = "#721c24";
             } finally {
-                btn.innerText = 'Enviar a Dropbox';
+                btn.innerText = 'Enviar Mensaje';
                 btn.disabled = false;
             }
         });
