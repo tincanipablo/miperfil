@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - Registro</title>
+    <title>Soporte Técnico - Forminit</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
         .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
@@ -12,41 +12,39 @@
         label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
         
-        /* Estilo del botón y estado de carga */
         #btn-enviar { 
             background: #007bff; color: white; border: none; padding: 15px; 
             width: 100%; border-radius: 8px; cursor: pointer; font-size: 1.1rem; 
             font-weight: bold; transition: 0.3s; 
         }
         #btn-enviar:disabled { background: #6c757d; cursor: not-allowed; }
-        
         #preview-names { margin-top: 10px; font-size: 0.85rem; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px; display: none; border-left: 4px solid #007bff; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Registrar Problema Geminy</h2>
+    <h2>Registrar Problema Geminy Web Forminit</h2>
     
     <form action="https://forminit.com/f/jmpr012pl5x" method="POST" enctype="multipart/form-data" id="form-soporte">
         
         <div class="form-group">
-            <label>Nombre Completo</label>
-            <input type="text" name="nombre" required>
+            <label>Nombre</label>
+            <input type="text" name="name" required>
         </div>
 
         <div class="form-group">
-            <label>Correo Electrónico</label>
+            <label>Email</label>
             <input type="email" name="email" id="user_email" required>
         </div>
 
         <div class="form-group">
-            <label>Descripción del Problema</label>
-            <textarea name="mensaje" rows="4" required placeholder="Describe detalladamente el error..."></textarea>
+            <label>Mensaje</label>
+            <textarea name="message" rows="4" required placeholder="Describe el error..."></textarea>
         </div>
 
         <div class="form-group">
-            <label>Adjuntar Archivos (ZIP, RAR, PDF, Imagen)</label>
+            <label>Adjuntar Archivos</label>
             <input type="file" name="file" id="file_picker" multiple required>
             <div id="preview-names"></div>
         </div>
@@ -62,14 +60,12 @@
     const emailInput = document.getElementById('user_email');
     const previewDiv = document.getElementById('preview-names');
 
-    // 1. Mostrar nombres de archivos dinámicos (email_numero.ext)
+    // Generar nombres dinámicos (solo visual)
     filePicker.addEventListener('change', function() {
         const userPrefix = emailInput.value.split('@')[0] || "soporte";
-        
         if (this.files.length > 0) {
             previewDiv.style.display = 'block';
             previewDiv.innerHTML = "<strong>Nombres asignados:</strong><br>";
-            
             Array.from(this.files).forEach(file => {
                 const ext = file.name.split('.').pop();
                 const randomId = Math.floor(Math.random() * 9000) + 1000;
@@ -78,10 +74,10 @@
         }
     });
 
-    // 2. Función de carga solicitada
+    // Función "Cargando..."
     form.addEventListener('submit', function() {
         btn.disabled = true;
-        btn.innerText = "Subiendo archivos... por favor espere";
+        btn.innerText = "Subiendo archivos... por favor espera";
         btn.style.background = "#6c757d";
     });
 </script>
