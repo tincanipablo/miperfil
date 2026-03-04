@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Registrar Problema</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        header { background: #2c3e50; color: white; padding: 15px; text-align: center; border-radius: 8px 8px 0 0; max-width: 550px; margin: 0 auto; }
+        .container { max-width: 550px; margin: 0 auto; background: white; padding: 30px; border-radius: 0 0 8px 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background: #27ae60; color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 10px; }
+        button:hover { background: #219150; }
+        #nombres-referencia { font-size: 0.8rem; color: #666; margin-top: 8px; padding: 10px; background: #f9f9f9; border-radius: 4px; display: none; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Registrar Problema</h1>
+</header>
+
+<div class="container">
+    <form action="https://forminit.com/f/nmijskfhyyc" method="POST" enctype="multipart/form-data">
+        
+        <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="nombre" required>
+        </div>
+
+        <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" name="apellido" required>
+        </div>
+
+        <div class="form-group">
+            <label>Correo Electrónico</label>
+            <input type="email" name="email" id="email_input" required>
+        </div>
+
+        <div class="form-group">
+            <label>Detalle del Problema</label>
+            <textarea name="detalle" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Adjuntar Archivos (ZIP, RAR, PDF, Imagen)</label>
+            <input type="file" name="file" id="archivo_input" accept=".zip,.rar,.pdf,image/*" multiple required>
+            <div id="nombres-referencia"></div>
+        </div>
+        
+        <button type="submit">Enviar Reporte</button>
+    </form>
+</div>
+
+<script>
+    const inputArchivo = document.getElementById('archivo_input');
+    const inputEmail = document.getElementById('email_input');
+    const displayNombres = document.getElementById('nombres-referencia');
+
+    // Función para mostrar cómo se identificarán los archivos según tu petición
+    inputArchivo.addEventListener('change', function() {
+        const emailUser = inputEmail.value.split('@')[0] || "usuario";
+        
+        if (this.files.length > 0) {
+            displayNombres.style.display = 'block';
+            displayNombres.innerHTML = "<strong>Tus archivos se enviarán como:</strong><br>";
+            
+            Array.from(this.files).forEach(file => {
+                const ext = file.name.split('.').pop();
+                const randomNum = Math.floor(Math.random() * 9000) + 1000;
+                displayNombres.innerHTML += `📄 ${emailUser}_${randomNum}.${ext}<br>`;
+            });
+        }
+    });
+</script>
+
+</body>
+</html>
