@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte - Envío de Reporte</title>
+    <title>Soporte Técnico - Registro</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
         .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
@@ -12,7 +12,6 @@
         label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
         input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
         
-        /* Estilo del botón */
         #btn-enviar { 
             background: #007bff; color: white; border: none; padding: 15px; 
             width: 100%; border-radius: 8px; cursor: pointer; font-size: 1rem; 
@@ -28,13 +27,11 @@
 <div class="card">
     <h2>Registrar Problema</h2>
     
-    <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" id="form-soporte">
+    <form action="https://forminit.com/f/jmpr012pl5x" method="POST" enctype="multipart/form-data" id="form-soporte">
         
-        <input type="hidden" name="access_key" value="a20072ea-f205-4ead-a94c-58652c99f3f8">
-
         <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" name="name" required>
+            <label>Nombre Completo</label>
+            <input type="text" name="nombre" required>
         </div>
 
         <div class="form-group">
@@ -43,17 +40,15 @@
         </div>
 
         <div class="form-group">
-            <label>Descripción</label>
-            <textarea name="message" rows="4" required placeholder="Escribe aquí tu problema..."></textarea>
+            <label>Descripción del Problema</label>
+            <textarea name="mensaje" rows="4" required placeholder="Describe el error aquí..."></textarea>
         </div>
 
         <div class="form-group">
-            <label>Adjuntar Archivos (ZIP, RAR, PDF, Fotos)</label>
-            <input type="file" name="attachment" id="file_picker" accept=".zip,.rar,.pdf,image/*" multiple required>
+            <label>Adjuntar Archivos (Fotos o Documentos)</label>
+            <input type="file" name="archivo_adjunto" id="file_picker" multiple required>
             <div id="file-names"></div>
         </div>
-
-        <input type="hidden" name="redirect" value="https://web3forms.com/success">
 
         <button type="submit" id="btn-enviar">Enviar al Soporte</button>
     </form>
@@ -66,7 +61,7 @@
     const emailInput = document.getElementById('user_email');
     const fileNamesDiv = document.getElementById('file-names');
 
-    // 1. Mostrar nombres de archivos con tu formato solicitado
+    // Generador de nombres dinámicos para los archivos
     filePicker.addEventListener('change', function() {
         const userPrefix = emailInput.value.split('@')[0] || "soporte";
         
@@ -82,11 +77,10 @@
         }
     });
 
-    // 2. Efecto de "Cargando" al enviar
+    // Efecto de carga solicitado
     form.addEventListener('submit', function() {
         btn.disabled = true;
         btn.innerText = "Enviando archivos... por favor espere";
-        btn.style.background = "#6c757d";
     });
 </script>
 
