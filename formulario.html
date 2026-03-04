@@ -3,90 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - Registro Corregido</title>
+    <title>Soporte Técnico - Dropbox Direct</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { text-align: center; color: #1a2a3a; margin-bottom: 25px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
+        h2 { text-align: center; color: #0061ff; margin-top: 0; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
-        
-        #btn-enviar { 
-            background: #007bff; color: white; border: none; padding: 15px; 
-            width: 100%; border-radius: 8px; cursor: pointer; font-size: 1.1rem; 
-            font-weight: bold; transition: 0.3s; 
-        }
-        #btn-enviar:disabled { background: #6c757d; cursor: not-allowed; }
-        
-        #preview-names { margin-top: 10px; font-size: 0.85rem; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px; display: none; border-left: 4px solid #007bff; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; color: #333; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { background-color: #0061ff; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 1rem; font-weight: bold; transition: 0.3s; }
+        button:hover { background-color: #0046b8; }
+        button:disabled { background-color: #ccc; }
+        #status { margin-top: 15px; text-align: center; font-size: 0.9rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Registrar Problema Gemini</h2>
-    
-    <form action="https://forminit.com/f/jmpr012pl5x" method="POST" enctype="multipart/form-data" id="form-soporte">
-        
+    <h2>Enviar Reporte</h2>
+    <form id="dropbox-form">
         <div class="form-group">
-            <label>Nombre Completo</label>
-            <input type="text" name="name" required>
+            <label>Nombre</label>
+            <input type="text" id="nombre" required placeholder="Tu nombre">
         </div>
-
         <div class="form-group">
-            <label>Correo Electrónico</label>
-            <input type="email" name="email" id="user_email" required>
+            <label>Email (será el nombre del archivo)</label>
+            <input type="email" id="email" required placeholder="ejemplo@correo.com">
         </div>
-
         <div class="form-group">
-            <label>Descripción del Problema</label>
-            <textarea name="message" rows="4" required placeholder="Describe el error aquí..."></textarea>
+            <label>Descripción</label>
+            <textarea id="mensaje" rows="4" required placeholder="Describe el problema..."></textarea>
         </div>
-
         <div class="form-group">
-            <label>Adjuntar Archivos (ZIP, RAR, PDF, Fotos)</label>
-            <input type="file" name="file" id="file_picker" multiple required>
-            <div id="preview-names"></div>
+            <label>Adjuntar archivo (ZIP, Imagen, etc.)</label>
+            <input type="file" id="archivo" required>
         </div>
-
-        <button type="submit" id="btn-enviar">Enviar al Soporte</button>
+        <button type="submit" id="btn-enviar">Subir a Dropbox</button>
     </form>
+    <div id="status"></div>
 </div>
 
 <script>
-    const form = document.getElementById('form-soporte');
-    const btn = document.getElementById('btn-enviar');
-    const filePicker = document.getElementById('file_picker');
-    const emailInput = document.getElementById('user_email');
-    const previewDiv = document.getElementById('preview-names');
+    // TU TOKEN MAESTRO (Configurado con acceso Scoped)
+    const ACCESS_TOKEN = 'sl.u.AGVmqDsHEvepVJw29FeAVx9IeZ513eKQ7_ga_8ayG9_8NcpLlG1YRkqcpwGLvbR-_cTbTUZZnvQ5ywbf-CyUedJlXpHRTjOc8c_Z8egIXVAp6D5nOBJbEYHGOJY7dhhHyZkIRNtRc1jWaLgqEbwq5uAYMvTP-24L39Z6N3sBrieenyH909Be1QmfehgjL-J9zwkAWvNTuPNm0hBJI_9psW7EzA4yq3wng3QycbhShdyyTfRwa-3qf698mfBjC1Y_zNRJ28T5-ZmMzJ_lB7-rJu-dzq7t3M4ZUmzgJjZRtVgAk6zGmqV111W8USzYf5e7HQXd_kiJH4ZF3UUckzjDk1GKXigLthUGZXE_nvQfn3sidrbmKRiPeRQFI9V4lb466qcz9ID0xJBMScbZtLA88FJdt63yDZsfVVkJTDeIZqWKNpWMrtb9z8NdWcZu6yiIEV88x9tIytsaRGfb0CnCzcCYOWTN0zKA6BJtmEC_P9Ke9Iub4wdE3CdOrCoVEMNsRmSZWwNuov3txR5XZJz0eYVrJoQEivkv-Dd4bQbT_5mGT-Xlw3bNkNgwRoZJg7ufGMnBZuLhGWHe-AWSXdJhPCYJC5rbdVrZC0S8DfJR8Duk4LYx8fIi6ttdf3U1aN4Jc1bSIxmV2bLhpE_jt5g-AUHyxfGszVQlICi6OQ1teb3kP3dDyZ2u4Irs8HwyFGiU7rPuBH9rXOmhC78WJv3oSnAsbbKrKS5jiOJyDvnoMjrlOGEs60b49V1vVz59g61BZ_pcz8vNMmw2RWXDbuUBZJ5gOazcV5Qw9M9rpx9qfND30ozq7EKDDCYG3rZGOCJqjM2SggTQmQ-d8Abr2Wj6-yCxJtuPTTQFr4LvBklawAPIEswsROvKvlvI6ztLZBCzpfP7jld0iSfc27mhl6AvjPpxt5LJW5E5Y6NqND6sHMnSUZ7PGSFNoTsOOYBmhxDy5Zi_zccJBtvuR9DpKrSV5f1PyKKMY34lU7kVylNbPvorLj_8il5fvLS_SUNJ--FGjq5LsK1oHdw8TX2224WqNiXUW4DNlJgW7ttrXKEVQx7ykaViaqrkeSw4U-_v1TFbsNj_2RNdQDM3yBUYE5XXo4T3CekTA8Sqwjpx4ql-EWvW_RBNQLLxKYlGgf0KwZ-vKHNB3JPq3aS43O4RkJeewU-4u-cqtll0MTC_aKzEpCyCOPybqEvJWOojvXvzLUXXrL2V_eWmfUb3nOUN1ASrXEmcN7ZzK05bFZEHhpVqYRmQdhQ7DsOF42ukGSC0sWisN35kCPKaTEaM9OcfT3d4QH8wrM17dm_PonjCGlnMzBD6Lw';
 
-    // Visualización de nombres de archivos
-    filePicker.addEventListener('change', function() {
-        const userPrefix = emailInput.value.split('@')[0] || "soporte";
-        if (this.files.length > 0) {
-            previewDiv.style.display = 'block';
-            previewDiv.innerHTML = "<strong>Nombres asignados:</strong><br>";
-            Array.from(this.files).forEach(file => {
-                const ext = file.name.split('.').pop();
-                const randomId = Math.floor(Math.random() * 9000) + 1000;
-                previewDiv.innerHTML += `📄 ${userPrefix}_${randomId}.${ext}<br>`;
-            });
+    const dbx = new Dropbox.Dropbox({ accessToken: ACCESS_TOKEN });
+
+    document.getElementById('dropbox-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('btn-enviar');
+        const status = document.getElementById('status');
+        
+        const nombre = document.getElementById('nombre').value;
+        const email = document.getElementById('email').value;
+        const mensaje = document.getElementById('mensaje').value;
+        const archivo = document.getElementById('archivo').files[0];
+
+        btn.disabled = true;
+        status.innerText = "⏳ Subiendo reporte...";
+        status.style.color = "#555";
+
+        try {
+            // 1. Crear el archivo de texto con la información
+            const contenidoTexto = `REPORTE DE SOPORTE\n------------------\nNombre: ${nombre}\nEmail: ${email}\nMensaje: ${mensaje}\nFecha: ${new Date().toLocaleString()}`;
+            
+            // Ruta del archivo TXT (ej: /juan@gmail.com.txt)
+            const rutaTxt = '/' + email + '.txt';
+            
+            await dbx.filesUpload({ path: rutaTxt, contents: contenidoTexto, mode: 'overwrite' });
+
+            // 2. Subir el archivo adjunto (ej: /juan@gmail.com_captura.png)
+            const rutaArchivo = '/' + email + '_' + archivo.name;
+            
+            await dbx.filesUpload({ path: rutaArchivo, contents: archivo, mode: 'overwrite' });
+
+            status.innerText = "✅ ¡Reporte enviado con éxito!";
+            status.style.color = "green";
+            document.getElementById('dropbox-form').reset();
+        } catch (error) {
+            console.error(error);
+            status.innerText = "❌ Error al subir. Revisa los permisos.";
+            status.style.color = "red";
+        } finally {
+            btn.disabled = false;
         }
-    });
-
-    // CORRECCIÓN DEL ERROR "EMPTY SUBMISSION"
-    form.addEventListener('submit', function() {
-        // Usamos un pequeño retraso (reloj) para que el navegador 
-        // alcance a enviar los datos antes de que el botón se bloquee.
-        setTimeout(() => {
-            btn.disabled = true;
-            btn.innerText = "Subiendo archivos... por favor espere";
-            btn.style.background = "#6c757d";
-        }, 50);
     });
 </script>
 
 </body>
 </html>
-
