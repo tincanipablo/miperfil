@@ -3,25 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - Registro de Archivos</title>
+    <title>Soporte - Envío de Reporte</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 20px; display: flex; justify-content: center; }
-        .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h1 { color: #2c3e50; text-align: center; font-size: 1.6rem; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h2 { text-align: center; color: #333; margin-bottom: 25px; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
-        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { background: #007bff; color: white; border: none; padding: 12px; width: 100%; border-radius: 5px; cursor: pointer; font-size: 1rem; font-weight: bold; margin-top: 10px; }
-        button:hover { background: #0056b3; }
-        #file-list { margin-top: 10px; font-size: 0.85rem; color: #666; background: #f9f9f9; padding: 8px; border-radius: 4px; display: none; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        
+        /* Estilo del botón */
+        #btn-enviar { 
+            background: #007bff; color: white; border: none; padding: 15px; 
+            width: 100%; border-radius: 8px; cursor: pointer; font-size: 1rem; 
+            font-weight: bold; transition: 0.3s; 
+        }
+        #btn-enviar:disabled { background: #6c757d; cursor: not-allowed; }
+        
+        #file-names { margin-top: 10px; font-size: 0.85rem; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px; display: none; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>Registrar Problema</h1>
+<div class="card">
+    <h2>Registrar Problema</h2>
     
-    <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
+    <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data" id="form-soporte">
         
         <input type="hidden" name="access_key" value="a20072ea-f205-4ead-a94c-58652c99f3f8">
 
@@ -36,40 +43,50 @@
         </div>
 
         <div class="form-group">
-            <label>Descripción del Problema</label>
-            <textarea name="message" rows="4" required></textarea>
+            <label>Descripción</label>
+            <textarea name="message" rows="4" required placeholder="Escribe aquí tu problema..."></textarea>
         </div>
 
         <div class="form-group">
-            <label>Adjuntar Archivos (ZIP, RAR, PDF, Imagen)</label>
+            <label>Adjuntar Archivos (ZIP, RAR, PDF, Fotos)</label>
             <input type="file" name="attachment" id="file_picker" accept=".zip,.rar,.pdf,image/*" multiple required>
-            <div id="file-list"></div>
+            <div id="file-names"></div>
         </div>
-        
+
         <input type="hidden" name="redirect" value="https://web3forms.com/success">
 
-        <button type="submit">Enviar Reporte</button>
+        <button type="submit" id="btn-enviar">Enviar al Soporte</button>
     </form>
 </div>
 
 <script>
+    const form = document.getElementById('form-soporte');
+    const btn = document.getElementById('btn-enviar');
     const filePicker = document.getElementById('file_picker');
     const emailInput = document.getElementById('user_email');
-    const fileList = document.getElementById('file-list');
+    const fileNamesDiv = document.getElementById('file-names');
 
+    // 1. Mostrar nombres de archivos con tu formato solicitado
     filePicker.addEventListener('change', function() {
-        const user = emailInput.value.split('@')[0] || "usuario";
+        const userPrefix = emailInput.value.split('@')[0] || "soporte";
         
         if (this.files.length > 0) {
-            fileList.style.display = 'block';
-            fileList.innerHTML = "<strong>Nombres de referencia:</strong><br>";
+            fileNamesDiv.style.display = 'block';
+            fileNamesDiv.innerHTML = "<strong>Archivos detectados:</strong><br>";
             
-            Array.from(this.files).forEach(f => {
-                const ext = f.name.split('.').pop();
-                const rand = Math.floor(Math.random() * 9000) + 1000;
-                fileList.innerHTML += `📎 ${user}_${rand}.${ext}<br>`;
+            Array.from(this.files).forEach(file => {
+                const ext = file.name.split('.').pop();
+                const randomId = Math.floor(Math.random() * 9000) + 1000;
+                fileNamesDiv.innerHTML += `📄 ${userPrefix}_${randomId}.${ext}<br>`;
             });
         }
+    });
+
+    // 2. Efecto de "Cargando" al enviar
+    form.addEventListener('submit', function() {
+        btn.disabled = true;
+        btn.innerText = "Enviando archivos... por favor espere";
+        btn.style.background = "#6c757d";
     });
 </script>
 
