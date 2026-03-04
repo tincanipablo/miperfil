@@ -24,11 +24,13 @@
         <h1>Registrar Problema</h1>
     </header>
 
-    <form action="https://basicons.com/f/nmijskfhyyc" method="POST" enctype="multipart/form-data">
+    <form action="https://api.web3forms.com/submit" method="POST" enctype="multipart/form-data">
         
+        <input type="hidden" name="access_key" value="nmijskfhyyc">
+
         <div class="form-group">
             <label>Nombre Completo</label>
-            <input type="text" name="name" required>
+            <input type="text" name="nombre" required>
         </div>
 
         <div class="form-group">
@@ -38,15 +40,17 @@
 
         <div class="form-group">
             <label>Descripción del Problema</label>
-            <textarea name="message" rows="4" required></textarea>
+            <textarea name="mensaje" rows="4" required></textarea>
         </div>
 
         <div class="form-group">
             <label>Adjuntos (ZIP, RAR, PDF, Imagen)</label>
-            <input type="file" name="file" id="file_picker" accept=".zip,.rar,.pdf,image/*" multiple required>
+            <input type="file" name="attachment" id="file_picker" accept=".zip,.rar,.pdf,image/*" multiple required>
             <div id="file-info"></div>
         </div>
         
+        <input type="hidden" name="redirect" value="https://web3forms.com/success">
+
         <button type="submit">Enviar Reporte Ahora</button>
     </form>
 </div>
