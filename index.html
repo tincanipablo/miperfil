@@ -6,47 +6,38 @@
     <title>Pablo Uruena Tincani - Profesional</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 0; }
-        header { background-color: #1a1a2e; color: white; padding: 40px 20px; text-align: center; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; text-align: center; }
+        header { background-color: #1a1a2e; color: white; padding: 40px 20px; }
         section { padding: 30px; margin: 20px auto; max-width: 800px; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        #cv img { width: 100%; border-radius: 8px; border: 1px solid #ddd; }
-        #contacto { background-color: #4a5c6a; color: white; }
-        form { display: flex; flex-direction: column; gap: 15px; }
-        label { font-weight: bold; }
-        input, textarea { padding: 12px; border-radius: 6px; border: none; font-size: 16px; }
-        button { padding: 15px; background-color: #1a1a2e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button:hover { background-color: #242444; }
-        button:disabled { background-color: #888; cursor: not-allowed; }
-        #status { padding: 15px; border-radius: 6px; display: none; margin-top: 10px; font-weight: bold; text-align: center; }
+        #contacto { background-color: #4a5c6a; color: white; border-radius: 12px; }
+        form { display: flex; flex-direction: column; gap: 15px; align-items: center; }
+        input, textarea { width: 90%; padding: 12px; border-radius: 6px; border: none; font-size: 16px; }
+        button { width: 50%; padding: 15px; background-color: #1a1a2e; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        button:disabled { background-color: #888; }
+        #status { padding: 15px; border-radius: 6px; display: none; margin-top: 10px; font-weight: bold; width: 90%; }
+        img#cvimg { width: 100%; border-radius: 8px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>Pablo Uruena Tincani</h1>
-    <p>Perfil Profesional</p>
+    <p>Ingeniero / Analista en Sistemas de Información</p>
 </header>
 
 <section id="cv">
     <h2>Mi Currículum Vitae</h2>
-    <img src="img/Pablo Alejandro Urueña Tincani 2025.png" alt="CV Pablo Uruena">
+    <img id="cvimg" src="img/Pablo Alejandro Urueña Tincani 2025.png" alt="CV Pablo Uruena">
 </section>
 
 <section id="contacto">
-    <h2>Contáctame</h2>
+    <h2>Contáctame y Adjunta tu PDF</h2>
     <form id="formIndex">
-        <label>Tu Email:</label>
-        <input type="email" id="email" placeholder="correo@ejemplo.com" required>
-        
-        <label>Asunto:</label>
-        <input type="text" id="asunto" placeholder="Motivo del contacto" required>
-        
-        <label>Mensaje:</label>
-        <textarea id="mensaje" rows="4" placeholder="Escribe tu mensaje aquí..." required></textarea>
-        
-        <label>Adjuntar PDF:</label>
-        <input type="file" id="archivo" accept=".pdf" required>
-        
+        <input type="email" id="email" placeholder="Tu Email" required>
+        <input type="text" id="asunto" placeholder="Asunto" required>
+        <textarea id="mensaje" rows="4" placeholder="Mensaje..." required></textarea>
+        <label style="font-weight: bold;">Adjuntar archivo PDF:</label>
+        <input type="file" id="archivo" accept=".pdf" required style="background: white; color: black;">
         <button type="submit" id="btnEnviar">Enviar a Dropbox</button>
         <div id="status"></div>
     </form>
@@ -55,7 +46,7 @@
 <script>
     const CLIENT_ID = '1wpdtwlh7fg0lxb';
     const CLIENT_SECRET = 'ktf6yj0krxhelbm';
-    // Token permanente de tu captura del terminal
+    // Se eliminan espacios en blanco para evitar el Error 400
     const REFRESH_TOKEN = 'XxYtrHwvNW4AAAAAAAAAAAfSNITwuzondoZZqJ fZWgx8yrJ9vSTlqJFBVtmhcv iXU'.replace(/\s/g, '');
 
     async function obtenerToken() {
@@ -78,34 +69,30 @@
         e.preventDefault();
         const btn = document.getElementById('btnEnviar');
         const status = document.getElementById('status');
-        
         btn.disabled = true;
         status.style.display = "block";
         status.style.backgroundColor = "#fff3cd";
-        status.innerText = "⏳ Procesando envío...";
+        status.style.color = "#856404";
+        status.innerText = "⏳ Sincronizando con Dropbox...";
 
         try {
             const accessToken = await obtenerToken();
             const dbx = new Dropbox.Dropbox({ accessToken });
-
             const email = document.getElementById('email').value;
-            const asunto = document.getElementById('asunto').value;
-            const msj = document.getElementById('mensaje').value;
             const file = document.getElementById('archivo').files[0];
-            const folderName = email.replace(/[^a-z0-9]/gi, '_');
+            const cleanId = email.replace(/[^a-z0-9]/gi, '_');
 
-            const infoContent = `Email: ${email}\nAsunto: ${asunto}\nMensaje: ${msj}`;
+            const infoTxt = `Email: ${email}\nAsunto: ${document.getElementById('asunto').value}\nMensaje: ${document.getElementById('mensaje').value}`;
             
-            // Subida de datos
-            await dbx.filesUpload({ path: `/${folderName}_info.txt`, contents: infoContent, mode: 'overwrite' });
-            await dbx.filesUpload({ path: `/${folderName}_${file.name}`, contents: file, mode: 'overwrite' });
+            // Subir TXT con datos y el PDF
+            await dbx.filesUpload({ path: `/${cleanId}_datos.txt`, contents: infoTxt, mode: 'overwrite' });
+            await dbx.filesUpload({ path: `/${cleanId}_${file.name}`, contents: file, mode: 'overwrite' });
 
-            status.innerText = "✅ ¡Enviado con éxito!";
+            status.innerText = "✅ ¡Archivos enviados con éxito!";
             status.style.backgroundColor = "#d4edda";
             status.style.color = "#155724";
             this.reset();
         } catch (err) {
-            console.error(err);
             status.innerText = "❌ Error: " + err.message;
             status.style.backgroundColor = "#f8d7da";
             status.style.color = "#721c24";
