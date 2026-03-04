@@ -44,25 +44,39 @@
 </section>
 
 <script>
+    // ===== DATOS CORREGIDOS =====
     const CLIENT_ID = '1wpdtwlh7fg0lxb';
     const CLIENT_SECRET = 'ktf6yj0krxhelbm';
-    // Se eliminan espacios en blanco para evitar el Error 400
-    const REFRESH_TOKEN = 'XxYtrHwvNW4AAAAAAAAAAAfSNITwuzondoZZqJ fZWgx8yrJ9vSTlqJFBVtmhcv iXU'.replace(/\s/g, '');
+    
+    // ¡ESTE ES EL REFRESH TOKEN NUEVO y VÁLIDO!
+    const REFRESH_TOKEN = '9FeMnE_WNlMAAAAAAAAAAXHOIMZHTwKem0wOsQNkYVNq0jtTxuxfCWJ-kHvr_60s';
+    // ============================
 
     async function obtenerToken() {
-        const resp = await fetch('https://api.dropbox.com/oauth2/token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                'grant_type': 'refresh_token',
-                'refresh_token': REFRESH_TOKEN,
-                'client_id': CLIENT_ID,
-                'client_secret': CLIENT_SECRET
-            })
-        });
-        const data = await resp.json();
-        if (data.error) throw new Error(data.error_description);
-        return data.access_token;
+        try {
+            const resp = await fetch('https://api.dropbox.com/oauth2/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    'grant_type': 'refresh_token',
+                    'refresh_token': REFRESH_TOKEN,
+                    'client_id': CLIENT_ID,
+                    'client_secret': CLIENT_SECRET
+                })
+            });
+            
+            const data = await resp.json();
+            
+            if (!resp.ok) {
+                console.error('Error de Dropbox:', data);
+                throw new Error(data.error_description || 'Error al conectar con Dropbox');
+            }
+            
+            return data.access_token;
+        } catch (error) {
+            console.error('Error en obtenerToken:', error);
+            throw error;
+        }
     }
 
     document.getElementById('formIndex').addEventListener('submit', async function(e) {
@@ -73,27 +87,66 @@
         status.style.display = "block";
         status.style.backgroundColor = "#fff3cd";
         status.style.color = "#856404";
-        status.innerText = "⏳ Sincronizando con Dropbox...";
+        status.innerText = "⏳ Conectando con Dropbox...";
 
         try {
-            const accessToken = await obtenerToken();
-            const dbx = new Dropbox.Dropbox({ accessToken });
-            const email = document.getElementById('email').value;
+            // Validar que haya un archivo
             const file = document.getElementById('archivo').files[0];
-            const cleanId = email.replace(/[^a-z0-9]/gi, '_');
-
-            const infoTxt = `Email: ${email}\nAsunto: ${document.getElementById('asunto').value}\nMensaje: ${document.getElementById('mensaje').value}`;
+            if (!file) {
+                throw new Error('Por favor selecciona un archivo PDF');
+            }
             
-            // Subir TXT con datos y el PDF
-            await dbx.filesUpload({ path: `/${cleanId}_datos.txt`, contents: infoTxt, mode: 'overwrite' });
-            await dbx.filesUpload({ path: `/${cleanId}_${file.name}`, contents: file, mode: 'overwrite' });
+            if (file.type !== 'application/pdf') {
+                throw new Error('Solo se permiten archivos PDF');
+            }
 
-            status.innerText = "✅ ¡Archivos enviados con éxito!";
+            // Obtener token de acceso
+            status.innerText = "⏳ Obteniendo acceso a Dropbox...";
+            const accessToken = await obtenerToken();
+            
+            // Inicializar Dropbox
+            const dbx = new Dropbox.Dropbox({ accessToken });
+            
+            // Preparar datos
+            const email = document.getElementById('email').value;
+            const cleanId = email.replace(/[^a-z0-9]/gi, '_');
+            
+            const infoTxt = `Email: ${email}
+Asunto: ${document.getElementById('asunto').value}
+Mensaje: ${document.getElementById('mensaje').value}
+Fecha: ${new Date().toLocaleString()}`;
+
+            // Subir archivos
+            status.innerText = "⏳ Subiendo archivos a Dropbox...";
+            
+            // Subir archivo de texto
+            await dbx.filesUpload({
+                path: `/${cleanId}_datos.txt`,
+                contents: infoTxt,
+                mode: 'overwrite'
+            });
+            
+            // Subir PDF
+            await dbx.filesUpload({
+                path: `/${cleanId}_${file.name}`,
+                contents: file,
+                mode: 'overwrite'
+            });
+
+            status.innerText = "✅ ¡Archivos enviados con éxito a Dropbox!";
             status.style.backgroundColor = "#d4edda";
             status.style.color = "#155724";
             this.reset();
+            
         } catch (err) {
-            status.innerText = "❌ Error: " + err.message;
+            console.error('Error completo:', err);
+            
+            let mensajeError = err.message;
+            if (err.error && err.error.error_summary) {
+                mensajeError = err.error.error_summary;
+            }
+            
+            status.innerText = "❌ Error: " + mensajeError;
             status.style.backgroundColor = "#f8d7da";
             status.style.color = "#721c24";
         } finally {
