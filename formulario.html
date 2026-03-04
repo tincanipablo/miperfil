@@ -2,42 +2,52 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - PersonalWebTincani</title>
+    <title>Centro de Soporte - Pablo Uruena</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); width: 100%; max-width: 400px; }
-        h2 { text-align: center; color: #0061ff; margin-bottom: 20px; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { background-color: #0061ff; color: white; border: none; padding: 14px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        button:disabled { background-color: #ccc; }
-        #status { margin-top: 15px; padding: 10px; border-radius: 6px; text-align: center; display: none; font-weight: bold; }
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 40px; background-color: #f0f2f5; }
+        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 8px 24px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h1 { color: #0061ff; text-align: center; margin-bottom: 25px; }
+        .field { margin-bottom: 15px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; color: #444; }
+        input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #0061ff; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        button:hover { background: #0054de; }
+        #msg { margin-top: 15px; padding: 10px; border-radius: 5px; text-align: center; display: none; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Centro de Soporte</h2>
-    <form id="form-soporte">
-        <input type="text" id="nombre" placeholder="Nombre completo" required>
-        <input type="email" id="email" placeholder="Correo electrónico" required>
-        <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
-        <label style="font-size: 13px; color: #666;">Adjuntar captura/archivo:</label>
-        <input type="file" id="archivo" required>
-        <button type="submit" id="btn-enviar">Enviar Reporte</button>
+    <h1>Centro de Soporte</h1>
+    <form id="formSoporte">
+        <div class="field">
+            <label>Nombre:</label>
+            <input type="text" id="nombre" required>
+        </div>
+        <div class="field">
+            <label>Email:</label>
+            <input type="email" id="email" required>
+        </div>
+        <div class="field">
+            <label>Mensaje:</label>
+            <textarea id="mensaje" rows="4" required></textarea>
+        </div>
+        <div class="field">
+            <label>Adjuntar Archivo:</label>
+            <input type="file" id="archivo" required>
+        </div>
+        <button type="submit" id="btnSoporte">Enviar Reporte</button>
+        <div id="msg"></div>
     </form>
-    <div id="status"></div>
 </div>
 
 <script>
-    // DATOS DE TUS CAPTURAS
     const CLIENT_ID = '1wpdtwlh7fg0lxb';
     const CLIENT_SECRET = 'ktf6yj0krxhelbm';
-    // Este token "maestro" permite renovar el acceso automáticamente
-    const REFRESH_TOKEN = 'L0D9u_YV-PAAAAAAAAAAAbn_B_WjWREp6m7C9rG0O-Kx7K_Y2tS1-wM0k2-LhPzB';
+    const REFRESH_TOKEN = 'XxYtrHwvNW4AAAAAAAAAAAfSNITwuzondoZZqJ fZWgx8yrJ9vSTlqJFBVtmhcv iXU'.replace(/\s/g, '');
 
-    async function obtenerTokenNuevo() {
+    async function renovarToken() {
         const response = await fetch('https://api.dropbox.com/oauth2/token', {
             method: 'POST',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -49,48 +59,45 @@
             })
         });
         const data = await response.json();
-        if (data.error) throw new Error("Error al renovar token");
+        if (data.error) throw new Error(data.error_description);
         return data.access_token;
     }
 
-    document.getElementById('form-soporte').addEventListener('submit', async (e) => {
+    document.getElementById('formSoporte').addEventListener('submit', async function(e) {
         e.preventDefault();
-        const btn = document.getElementById('btn-enviar');
-        const status = document.getElementById('status');
-        
+        const btn = document.getElementById('btnSoporte');
+        const msg = document.getElementById('msg');
+
         btn.disabled = true;
-        status.style.display = "block";
-        status.innerText = "⏳ Conectando con Dropbox...";
-        status.style.backgroundColor = "#fff3cd";
+        msg.style.display = "block";
+        msg.style.backgroundColor = "#e7f3ff";
+        msg.innerText = "Subiendo reporte...";
 
         try {
-            // 1. Renovamos el token antes de subir nada
-            const tokenVivo = await obtenerTokenNuevo();
-            const dbx = new Dropbox.Dropbox({ accessToken: tokenVivo });
+            const token = await renovarToken();
+            const dbx = new Dropbox.Dropbox({ accessToken: token });
 
             const nombre = document.getElementById('nombre').value;
             const email = document.getElementById('email').value;
-            const mensaje = document.getElementById('mensaje').value;
+            const texto = document.getElementById('mensaje').value;
             const file = document.getElementById('archivo').files[0];
-            const carpeta = email.replace(/[^a-z0-9]/gi, '_');
 
-            // 2. Subimos los datos
-            const contenidoTexto = `Nombre: ${nombre}\nEmail: ${email}\nMensaje: ${mensaje}`;
-            await dbx.filesUpload({ path: `/${carpeta}.txt`, contents: contenidoTexto, mode: 'overwrite' });
-            await dbx.filesUpload({ path: `/${carpeta}_${file.name}`, contents: file, mode: 'overwrite' });
+            const contenido = `Nombre: ${nombre}\nEmail: ${email}\nMensaje: ${texto}`;
+            const timestamp = Date.now();
 
-            status.innerText = "✅ ¡Enviado correctamente!";
-            status.style.backgroundColor = "#d4edda";
-            document.getElementById('form-soporte').reset();
-        } catch (error) {
-            console.error(error);
-            status.innerText = "❌ Error en el servidor. Inténtalo más tarde.";
-            status.style.backgroundColor = "#f8d7da";
+            await dbx.filesUpload({ path: `/Soporte_${timestamp}_info.txt`, contents: contenido });
+            await dbx.filesUpload({ path: `/Soporte_${timestamp}_${file.name}`, contents: file });
+
+            msg.innerText = "✅ Reporte enviado correctamente.";
+            msg.style.backgroundColor = "#d4edda";
+            this.reset();
+        } catch (err) {
+            msg.innerText = "❌ Error en la subida.";
+            msg.style.backgroundColor = "#f8d7da";
         } finally {
             btn.disabled = false;
         }
     });
 </script>
-
 </body>
 </html>
