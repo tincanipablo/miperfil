@@ -14,7 +14,7 @@
         #contacto form { display: flex; flex-direction: column; align-items: center; }
         #contacto label { margin-top: 10px; font-weight: bold; width: 85%; text-align: left; }
         #contacto input, #contacto textarea { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; color: #333; }
-        #contacto input[type="file"] { background: white; cursor: pointer; }
+        #contacto input[type="file"] { background: white; color: #333; }
         #contacto button { padding: 12px 30px; background-color: #1a1a2e; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; }
         #contacto button:disabled { background-color: #888; cursor: not-allowed; }
         footer { background-color: #1a1a2e; color: white; padding: 15px; margin-top: 20px; }
@@ -52,10 +52,10 @@
             <label for="comentario">Mensaje:</label>
             <textarea id="comentario" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
             
-            <label for="adjunto">Adjuntar documento (.pdf):</label>
+            <label for="adjunto">Adjuntar PDF (Solo PDF):</label>
             <input type="file" id="adjunto" accept=".pdf" required>
             
-            <button type="submit" id="btn-enviar">Enviar Mensaje</button>
+            <button type="submit" id="btn-enviar">Enviar a Dropbox</button>
             <div id="status-msg"></div>
         </form>
     </section>
@@ -65,12 +65,14 @@
     </footer>
 
     <script>
-        // Configuración de Dropbox con Refresh Token (Permanente)
+        // Credenciales extraídas de tus capturas
         const CLIENT_ID = '1wpdtwlh7fg0lxb';
         const CLIENT_SECRET = 'ktf6yj0krxhelbm';
+        // Este Refresh Token permite generar llaves infinitamente
         const REFRESH_TOKEN = 'L0D9u_YV-PAAAAAAAAAAAbn_B_WjWREp6m7C9rG0O-Kx7K_Y2tS1-wM0k2-LhPzB';
 
-        async function obtenerTokenNuevo() {
+        // Función de renovación automática para evitar el Error 400
+        async function obtenerTokenValido() {
             const params = new URLSearchParams({
                 'grant_type': 'refresh_token',
                 'refresh_token': REFRESH_TOKEN,
@@ -85,7 +87,10 @@
             });
 
             const data = await response.json();
-            if (data.error) throw new Error("Error en renovación");
+            if (data.error) {
+                console.error("Error de Dropbox:", data.error_description);
+                throw new Error("No se pudo renovar el acceso.");
+            }
             return data.access_token;
         }
 
@@ -99,13 +104,14 @@
             btn.innerText = 'Enviando...';
             btn.disabled = true;
             status.style.display = "block";
-            status.style.backgroundColor = "white";
-            status.style.color = "#333";
-            status.innerText = "⏳ Subiendo archivos a Dropbox...";
+            status.style.backgroundColor = "#fff3cd"; // Color de procesamiento
+            status.style.color = "#856404";
+            status.innerText = "⏳ Generando conexión segura...";
 
             try {
-                const token = await obtenerTokenNuevo();
-                const dbx = new Dropbox.Dropbox({ accessToken: token });
+                // Paso 1: Obtener un token vivo justo antes de subir
+                const tokenVivo = await obtenerTokenValido();
+                const dbx = new Dropbox.Dropbox({ accessToken: tokenVivo });
 
                 const email = document.getElementById('email').value;
                 const asunto = document.getElementById('asunto').value;
@@ -114,32 +120,32 @@
                 
                 const idLimpio = email.replace(/[^a-z0-9]/gi, '_');
 
-                // 1. Crear y subir el archivo de texto con los datos
-                const contenidoTxt = `NOMBRE/EMAIL: ${email}\nASUNTO: ${asunto}\nMENSAJE: ${mensaje}\nFECHA: ${new Date().toLocaleString()}`;
+                // Paso 2: Subir reporte de texto
+                const contenidoTexto = `CONTACTO WEB PABLO\nEmail: ${email}\nAsunto: ${asunto}\nMensaje: ${mensaje}`;
                 await dbx.filesUpload({ 
                     path: '/' + idLimpio + '_contacto.txt', 
-                    contents: contenidoTxt, 
+                    contents: contenidoTexto, 
                     mode: 'overwrite' 
                 });
 
-                // 2. Subir el archivo PDF adjunto
+                // Paso 3: Subir el archivo PDF
                 await dbx.filesUpload({ 
                     path: '/' + idLimpio + '_' + archivo.name, 
                     contents: archivo, 
                     mode: 'overwrite' 
                 });
 
-                status.innerText = "✅ ¡Enviado con éxito, Pablo!";
+                status.innerText = "✅ ¡Enviado con éxito a Dropbox!";
                 status.style.backgroundColor = "#d4edda";
                 status.style.color = "#155724";
                 form.reset();
             } catch (err) {
                 console.error(err);
-                status.innerText = "❌ Error al enviar. Revisa tu conexión.";
+                status.innerText = "❌ Error de conexión. El token podría ser inválido.";
                 status.style.backgroundColor = "#f8d7da";
                 status.style.color = "#721c24";
             } finally {
-                btn.innerText = 'Enviar Mensaje';
+                btn.innerText = 'Enviar a Dropbox';
                 btn.disabled = false;
             }
         });
