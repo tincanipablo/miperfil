@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - Registro</title>
+    <title>Soporte Técnico - Registro Fominit</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
         .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
@@ -61,7 +61,7 @@
     const emailInput = document.getElementById('user_email');
     const fileNamesDiv = document.getElementById('file-names');
 
-    // Generador de nombres dinámicos para los archivos
+    // Visualización de nombres de archivos antes de enviar
     filePicker.addEventListener('change', function() {
         const userPrefix = emailInput.value.split('@')[0] || "soporte";
         
@@ -77,7 +77,7 @@
         }
     });
 
-    // Efecto de carga solicitado
+    // Función de carga al enviar
     form.addEventListener('submit', function() {
         btn.disabled = true;
         btn.innerText = "Enviando archivos... por favor espere";
