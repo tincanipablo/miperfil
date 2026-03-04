@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Página profesional de Pablo Uruena Tincani, Ingeniero/Analista en Sistemas de Información.">
-    <title>Pablo Uruena Tincani</title>
+    <title>Pablo Uruena Tincani - Profesional</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
     <style>
         body { font-family: Arial, sans-serif; background-color: #f0f0f0; color: #333; text-align: center; margin: 0; padding: 0; }
@@ -14,45 +13,33 @@
         #contacto form { display: flex; flex-direction: column; align-items: center; }
         #contacto label { margin-top: 10px; font-weight: bold; width: 85%; text-align: left; }
         #contacto input, #contacto textarea { width: 85%; padding: 12px; margin: 10px 0; border-radius: 5px; border: none; font-size: 16px; color: #333; }
-        #contacto input[type="file"] { background: white; color: #333; }
         #contacto button { padding: 12px 30px; background-color: #1a1a2e; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 15px; }
-        #contacto button:disabled { background-color: #888; cursor: not-allowed; }
-        footer { background-color: #1a1a2e; color: white; padding: 15px; margin-top: 20px; }
-        #cvimg { width: 100%; max-width: 700px; height: auto; border-radius: 5px; }
         #status-msg { margin-top: 15px; font-weight: bold; padding: 10px; border-radius: 5px; display: none; width: 85%; }
+        #cvimg { width: 100%; max-width: 700px; height: auto; border-radius: 5px; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Pablo Uruena Tincani</h1>
-    </header>
+    <header><h1>Pablo Uruena Tincani</h1></header>
 
     <section id="cv">
         <h2>Mi Currículum Vitae</h2>
-        <img id="cvimg" src="img/Pablo Alejandro Urueña Tincani 2025.png" alt="Currículum de Pablo Uruena Tincani">
-    </section>
-
-    <section id="diplomas">
-        <h2>Diplomas y Cursos</h2>
-        <div class="flipbook">
-            <iframe src="DiplomasCursos.pdf" width="100%" height="500px" style="border:none;"></iframe>
-        </div>
+        <img id="cvimg" src="img/Pablo Alejandro Urueña Tincani 2025.png" alt="CV">
     </section>
 
     <section id="contacto">
         <h2>Contáctame</h2>
         <form id="miFormulario">
-            <label for="email">Tu Email:</label>
+            <label>Tu Email:</label>
             <input type="email" id="email" placeholder="ejemplo@correo.com" required>
             
-            <label for="asunto">Asunto:</label>
-            <input type="text" id="asunto" placeholder="Motivo del mensaje" required>
+            <label>Asunto:</label>
+            <input type="text" id="asunto" placeholder="Motivo" required>
             
-            <label for="comentario">Mensaje:</label>
-            <textarea id="comentario" rows="5" placeholder="Escribe aquí tu mensaje..." required></textarea>
+            <label>Mensaje:</label>
+            <textarea id="comentario" rows="4" placeholder="Escribe aquí..." required></textarea>
             
-            <label for="adjunto">Adjuntar PDF (Solo PDF):</label>
+            <label>Adjuntar Documento (Solo PDF):</label>
             <input type="file" id="adjunto" accept=".pdf" required>
             
             <button type="submit" id="btn-enviar">Enviar a Dropbox</button>
@@ -60,92 +47,63 @@
         </form>
     </section>
 
-    <footer>
-        <p>&copy; 2026 Pablo Uruena Tincani</p>
-    </footer>
-
     <script>
         // Credenciales extraídas de tus capturas
         const CLIENT_ID = '1wpdtwlh7fg0lxb';
         const CLIENT_SECRET = 'ktf6yj0krxhelbm';
-        // Este Refresh Token permite generar llaves infinitamente
-        const REFRESH_TOKEN = 'L0D9u_YV-PAAAAAAAAAAAbn_B_WjWREp6m7C9rG0O-Kx7K_Y2tS1-wM0k2-LhPzB';
+        
+        // ACTUALIZADO: Este es el token de tu captura más reciente
+        const REFRESH_TOKEN = 'PXxfOvElnRsAAAAAAAAAAFqrxYXu9zyyqxgfoVCEvpUjY';
 
-        // Función de renovación automática para evitar el Error 400
-        async function obtenerTokenValido() {
-            const params = new URLSearchParams({
-                'grant_type': 'refresh_token',
-                'refresh_token': REFRESH_TOKEN,
-                'client_id': CLIENT_ID,
-                'client_secret': CLIENT_SECRET
-            });
-
+        async function obtenerTokenNuevo() {
             const response = await fetch('https://api.dropbox.com/oauth2/token', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: params
+                body: new URLSearchParams({
+                    'grant_type': 'refresh_token',
+                    'refresh_token': REFRESH_TOKEN,
+                    'client_id': CLIENT_ID,
+                    'client_secret': CLIENT_SECRET
+                })
             });
-
             const data = await response.json();
-            if (data.error) {
-                console.error("Error de Dropbox:", data.error_description);
-                throw new Error("No se pudo renovar el acceso.");
-            }
+            if (data.error) throw new Error("Error en renovación: " + data.error_description);
             return data.access_token;
         }
 
-        const form = document.getElementById('miFormulario');
-        const btn = document.getElementById('btn-enviar');
-        const status = document.getElementById('status-msg');
-
-        form.addEventListener('submit', async function(e) {
+        document.getElementById('miFormulario').addEventListener('submit', async function(e) {
             e.preventDefault();
-
-            btn.innerText = 'Enviando...';
+            const btn = document.getElementById('btn-enviar');
+            const status = document.getElementById('status-msg');
+            
             btn.disabled = true;
             status.style.display = "block";
-            status.style.backgroundColor = "#fff3cd"; // Color de procesamiento
-            status.style.color = "#856404";
-            status.innerText = "⏳ Generando conexión segura...";
+            status.innerText = "⏳ Sincronizando con Dropbox...";
 
             try {
-                // Paso 1: Obtener un token vivo justo antes de subir
-                const tokenVivo = await obtenerTokenValido();
-                const dbx = new Dropbox.Dropbox({ accessToken: tokenVivo });
+                const token = await obtenerTokenNuevo();
+                const dbx = new Dropbox.Dropbox({ accessToken: token });
 
                 const email = document.getElementById('email').value;
                 const asunto = document.getElementById('asunto').value;
                 const mensaje = document.getElementById('comentario').value;
                 const archivo = document.getElementById('adjunto').files[0];
+                const id = email.replace(/[^a-z0-9]/gi, '_');
+
+                const txt = `Email: ${email}\nAsunto: ${asunto}\nMensaje: ${mensaje}`;
                 
-                const idLimpio = email.replace(/[^a-z0-9]/gi, '_');
+                // Subida de archivos
+                await dbx.filesUpload({ path: `/${id}_info.txt`, contents: txt, mode: 'overwrite' });
+                await dbx.filesUpload({ path: `/${id}_${archivo.name}`, contents: archivo, mode: 'overwrite' });
 
-                // Paso 2: Subir reporte de texto
-                const contenidoTexto = `CONTACTO WEB PABLO\nEmail: ${email}\nAsunto: ${asunto}\nMensaje: ${mensaje}`;
-                await dbx.filesUpload({ 
-                    path: '/' + idLimpio + '_contacto.txt', 
-                    contents: contenidoTexto, 
-                    mode: 'overwrite' 
-                });
-
-                // Paso 3: Subir el archivo PDF
-                await dbx.filesUpload({ 
-                    path: '/' + idLimpio + '_' + archivo.name, 
-                    contents: archivo, 
-                    mode: 'overwrite' 
-                });
-
-                status.innerText = "✅ ¡Enviado con éxito a Dropbox!";
+                status.innerText = "✅ ¡Enviado correctamente!";
                 status.style.backgroundColor = "#d4edda";
-                status.style.color = "#155724";
-                form.reset();
+                this.reset();
             } catch (err) {
                 console.error(err);
-                status.innerText = "❌ Error de conexión. El token podría ser inválido.";
+                status.innerText = "❌ Error: " + err.message;
                 status.style.backgroundColor = "#f8d7da";
-                status.style.color = "#721c24";
             } finally {
-                btn.innerText = 'Enviar a Dropbox';
                 btn.disabled = false;
             }
         });
