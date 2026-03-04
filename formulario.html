@@ -10,7 +10,9 @@
         h1 { color: #0061ff; text-align: center; }
         input, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
         button { width: 100%; padding: 15px; background: #0061ff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
+        button:disabled { background: #6c757d; cursor: not-allowed; }
         #msg { margin-top: 20px; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: bold; }
+        .file-info { font-size: 12px; color: #666; margin-top: -15px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -22,60 +24,132 @@
         <input type="email" id="email" placeholder="Email" required>
         <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
         <label style="display:block; margin-bottom:10px; font-weight:bold;">Adjuntar archivo:</label>
-        <input type="file" id="archivo" required>
+        <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
+        <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG</div>
         <button type="submit" id="btnSoporte">Enviar Reporte</button>
         <div id="msg"></div>
     </form>
 </div>
 
 <script>
-    const CID = '1wpdtwlh7fg0lxb';
-    const CSC = 'ktf6yj0krxhelbm';
-    const RTK = 'XxYtrHwvNW4AAAAAAAAAAAfSNITwuzondoZZqJ fZWgx8yrJ9vSTlqJFBVtmhcv iXU'.replace(/\s/g, '');
+    // ===== DATOS CORREGIDOS CON TU NUEVO REFRESH TOKEN =====
+    const CLIENT_ID = '1wpdtwlh7fg0lxb';
+    const CLIENT_SECRET = 'ktf6yj0krxhelbm';
+    const REFRESH_TOKEN = '9FeMnE_WNlMAAAAAAAAAAXHOIMZHTwKem0wOsQNkYVNq0jtTxuxfCWJ-kHvr_60s';
+    // ====================================================
 
-    async function renovar() {
-        const r = await fetch('https://api.dropbox.com/oauth2/token', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({ 
-                'grant_type': 'refresh_token', 
-                'refresh_token': RTK, 
-                'client_id': CID, 
-                'client_secret': CSC 
-            })
-        });
-        const d = await r.json();
-        if (d.error) throw new Error(d.error_description);
-        return d.access_token;
+    async function renovarToken() {
+        try {
+            const respuesta = await fetch('https://api.dropbox.com/oauth2/token', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ 
+                    'grant_type': 'refresh_token', 
+                    'refresh_token': REFRESH_TOKEN, 
+                    'client_id': CLIENT_ID, 
+                    'client_secret': CLIENT_SECRET 
+                })
+            });
+            
+            const datos = await respuesta.json();
+            
+            if (!respuesta.ok) {
+                console.error('Error de Dropbox:', datos);
+                throw new Error(datos.error_description || 'Error al conectar con Dropbox');
+            }
+            
+            return datos.access_token;
+        } catch (error) {
+            console.error('Error en renovarToken:', error);
+            throw error;
+        }
     }
 
     document.getElementById('formSoporte').addEventListener('submit', async function(e) {
         e.preventDefault();
         const btn = document.getElementById('btnSoporte');
-        const m = document.getElementById('msg');
+        const msgDiv = document.getElementById('msg');
+        
         btn.disabled = true;
-        m.style.display = "block"; 
-        m.style.backgroundColor = "#e8f0fe";
-        m.innerText = "⏳ Enviando reporte...";
+        msgDiv.style.display = "block"; 
+        msgDiv.style.backgroundColor = "#e8f0fe";
+        msgDiv.style.color = "#004085";
+        msgDiv.innerText = "⏳ Conectando con Dropbox...";
         
         try {
-            const tk = await renovar();
-            const dbx = new Dropbox.Dropbox({ accessToken: tk });
+            // Validar que haya un archivo
             const file = document.getElementById('archivo').files[0];
+            if (!file) {
+                throw new Error('Por favor selecciona un archivo');
+            }
             
+            // Validar tamaño (máximo 50MB)
+            if (file.size > 50 * 1024 * 1024) {
+                throw new Error('El archivo no puede ser mayor a 50MB');
+            }
+
+            msgDiv.innerText = "⏳ Obteniendo acceso a Dropbox...";
+            const token = await renovarToken();
+            
+            msgDiv.innerText = "⏳ Subiendo archivo a Dropbox...";
+            const dbx = new Dropbox.Dropbox({ accessToken: token });
+            
+            // Obtener datos del formulario
+            const nombre = document.getElementById('nombre').value;
+            const email = document.getElementById('email').value;
+            const mensaje = document.getElementById('mensaje').value;
+            
+            // Crear nombre de archivo con timestamp y datos del usuario
+            const timestamp = Date.now();
+            const nombreLimpio = nombre.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+            const nombreArchivo = `Soporte_${nombreLimpio}_${timestamp}_${file.name}`;
+            
+            // Crear archivo de texto con la información del reporte
+            const infoReporte = `===== REPORTE DE SOPORTE =====
+Fecha: ${new Date().toLocaleString()}
+Nombre: ${nombre}
+Email: ${email}
+Mensaje: ${mensaje}
+================================`;
+            
+            // Subir el archivo de información
             await dbx.filesUpload({ 
-                path: '/Soporte_' + Date.now() + '_' + file.name, 
-                contents: file 
+                path: `/Soportes/${timestamp}_${nombreLimpio}_datos.txt`, 
+                contents: infoReporte,
+                mode: 'overwrite'
+            });
+            
+            // Subir el archivo adjunto
+            await dbx.filesUpload({ 
+                path: `/Soportes/${nombreArchivo}`, 
+                contents: file,
+                mode: 'overwrite'
             });
 
-            m.innerText = "✅ Reporte enviado con éxito";
-            m.style.backgroundColor = "#d4edda";
-            m.style.color = "#155724";
+            msgDiv.innerText = "✅ ¡Reporte enviado con éxito a Dropbox!";
+            msgDiv.style.backgroundColor = "#d4edda";
+            msgDiv.style.color = "#155724";
+            
+            // Limpiar el formulario
             this.reset();
+            
         } catch (err) {
-            m.innerText = "❌ Error: " + err.message;
-            m.style.backgroundColor = "#f8d7da";
-            m.style.color = "#721c24";
+            console.error('Error completo:', err);
+            
+            let mensajeError = err.message;
+            if (err.error && err.error.error_summary) {
+                mensajeError = err.error.error_summary;
+            } else if (err.status === 409) {
+                mensajeError = 'Ya existe un archivo con ese nombre';
+            } else if (err.status === 401) {
+                mensajeError = 'Error de autenticación con Dropbox';
+            } else if (err.status === 413) {
+                mensajeError = 'El archivo es demasiado grande';
+            }
+            
+            msgDiv.innerText = "❌ Error: " + mensajeError;
+            msgDiv.style.backgroundColor = "#f8d7da";
+            msgDiv.style.color = "#721c24";
         } finally {
             btn.disabled = false;
         }
