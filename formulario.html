@@ -3,89 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - Registro Directo Drop Box</title>
+    <title>Soporte Técnico - Conexión Permanente</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .contenedor { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); width: 100%; max-width: 450px; }
-        h2 { text-align: center; color: #0061ff; margin-bottom: 25px; }
-        .campo { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: 600; color: #444; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-size: 14px; }
-        button { background-color: #0061ff; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.3s; }
-        button:hover { background-color: #004dc2; }
-        button:disabled { background-color: #bdc3c7; cursor: not-allowed; }
-        #estado { margin-top: 20px; text-align: center; font-size: 14px; font-weight: bold; padding: 10px; border-radius: 5px; display: none; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 8px 20px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        h2 { text-align: center; color: #0061ff; margin-top: 0; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #333; }
+        input, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { background-color: #0061ff; color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold; }
+        button:disabled { background-color: #ccc; }
+        #status { margin-top: 15px; text-align: center; font-weight: bold; padding: 10px; border-radius: 4px; display: none; }
     </style>
 </head>
 <body>
 
-<div class="contenedor">
-    <h2>Enviar Reporte</h2>
-    <form id="form-dropbox">
-        <div class="campo">
-            <label>Nombre</label>
-            <input type="text" id="nom" required placeholder="Tu nombre">
-        </div>
-        <div class="campo">
-            <label>Email</label>
-            <input type="email" id="correo" required placeholder="ejemplo@correo.com">
-        </div>
-        <div class="campo">
-            <label>Descripción</label>
-            <textarea id="desc" rows="4" required placeholder="¿Qué necesitas ayuda?"></textarea>
-        </div>
-        <div class="campo">
-            <label>Adjuntar archivo</label>
-            <input type="file" id="adjunto" required>
-        </div>
-        <button type="submit" id="btn-envio">Enviar a Dropbox</button>
+<div class="card">
+    <h2>Centro de Soporte</h2>
+    <form id="main-form">
+        <label>Nombre</label>
+        <input type="text" id="u_name" required>
+        
+        <label>Email</label>
+        <input type="email" id="u_email" required>
+        
+        <label>Mensaje</label>
+        <textarea id="u_msg" rows="3" required></textarea>
+        
+        <label>Adjuntar Archivo</label>
+        <input type="file" id="u_file" required>
+        
+        <button type="submit" id="u_btn">Enviar Reporte</button>
     </form>
-    <div id="estado"></div>
+    <div id="status"></div>
 </div>
 
 <script>
-    // TU TOKEN MAESTRO
-    const TOKEN_DBX = 'sl.u.AGVmqDsHEvepVJw29FeAVx9IeZ513eKQ7_ga_8ayG9_8NcpLlG1YRkqcpwGLvbR-_cTbTUZZnvQ5ywbf-CyUedJlXpHRTjOc8c_Z8egIXVAp6D5nOBJbEYHGOJY7dhhHyZkIRNtRc1jWaLgqEbwq5uAYMvTP-24L39Z6N3sBrieenyH909Be1QmfehgjL-J9zwkAWvNTuPNm0hBJI_9psW7EzA4yq3wng3QycbhShdyyTfRwa-3qf698mfBjC1Y_zNRJ28T5-ZmMzJ_lB7-rJu-dzq7t3M4ZUmzgJjZRtVgAk6zGmqV111W8USzYf5e7HQXd_kiJH4ZF3UUckzjDk1GKXigLthUGZXE_nvQfn3sidrbmKRiPeRQFI9V4lb466qcz9ID0xJBMScbZtLA88FJdt63yDZsfVVkJTDeIZqWKNpWMrtb9z8NdWcZu6yiIEV88x9tIytsaRGfb0CnCzcCYOWTN0zKA6BJtmEC_P9Ke9Iub4wdE3CdOrCoVEMNsRmSZWwNuov3txR5XZJz0eYVrJoQEivkv-Dd4bQbT_5mGT-Xlw3bNkNgwRoZJg7ufGMnBZuLhGWHe-AWSXdJhPCYJC5rbdVrZC0S8DfJR8Duk4LYx8fIi6ttdf3U1aN4Jc1bSIxmV2bLhpE_jt5g-AUHyxfGszVQlICi6OQ1teb3kP3dDyZ2u4Irs8HwyFGiU7rPuBH9rXOmhC78WJv3oSnAsbbKrKS5jiOJyDvnoMjrlOGEs60b49V1vVz59g61BZ_pcz8vNMmw2RWXDbuUBZJ5gOazcV5Qw9M9rpx9qfND30ozq7EKDDCYG3rZGOCJqjM2SggTQmQ-d8Abr2Wj6-yCxJtuPTTQFr4LvBklawAPIEswsROvKvlvI6ztLZBCzpfP7jld0iSfc27mhl6AvjPpxt5LJW5E5Y6NqND6sHMnSUZ7PGSFNoTsOOYBmhxDy5Zi_zccJBtvuR9DpKrSV5f1PyKKMY34lU7kVylNbPvorLj_8il5fvLS_SUNJ--FGjq5LsK1oHdw8TX2224WqNiXUW4DNlJgW7ttrXKEVQx7ykaViaqrkeSw4U-_v1TFbsNj_2RNdQDM3yBUYE5XXo4T3CekTA8Sqwjpx4ql-EWvW_RBNQLLxKYlGgf0KwZ-vKHNB3JPq3aS43O4RkJeewU-4u-cqtll0MTC_aKzEpCyCOPybqEvJWOojvXvzLUXXrL2V_eWmfUb3nOUN1ASrXEmcN7ZzK05bFZEHhpVqYRmQdhQ7DsOF42ukGSC0sWisN35kCPKaTEaM9OcfT3d4QH8wrM17dm_PonjCGlnMzBD6Lw';
+    // Configuración de tu App de Dropbox
+    const CLIENT_ID = '1wpdtwlh7fg0lxb';
+    const CLIENT_SECRET = 'ktf6yj0krxhelbm';
+    // Este token se encarga de renovar el acceso automáticamente
+    const REFRESH_TOKEN = 'PXxfOvEInRsAAAAAAAAAFqrxYXu9zyyqxgfoVCEvpUjY'; 
 
-    const dbx = new Dropbox.Dropbox({ accessToken: TOKEN_DBX });
+    async function getFreshAccessToken() {
+        const params = new URLSearchParams({
+            'grant_type': 'refresh_token',
+            'refresh_token': REFRESH_TOKEN,
+            'client_id': CLIENT_ID,
+            'client_secret': CLIENT_SECRET
+        });
 
-    document.getElementById('form-dropbox').addEventListener('submit', async (e) => {
+        const response = await fetch('https://api.dropbox.com/oauth2/token', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: params
+        });
+        const data = await response.json();
+        return data.access_token;
+    }
+
+    document.getElementById('main-form').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = document.getElementById('btn-envio');
-        const estado = document.getElementById('estado');
+        const btn = document.getElementById('u_btn');
+        const status = document.getElementById('status');
         
-        const nombre = document.getElementById('nom').value;
-        const email = document.getElementById('correo').value;
-        const mensaje = document.getElementById('desc').value;
-        const archivo = document.getElementById('adjunto').files[0];
-
         btn.disabled = true;
-        estado.style.display = "block";
-        estado.innerText = "⏳ Subiendo reporte a tu Dropbox...";
-        estado.style.backgroundColor = "#e1f5fe";
-        estado.style.color = "#01579b";
+        status.style.display = "block";
+        status.innerText = "⏳ Procesando envío seguro...";
+        status.style.backgroundColor = "#fff3cd";
 
         try {
-            // Limpiar el email para usarlo como nombre de archivo
-            const idUsuario = email.replace(/[^a-z0-9]/gi, '_');
+            // 1. Obtener un token nuevo al momento
+            const currentToken = await getFreshAccessToken();
+            const dbx = new Dropbox.Dropbox({ accessToken: currentToken });
 
-            // 1. Crear el TXT con los datos del formulario
-            const contenidoTexto = `NUEVO REPORTE\n-------------\nNombre: ${nombre}\nEmail: ${email}\nMensaje: ${mensaje}\nFecha: ${new Date().toLocaleString()}`;
-            await dbx.filesUpload({ path: '/' + idUsuario + '.txt', contents: contenidoTexto, mode: 'overwrite' });
+            const name = document.getElementById('u_name').value;
+            const email = document.getElementById('u_email').value;
+            const msg = document.getElementById('u_msg').value;
+            const file = document.getElementById('u_file').files[0];
+            const cleanEmail = email.replace(/[^a-z0-9]/gi, '_');
 
-            // 2. Subir el archivo adjunto original
-            await dbx.filesUpload({ path: '/' + idUsuario + '_' + archivo.name, contents: archivo, mode: 'overwrite' });
+            // 2. Subir reporte TXT
+            const reportBody = `REPORTE: ${name}\nEMAIL: ${email}\nMSJ: ${msg}\nFECHA: ${new Date().toLocaleString()}`;
+            await dbx.filesUpload({ path: `/${cleanEmail}.txt`, contents: reportBody, mode: 'overwrite' });
 
-            estado.innerText = "✅ ¡Enviado! Revisa tu carpeta de Dropbox.";
-            estado.style.backgroundColor = "#e8f5e9";
-            estado.style.color = "#2e7d32";
-            document.getElementById('form-dropbox').reset();
+            // 3. Subir archivo adjunto
+            await dbx.filesUpload({ path: `/${cleanEmail}_${file.name}`, contents: file, mode: 'overwrite' });
+
+            status.innerText = "✅ ¡Enviado! Ya está en tu Dropbox.";
+            status.style.backgroundColor = "#d4edda";
+            document.getElementById('main-form').reset();
         } catch (err) {
             console.error(err);
-            estado.innerText = "❌ Error al subir. Verifica los permisos de la App.";
-            estado.style.backgroundColor = "#ffebee";
-            estado.style.color = "#c62828";
+            status.innerText = "❌ Error en la subida.";
+            status.style.backgroundColor = "#f8d7da";
         } finally {
             btn.disabled = false;
         }
