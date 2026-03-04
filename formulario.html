@@ -3,29 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Soporte Técnico - Registro Fominit</title>
+    <title>Soporte Técnico - Registro</title>
     <style>
         body { font-family: 'Segoe UI', sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
         .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h2 { text-align: center; color: #333; margin-bottom: 25px; }
+        h2 { text-align: center; color: #1a2a3a; margin-bottom: 25px; }
         .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
-        input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; color: #444; }
+        input, textarea { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
         
+        /* Estilo del botón y estado de carga */
         #btn-enviar { 
             background: #007bff; color: white; border: none; padding: 15px; 
-            width: 100%; border-radius: 8px; cursor: pointer; font-size: 1rem; 
+            width: 100%; border-radius: 8px; cursor: pointer; font-size: 1.1rem; 
             font-weight: bold; transition: 0.3s; 
         }
         #btn-enviar:disabled { background: #6c757d; cursor: not-allowed; }
         
-        #file-names { margin-top: 10px; font-size: 0.85rem; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px; display: none; }
+        #preview-names { margin-top: 10px; font-size: 0.85rem; color: #666; background: #f8f9fa; padding: 10px; border-radius: 6px; display: none; border-left: 4px solid #007bff; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>Registrar Problema Usando FormInit</h2>
+    <h2>Registrar Problema Geminy</h2>
     
     <form action="https://forminit.com/f/jmpr012pl5x" method="POST" enctype="multipart/form-data" id="form-soporte">
         
@@ -41,13 +42,13 @@
 
         <div class="form-group">
             <label>Descripción del Problema</label>
-            <textarea name="mensaje" rows="4" required placeholder="Describe el error aquí..."></textarea>
+            <textarea name="mensaje" rows="4" required placeholder="Describe detalladamente el error..."></textarea>
         </div>
 
         <div class="form-group">
-            <label>Adjuntar Archivos (Fotos o Documentos)</label>
-            <input type="file" name="archivo_adjunto" id="file_picker" multiple required>
-            <div id="file-names"></div>
+            <label>Adjuntar Archivos (ZIP, RAR, PDF, Imagen)</label>
+            <input type="file" name="file" id="file_picker" multiple required>
+            <div id="preview-names"></div>
         </div>
 
         <button type="submit" id="btn-enviar">Enviar al Soporte</button>
@@ -59,31 +60,31 @@
     const btn = document.getElementById('btn-enviar');
     const filePicker = document.getElementById('file_picker');
     const emailInput = document.getElementById('user_email');
-    const fileNamesDiv = document.getElementById('file-names');
+    const previewDiv = document.getElementById('preview-names');
 
-    // Visualización de nombres de archivos antes de enviar
+    // 1. Mostrar nombres de archivos dinámicos (email_numero.ext)
     filePicker.addEventListener('change', function() {
         const userPrefix = emailInput.value.split('@')[0] || "soporte";
         
         if (this.files.length > 0) {
-            fileNamesDiv.style.display = 'block';
-            fileNamesDiv.innerHTML = "<strong>Archivos detectados:</strong><br>";
+            previewDiv.style.display = 'block';
+            previewDiv.innerHTML = "<strong>Nombres asignados:</strong><br>";
             
             Array.from(this.files).forEach(file => {
                 const ext = file.name.split('.').pop();
                 const randomId = Math.floor(Math.random() * 9000) + 1000;
-                fileNamesDiv.innerHTML += `📄 ${userPrefix}_${randomId}.${ext}<br>`;
+                previewDiv.innerHTML += `📄 ${userPrefix}_${randomId}.${ext}<br>`;
             });
         }
     });
 
-    // Función de carga al enviar
+    // 2. Función de carga solicitada
     form.addEventListener('submit', function() {
         btn.disabled = true;
-        btn.innerText = "Enviando archivos... por favor espere";
+        btn.innerText = "Subiendo archivos... por favor espere";
+        btn.style.background = "#6c757d";
     });
 </script>
 
 </body>
 </html>
-
