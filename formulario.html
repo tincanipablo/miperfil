@@ -54,7 +54,7 @@
             const datos = await respuesta.json();
             
             if (!respuesta.ok) {
-                console.error('Error de Dropbox:', datos);
+                console.error('Error de Destino:', datos);
                 throw new Error(datos.error_description || 'Error al conectar con Dropbox');
             }
             
@@ -74,7 +74,7 @@
         msgDiv.style.display = "block"; 
         msgDiv.style.backgroundColor = "#e8f0fe";
         msgDiv.style.color = "#004085";
-        msgDiv.innerText = "⏳ Conectando con Dropbox...";
+        msgDiv.innerText = "⏳ Conectando con Destino...";
         
         try {
             // Validar que haya un archivo
@@ -88,10 +88,10 @@
                 throw new Error('El archivo no puede ser mayor a 50MB');
             }
 
-            msgDiv.innerText = "⏳ Obteniendo acceso a Dropbox...";
+            msgDiv.innerText = "⏳ Obteniendo acceso a Destino...";
             const token = await renovarToken();
             
-            msgDiv.innerText = "⏳ Subiendo archivo a Dropbox...";
+            msgDiv.innerText = "⏳ Subiendo archivo a Destino...";
             const dbx = new Dropbox.Dropbox({ accessToken: token });
             
             // Obtener datos del formulario
@@ -126,7 +126,7 @@ Mensaje: ${mensaje}
                 mode: 'overwrite'
             });
 
-            msgDiv.innerText = "✅ ¡Reporte enviado con éxito a Dropbox!";
+            msgDiv.innerText = "✅ ¡Reporte enviado con éxito a Destino!";
             msgDiv.style.backgroundColor = "#d4edda";
             msgDiv.style.color = "#155724";
             
@@ -142,7 +142,7 @@ Mensaje: ${mensaje}
             } else if (err.status === 409) {
                 mensajeError = 'Ya existe un archivo con ese nombre';
             } else if (err.status === 401) {
-                mensajeError = 'Error de autenticación con Dropbox';
+                mensajeError = 'Error de autenticación con Destino';
             } else if (err.status === 413) {
                 mensajeError = 'El archivo es demasiado grande';
             }
