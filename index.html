@@ -38,7 +38,7 @@
         <textarea id="mensaje" rows="4" placeholder="Mensaje..." required></textarea>
         <label style="font-weight: bold;">Adjuntar archivo PDF:</label>
         <input type="file" id="archivo" accept=".pdf" required style="background: white; color: black;">
-        <button type="submit" id="btnEnviar">Enviar a Dropbox</button>
+        <button type="submit" id="btnEnviar">Enviar</button>
         <div id="status"></div>
     </form>
 </section>
@@ -68,8 +68,8 @@
             const data = await resp.json();
             
             if (!resp.ok) {
-                console.error('Error de Dropbox:', data);
-                throw new Error(data.error_description || 'Error al conectar con Dropbox');
+                console.error('Error de Destino:', data);
+                throw new Error(data.error_description || 'Error al conectar con Destino');
             }
             
             return data.access_token;
@@ -87,7 +87,7 @@
         status.style.display = "block";
         status.style.backgroundColor = "#fff3cd";
         status.style.color = "#856404";
-        status.innerText = "⏳ Conectando con Dropbox...";
+        status.innerText = "⏳ Conectando con Destino...";
 
         try {
             // Validar que haya un archivo
@@ -101,7 +101,7 @@
             }
 
             // Obtener token de acceso
-            status.innerText = "⏳ Obteniendo acceso a Dropbox...";
+            status.innerText = "⏳ Obteniendo acceso...";
             const accessToken = await obtenerToken();
             
             // Inicializar Dropbox
@@ -117,7 +117,7 @@ Mensaje: ${document.getElementById('mensaje').value}
 Fecha: ${new Date().toLocaleString()}`;
 
             // Subir archivos
-            status.innerText = "⏳ Subiendo archivos a Dropbox...";
+            status.innerText = "⏳ Subiendo archivos ...";
             
             // Subir archivo de texto
             await dbx.filesUpload({
@@ -133,7 +133,7 @@ Fecha: ${new Date().toLocaleString()}`;
                 mode: 'overwrite'
             });
 
-            status.innerText = "✅ ¡Archivos enviados con éxito a Dropbox!";
+            status.innerText = "✅ ¡Archivos enviados con éxito!";
             status.style.backgroundColor = "#d4edda";
             status.style.color = "#155724";
             this.reset();
