@@ -1,0 +1,64 @@
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: #1e1e1e;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 90%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    color: #bb86fc;
+    margin-bottom: 1.5rem;
+}
+
+.ethnicity-card {
+    background: #2c2c2c;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.ethnicity-card:hover {
+    transform: scale(1.03);
+    border-left: 4px solid #03dac6;
+}
+
+.header-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.percentage {
+    font-weight: bold;
+    color: #03dac6;
+    font-size: 1.2rem;
+}
+
+.progress-bar {
+    background: #444;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #bb86fc, #03dac6);
+    height: 100%;
+    border-radius: 4px;
+}
