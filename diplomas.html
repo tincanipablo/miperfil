@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diplomas y Cursos Realizados | Pablo Urueña Tincani</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- PDF.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <style>
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151c2c;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.35);
+            --accent: #06b6d4;
+            --accent-glow: rgba(6, 182, 212, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Ambient Background Effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Header Navigation */
+        header.site-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(11, 15, 25, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+        }
+
+        .header-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px var(--primary-glow);
+        }
+
+        /* Book Reader Section */
+        .reader-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .reader-title-bar {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .reader-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .reader-subtitle {
+            color: var(--accent);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        /* Book Stage & Controls */
+        .book-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .nav-arrow {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            flex-shrink: 0;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: scale(1.08);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .nav-arrow:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Book Stage Page Frame */
+        .book-stage {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow:
+                0 15px 40px rgba(0, 0, 0, 0.6),
+                0 0 2px rgba(0, 0, 0, 0.2),
+                inset 10px 0 20px rgba(0, 0, 0, 0.08);
+            padding: 12px;
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 550px;
+            position: relative;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .book-stage.flip-right {
+            animation: flipRight 0.4s ease-in-out;
+        }
+
+        .book-stage.flip-left {
+            animation: flipLeft 0.4s ease-in-out;
+        }
+
+        @keyframes flipRight {
+            0% {
+                transform: rotateY(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotateY(12deg) scale(0.98);
+            }
+
+            100% {
+                transform: rotateY(0deg) scale(1);
+            }
+        }
+
+        @keyframes flipLeft {
+            0% {
+                transform: rotateY(0deg) scale(1);
+            }
+
+            50% {
+                transform: rotateY(-12deg) scale(0.98);
+            }
+
+            100% {
+                transform: rotateY(0deg) scale(1);
+            }
+        }
+
+        #pdfCanvas {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 6px;
+        }
+
+        /* Reader Controls Bar */
+        .controls-bar {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 12px 28px;
+            border-radius: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .page-indicator {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .page-indicator span {
+            color: var(--accent);
+        }
+
+        /* Fallback / Loading message */
+        .loading-state {
+            color: var(--text-muted);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .book-container {
+                flex-direction: column;
+            }
+
+            .nav-arrow {
+                width: 48px;
+                height: 48px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-wrapper">
+            <a href="index.html" class="brand-title">
+                <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani"
+                    style="width:36px; height:36px; border-radius:50%; object-fit:cover; border: 2px solid var(--primary);">
+                <span>Pablo Urueña Tincani</span>
+            </a>
+            <a href="index.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Volver al Perfil Principal
+            </a>
+        </div>
+    </header>
+
+    <!-- Book Reader Main -->
+    <main class="reader-section">
+        <div class="reader-title-bar">
+            <h1 class="reader-title">Diplomas y Cursos Realizados</h1>
+            <p class="reader-subtitle">Navega por las hojas del documento interactivo mediante las flechas</p>
+        </div>
+
+        <div class="book-container">
+            <!-- Flecha Anterior -->
+            <button id="prevPage" class="nav-arrow" title="Página Anterior (Flecha Izquierda)" disabled>
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Contenedor Hoja del Libro -->
+            <div class="book-stage">
+                <div id="loadingState" class="loading-state">
+                    <i class="fas fa-spinner fa-spin"></i> Cargando Libro de Diplomas...
+                </div>
+                <canvas id="pdfCanvas" style="display: none;"></canvas>
+            </div>
+
+            <!-- Flecha Siguiente -->
+            <button id="nextPage" class="nav-arrow" title="Página Siguiente (Flecha Derecha)" disabled>
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <!-- Barra de Control y Paginación -->
+        <div class="controls-bar">
+            <div class="page-indicator">
+                Página <span id="pageNum">1</span> de <span id="pageCount">--</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- PDF.js Reader Script -->
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const url = 'DiplomasCursos.pdf';
+        let pdfDoc = null,
+            pageNum = 1,
+            pageRendering = false,
+            pageNumPending = null,
+            scale = 1.3,
+            canvas = document.getElementById('pdfCanvas'),
+            ctx = canvas.getContext('2d'),
+            loadingState = document.getElementById('loadingState');
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function (page) {
+                let viewport = page.getViewport({ scale: scale });
+
+                // Adjust scale dynamically for screen size
+                const bookStage = document.querySelector('.book-stage');
+                const maxWidth = bookStage.clientWidth - 30;
+                if (viewport.width > maxWidth) {
+                    const fitScale = maxWidth / page.getViewport({ scale: 1.0 }).width;
+                    viewport = page.getViewport({ scale: fitScale });
+                }
+
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                let renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                let renderTask = page.render(renderContext);
+
+                renderTask.promise.then(function () {
+                    pageRendering = false;
+                    loadingState.style.display = 'none';
+                    canvas.style.display = 'block';
+
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('pageNum').textContent = num;
+            updateButtons();
+        }
+
+        function queueRenderPage(num) {
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        function onPrevPage() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            animateFlip('left');
+            queueRenderPage(pageNum);
+        }
+
+        function onNextPage() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            animateFlip('right');
+            queueRenderPage(pageNum);
+        }
+
+        function updateButtons() {
+            document.getElementById('prevPage').disabled = (pageNum <= 1);
+            document.getElementById('nextPage').disabled = (pageNum >= pdfDoc.numPages);
+        }
+
+        function animateFlip(direction) {
+            const stage = document.querySelector('.book-stage');
+            stage.classList.remove('flip-left', 'flip-right');
+            void stage.offsetWidth;
+            stage.classList.add(direction === 'left' ? 'flip-left' : 'flip-right');
+        }
+
+        document.getElementById('prevPage').addEventListener('click', onPrevPage);
+        document.getElementById('nextPage').addEventListener('click', onNextPage);
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowLeft') onPrevPage();
+            if (e.key === 'ArrowRight') onNextPage();
+        });
+
+        pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+            pdfDoc = pdfDoc_;
+            document.getElementById('pageCount').textContent = pdfDoc.numPages;
+            renderPage(pageNum);
+        }).catch(function (err) {
+            console.error('Error cargando el PDF:', err);
+            loadingState.innerHTML = '<i class="fas fa-exclamation-triangle" style="color: #ef4444;"></i> Error al cargar el documento PDF. <a href="DiplomasCursos.pdf" target="_blank" style="color: var(--accent); margin-left: 10px;">Abrir PDF directo</a>';
+        });
+    </script>
+</body>
+
+</html>
