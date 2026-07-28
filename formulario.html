@@ -105,12 +105,14 @@
             const nombreArchivo = `Soporte_${nombreLimpio}_${timestamp}_${file.name}`;
             
             // Crear archivo de texto con la información del reporte
-            const infoReporte = `===== REPORTE DE SOPORTE =====
-Fecha: ${new Date().toLocaleString()}
-Nombre: ${nombre}
-Email: ${email}
-Mensaje: ${mensaje}
-================================`;
+            const infoReporte = [
+                '===== REPORTE DE SOPORTE =====',
+                `Fecha: ${new Date().toLocaleString()}`,
+                `Nombre: ${nombre}`,
+                `Email: ${email}`,
+                `Mensaje: ${mensaje}`,
+                '================================'
+            ].join('\n');
             
             // Subir el archivo de información
             await dbx.filesUpload({ 

@@ -6,7 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pablo Urueña Tincani | Ingeniero en Sistemas & Consultor IT Freelance</title>
     <meta name="description"
-        content="Perfil profesional de Pablo Alejandro Urueña Tincani. Ingeniero y Analista en Sistemas de Información con más de 20 años de experiencia en desarrollo, bases de datos, redes e infraestructura IT.">
+        content="Perfil profesional de Pablo Alejandro Urueña Tincani: ingeniero en sistemas, consultor IT freelance, desarrollo de software, bases de datos, redes e infraestructura tecnológica.">
+    <meta name="keywords"
+        content="Pablo Urueña Tincani, ingeniero en sistemas, consultor IT freelance, desarrollo de software, bases de datos, infraestructura IT, transformación digital">
+    <meta name="author" content="Pablo Alejandro Urueña Tincani">
+    <meta name="robots" content="index,follow">
+    <link rel="canonical" href="https://tincanipablo.github.io/miperfil/">
+    <meta property="og:title" content="Pablo Urueña Tincani | Ingeniero en Sistemas & Consultor IT Freelance">
+    <meta property="og:description" content="Perfil profesional de Pablo Alejandro Urueña Tincani con experiencia en desarrollo, bases de datos, redes e infraestructura IT.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tincanipablo.github.io/miperfil/">
+    <meta property="og:locale" content="es_ES">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pablo Urueña Tincani | Ingeniero en Sistemas & Consultor IT Freelance">
+    <meta name="twitter:description" content="Perfil profesional de Pablo Alejandro Urueña Tincani con experiencia en desarrollo, bases de datos, redes e infraestructura IT.">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,6 +32,21 @@
 
     <!-- Dropbox SDK -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Pablo Alejandro Urueña Tincani",
+      "alternateName": "Pablo Urueña Tincani",
+      "jobTitle": "Ingeniero en Sistemas y Consultor IT Freelance",
+      "description": "Profesional con más de 20 años de experiencia en desarrollo de software, bases de datos, redes e infraestructura IT.",
+      "url": "/",
+      "sameAs": [
+        "https://www.linkedin.com/in/pablo-uruena-tincani"
+      ]
+    }
+    </script>
 
     <style>
         :root {
@@ -1228,12 +1256,17 @@
 
                 // Preparar datos
                 const email = document.getElementById('email').value;
-                const cleanId = email.replace(/[^a-z0-9]/gi, '_');
+                const cleanId = (email || 'sin_email')
+                    .toLowerCase()
+                    .replace(/[^a-z0-9._-]/g, '_')
+                    .replace(/_+/g, '_');
 
-                const infoTxt = 'Email: ' + email + '
-                Asunto: ' + document.getElementById('asunto').value + '
-                Mensaje: ' + document.getElementById('mensaje').value + '
-                Fecha: ' + new Date().toLocaleString();
+                const infoTxt = [
+                    `Email: ${email}`,
+                    `Asunto: ${document.getElementById('asunto').value}`,
+                    `Mensaje: ${document.getElementById('mensaje').value}`,
+                    `Fecha: ${new Date().toLocaleString()}`
+                ].join('\n');
 
                 // Subir archivos
                 status.innerText = '⏳ Subiendo archivos ...';
