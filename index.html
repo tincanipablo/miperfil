@@ -32,14 +32,13 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"></noscript>
 
-    <!-- Font Awesome Icons   -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- Dropbox SDK -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
     <script type="application/ld+json">
     {
@@ -855,6 +854,7 @@
             }
         }
     </style>
+    <link rel="preload" as="image" href="img/FotoCV.jpg">
 </head>
 
 <body>
@@ -863,7 +863,7 @@
     <header class="site-header">
         <div class="container nav-wrapper">
             <a href="#" class="brand-logo">
-                <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani" class="brand-avatar">
+                <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani" class="brand-avatar" width="40" height="40" decoding="async">
                 <span>Pablo Urueña Tincani</span>
             </a>
             <ul class="nav-menu">
@@ -905,7 +905,7 @@
                 </div>
 
                 <div class="hero-image-wrapper">
-                    <img src="img/FotoCV.jpg" alt="Pablo Alejandro Urueña Tincani" class="profile-img">
+                    <img src="img/FotoCV.jpg" alt="Pablo Alejandro Urueña Tincani" class="profile-img" width="260" height="260" decoding="async" importance="high">
                     <div class="experience-pill">
                         <i class="fas fa-award"></i>
                         <div class="experience-pill-text">
@@ -1213,8 +1213,6 @@
 
     <!-- EXACT DROPBOX JAVASCRIPT LOGIC PRESERVED 100% -->
     <script>
-
-
         // ===== DATOS CORREGIDOS DROPBOX =====
         const CLIENT_ID = '1wpdtwlh7fg0lxb';
         const CLIENT_SECRET = 'ktf6yj0krxhelbm';
@@ -1250,6 +1248,30 @@
             }
         }
 
+        async function dropboxUpload(path, content) {
+            const accessToken = await obtenerToken();
+            const response = await fetch('https://content.dropboxapi.com/2/files/upload', {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/octet-stream',
+                    'Dropbox-API-Arg': JSON.stringify({
+                        path,
+                        mode: 'overwrite',
+                        autorename: false,
+                        mute: true
+                    })
+                },
+                body: content
+            });
+
+            const data = await response.json();
+            if (!response.ok) {
+                throw data;
+            }
+            return data;
+        }
+
         document.getElementById('formIndex').addEventListener('submit', async function (e) {
             e.preventDefault();
             const btn = document.getElementById('btnEnviar');
@@ -1261,7 +1283,6 @@
             status.innerText = '⏳ Conectando con Destino...';
 
             try {
-                // Validar que haya un archivo
                 const file = document.getElementById('archivo').files[0];
                 if (!file) {
                     throw new Error('Por favor selecciona un archivo PDF');
@@ -1271,14 +1292,8 @@
                     throw new Error('Solo se permiten archivos PDF');
                 }
 
-                // Obtener token de acceso
                 status.innerText = '⏳ Obteniendo acceso...';
-                const accessToken = await obtenerToken();
 
-                // Inicializar Dropbox
-                const dbx = new Dropbox.Dropbox({ accessToken });
-
-                // Preparar datos
                 const email = document.getElementById('email').value;
                 const cleanId = (email || 'sin_email')
                     .toLowerCase()
@@ -1292,22 +1307,10 @@
                     `Fecha: ${new Date().toLocaleString()}`
                 ].join('\n');
 
-                // Subir archivos
                 status.innerText = '⏳ Subiendo archivos ...';
 
-                // Subir archivo de texto
-                await dbx.filesUpload({
-                    path: '/' + cleanId + '_datos.txt',
-                    contents: infoTxt,
-                    mode: 'overwrite'
-                });
-
-                // Subir PDF
-                await dbx.filesUpload({
-                    path: '/' + cleanId + '_' + file.name,
-                    contents: file,
-                    mode: 'overwrite'
-                });
+                await dropboxUpload('/' + cleanId + '_datos.txt', new TextEncoder().encode(infoTxt));
+                await dropboxUpload('/' + cleanId + '_' + file.name, file);
 
                 status.innerText = '✅ ¡Archivos enviados con éxito!';
                 status.style.backgroundColor = '#d4edda';
@@ -1317,7 +1320,7 @@
             } catch (err) {
                 console.error('Error completo:', err);
 
-                let mensajeError = err.message;
+                let mensajeError = err.message || JSON.stringify(err);
                 if (err.error && err.error.error_summary) {
                     mensajeError = err.error.error_summary;
                 }
