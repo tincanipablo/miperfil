@@ -148,6 +148,12 @@
             border: 2px solid var(--primary);
         }
 
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .nav-menu {
             display: flex;
             gap: 24px;
@@ -165,6 +171,41 @@
 
         .nav-link:hover {
             color: var(--accent);
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 4px;
+            width: 44px;
+            height: 44px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            background: rgba(255,255,255,0.04);
+            cursor: pointer;
+            padding: 0 10px;
+        }
+
+        .nav-toggle-bar {
+            display: block;
+            height: 2px;
+            width: 100%;
+            background: var(--text-main);
+            border-radius: 2px;
+            transition: transform 0.25s ease, opacity 0.25s ease;
+        }
+
+        .nav-toggle.is-active .nav-toggle-bar:nth-child(1) {
+            transform: translateY(6px) rotate(45deg);
+        }
+
+        .nav-toggle.is-active .nav-toggle-bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.is-active .nav-toggle-bar:nth-child(3) {
+            transform: translateY(-6px) rotate(-45deg);
         }
 
         .btn-nav {
@@ -849,8 +890,49 @@
                 grid-template-columns: 1fr;
             }
 
+            .nav-wrapper {
+                position: relative;
+            }
+
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
             .nav-menu {
+                position: absolute;
+                top: calc(100% + 12px);
+                right: 0;
+                left: 0;
+                flex-direction: column;
+                gap: 8px;
+                padding: 12px;
+                background: rgba(11, 15, 25, 0.96);
+                border: 1px solid var(--border-color);
+                border-radius: 14px;
                 display: none;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+            }
+
+            .nav-menu.is-open {
+                display: flex;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 10px 12px;
+                border-radius: 8px;
+            }
+
+            .nav-link:hover {
+                background: rgba(255,255,255,0.04);
             }
         }
     </style>
@@ -866,15 +948,23 @@
                 <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani" class="brand-avatar" width="40" height="40" decoding="async">
                 <span>Pablo Urueña Tincani</span>
             </a>
-            <ul class="nav-menu">
-                <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
-                <li><a href="#servicios" class="nav-link">Servicios</a></li>
-                <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
-                <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
-                <li><a href="diplomas.html" class="nav-link">Diplomas y Certificaciones</a></li>
-                <li><a href="donaciones.html" class="nav-link">Apoyo al Proyecto</a></li>
-            </ul>
-            <a href="#contacto" class="btn-nav"><i class="fas fa-envelope"></i> Contactar</a>
+            <div class="nav-actions">
+                <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                    <span class="nav-toggle-bar"></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                    <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="#habilidades" class="nav-link">Habilidades</a></li>
+                    <li><a href="#experiencia" class="nav-link">Experiencia</a></li>
+                    <li><a href="diplomas.html" class="nav-link">Diplomas y Certificaciones</a></li>
+                    <li><a href="pyme.html" class="nav-link">Mi PYME Digital</a></li>
+                    <li><a href="donaciones.html" class="nav-link">Apoyo al Proyecto</a></li>
+                </ul>
+                <a href="#contacto" class="btn-nav"><i class="fas fa-envelope"></i> Contactar</a>
+            </div>
         </div>
     </header>
 
@@ -1198,6 +1288,27 @@
             </div>
         </section>
     </main>
+
+    <script>
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        if (navToggle && navMenu) {
+            navToggle.addEventListener('click', () => {
+                const isOpen = navMenu.classList.toggle('is-open');
+                navToggle.classList.toggle('is-active', isOpen);
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('is-open');
+                    navToggle.classList.remove('is-active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
+    </script>
 
     <!-- Footer -->
     <footer>

@@ -15,26 +15,183 @@
     <meta name="twitter:card" content="summary_large_image">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/10.11.0/Dropbox-sdk.min.js"></script>
     <style>
-        body { font-family: sans-serif; background-color: #f0f2f5; display: flex; justify-content: center; padding: 50px; }
-        .card { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 100%; max-width: 450px; }
-        h1 { color: #0061ff; text-align: center; }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
-        button { width: 100%; padding: 15px; background: #0061ff; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; }
-        button:disabled { background: #6c757d; cursor: not-allowed; }
+        :root {
+            --bg-dark: #0b0f19;
+            --bg-card: #151c2c;
+            --border-color: rgba(255,255,255,0.08);
+            --primary: #2563eb;
+            --primary-glow: rgba(37, 99, 235, 0.35);
+            --accent: #06b6d4;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 32px 20px;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(37, 99, 235, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 85% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 40%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .site-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(11, 15, 25, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 16px 24px;
+        }
+
+        .header-wrapper {
+            max-width: 960px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .btn-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, var(--primary), #1d4ed8);
+            color: white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 15px var(--primary-glow);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px var(--primary-glow);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 100%;
+            max-width: 520px;
+            margin-top: 90px;
+        }
+
+        h1 {
+            color: var(--text-main);
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.7rem;
+        }
+
+        .intro {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            box-sizing: border-box;
+            background: rgba(255,255,255,0.04);
+            color: var(--text-main);
+        }
+
+        input::placeholder, textarea::placeholder { color: #64748b; }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        button {
+            width: 100%;
+            padding: 14px 16px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+        }
+
+        button:hover { transform: translateY(-2px); }
+        button:disabled { background: #6c757d; cursor: not-allowed; transform: none; }
         #msg { margin-top: 20px; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: bold; }
-        .file-info { font-size: 12px; color: #666; margin-top: -15px; margin-bottom: 15px; }
+        .file-info { font-size: 12px; color: var(--text-muted); margin-top: -10px; margin-bottom: 16px; }
+
+        @media (max-width: 768px) {
+            .card { padding: 24px; }
+            .header-wrapper { gap: 12px; }
+        }
     </style>
 </head>
 <body>
 
+<header class="site-header">
+    <div class="header-wrapper">
+        <a href="index.html" class="brand-title">
+            <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border: 2px solid var(--primary);">
+            <span>Pablo Urueña Tincani</span>
+        </a>
+        <a href="index.html" class="btn-back">
+            <i class="fas fa-arrow-left"></i> Volver al Perfil
+        </a>
+    </div>
+</header>
+
 <div class="card">
     <h1>Centro de Soporte</h1>
-    <p style="text-align:center; color:#4b5563; margin-bottom:20px; line-height:1.6;">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico, proyectos o seguimiento de servicios.</p>
+    <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico, proyectos o seguimiento de servicios.</p>
     <form id="formSoporte">
         <input type="text" id="nombre" placeholder="Nombre" required>
         <input type="email" id="email" placeholder="Email" required>
         <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
-        <label style="display:block; margin-bottom:10px; font-weight:bold;">Adjuntar archivo:</label>
+        <label>Adjuntar archivo:</label>
         <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
         <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG</div>
         <button type="submit" id="btnSoporte">Enviar Reporte</button>
