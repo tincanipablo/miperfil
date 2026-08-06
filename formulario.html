@@ -210,6 +210,9 @@
         try {
             const respuesta = await fetch('https://api.dropbox.com/oauth2/token', {
                 method: 'POST',
+                mode: 'cors',
+                cache: 'no-store',
+                credentials: 'omit',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ 
                     'grant_type': 'refresh_token', 
