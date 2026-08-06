@@ -152,6 +152,7 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            position: relative;
         }
 
         .nav-menu {
@@ -903,18 +904,19 @@
             }
 
             .nav-menu {
-                position: absolute;
-                top: calc(100% + 12px);
-                right: 0;
-                left: 0;
+                position: fixed;
+                top: 80px;
+                left: 16px;
+                right: 16px;
                 flex-direction: column;
                 gap: 8px;
-                padding: 12px;
-                background: rgba(11, 15, 25, 0.96);
+                padding: 14px;
+                background: rgba(11, 15, 25, 0.98);
                 border: 1px solid var(--border-color);
-                border-radius: 14px;
+                border-radius: 16px;
                 display: none;
                 box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+                z-index: 1100;
             }
 
             .nav-menu.is-open {
