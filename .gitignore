@@ -1,0 +1,83 @@
+# ---------------------------
+# Sistema operativo / editor
+# ---------------------------
+.DS_Store
+Thumbs.db
+Desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# ---------------------------
+# Archivos de prueba locales
+# ---------------------------
+prueba.php
+
+# --------------------------------
+# Variables de entorno / secrets
+# --------------------------------
+.env
+.env.*
+*.env
+*.local
+.env.local
+.env.*.local
+
+# ---------------------------
+# Docker / contenedores
+# ---------------------------
+.docker/
+.dockerignore
+docker-compose.override.yml
+**/.docker/
+**/.env
+**/.env.*
+**/*.env
+**/*.local
+**/docker-data/
+**/db-data/
+**/mysql-data/
+**/postgres-data/
+**/redis-data/
+**/volumes/
+**/data/
+**/*.pid
+**/*.sock
+**/*.log
+**/tmp/
+**/cache/
+*.tar
+*.img
+*.qcow2
+
+# ---------------------------
+# PHP / Composer
+# ---------------------------
+/vendor/
+composer.lock
+phpunit.xml
+.phpunit.result.cache
+*.cache
+
+# ---------------------------
+# Node / frontend
+# ---------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+
+# ---------------------------
+# Build / artefactos locales
+# ---------------------------
+build/
+dist/
+out/
+coverage/
+.cache/
+*.tmp
+*.bak
