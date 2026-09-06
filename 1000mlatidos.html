@@ -354,7 +354,7 @@
 
         <label for="peso"><i class="fas fa-weight-hanging"></i> Peso (kg) — se convierte a Newtons</label>
         <input type="number" id="peso" placeholder="p. ej. 60 kg → 588,4 N" min="0" step="any" inputmode="decimal">
-        <div class="hint"><i class="fas fa-info-circle"></i> Se usa P = m × g con g = 9,80665 m/s² y luego m = P / g</div>
+        <div class="hint"><i class="fas fa-info-circle"></i> P = m × g (1 kg ≡ 9,80665 N) y luego m = P / g</div>
 
         <div class="btn-row">
             <button type="submit" class="btn-calc" id="btnCalcular"><i class="fas fa-calculator"></i> Calcular</button>
@@ -440,8 +440,8 @@
         const human = esHumano(mamifero);
         let filas = [];
 
-        const pesoNewtons = peso * GRAVEDAD;   // P = m · g (convierte kg a Newtons)
-        const masa = pesoNewtons / GRAVEDAD;   // masa m = P / g (kg)
+        const pesoNewtons = peso * GRAVEDAD;   // P = m · g: 1 kg de peso ≡ 1 kgf = 9,80665 N (fuerza)
+        const masa = pesoNewtons / GRAVEDAD;   // m = P / g: masa (kg) = fuerza (N) / gravedad (m/s²)
 
         if (human) {
             filas = [
