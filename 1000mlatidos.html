@@ -279,10 +279,6 @@
             background: #0f1626;
         }
 
-        #imagenCaption { margin-top: 10px; font-size: 0.8rem; color: var(--text-muted); }
-        #imagenCaption a { color: var(--accent); text-decoration: none; }
-        #imagenCaption a:hover { text-decoration: underline; }
-
         .load-spinner {
             display: inline-block;
             width: 32px;
@@ -550,39 +546,31 @@
 
         try {
             let thumbnail = null;
-            let titulo = null;
 
             async function pageimages(t) {
                 const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&titles=' + encodeURIComponent(t) + '&prop=pageimages&piprop=thumbnail&pithumbsize=500&format=json&origin=*&redirects=1');
                 const d = await r.json();
                 const paginas = Object.values(d.query.pages);
                 if (paginas[0] && paginas[0].thumbnail) {
-                    return { thumb: paginas[0].thumbnail.source, titulo: paginas[0].title };
+                    return paginas[0].thumbnail.source;
                 }
                 return null;
             }
 
             const directo = await pageimages(mamifero);
             if (directo) {
-                thumbnail = directo.thumb;
-                titulo = directo.titulo;
+                thumbnail = directo;
             } else {
                 const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(mamifero) + '&srlimit=1&format=json&origin=*');
                 const d = await r.json();
                 if (d.query.search && d.query.search[0]) {
-                    const busqueda = await pageimages(d.query.search[0].title);
-                    if (busqueda) {
-                        thumbnail = busqueda.thumb;
-                        titulo = busqueda.titulo;
-                    }
+                    thumbnail = await pageimages(d.query.search[0].title);
                 }
             }
 
             if (thumbnail) {
-                const urlArt = 'https://es.wikipedia.org/wiki/' + encodeURIComponent(titulo.replace(/ /g, '_'));
                 imgContenido.innerHTML =
-                    '<img src="' + thumbnail + '" alt="' + mamifero + '" onerror="this.parentElement.innerHTML=\'<div style=\'font-size:0.85rem; color:var(--text-muted);\'>No se pudo cargar la imagen.</div>\'">' +
-                    '<div id="imagenCaption"><i class="fas fa-images"></i> Imagen de "' + titulo + '" · <a href="' + urlArt + '" target="_blank" rel="noopener">Wikipedia <i class="fas fa-external-link-alt"></i></a></div>';
+                    '<img src="' + thumbnail + '" alt="' + mamifero + '" onerror="this.parentElement.innerHTML=\'<div style=\'font-size:0.85rem; color:var(--text-muted);\'>No se pudo cargar la imagen.</div>\'">';
             } else {
                 imgContenido.innerHTML = '<div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-image"></i> No se encontró imagen en Wikipedia para "' + mamifero + '".</div>';
             }
