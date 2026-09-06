@@ -297,6 +297,16 @@
             .header-wrapper { gap: 12px; }
             .btn-row { flex-direction: column; }
         }
+
+        .credit {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 20px;
+            padding-bottom: 24px;
+        }
+
+        .credit i { margin-right: 8px; }
     </style>
 </head>
 <body>
@@ -370,6 +380,8 @@
         </div>
     </form>
 </div>
+
+<footer class="credit"><i class="fas fa-flask"></i> Estudio realizado por Pablo Alejandro Urueña Tincani</footer>
 
 <script>
     const MAPA_MASAS = {
@@ -460,8 +472,8 @@
             ];
         } else {
             const B = 70 * Math.pow(peso, 0.75);
-            const f = 254 * Math.pow(peso, -0.25);
-            const vida = 8.2 * Math.pow(peso, 0.25);
+            const f = 241 * Math.pow(peso, -0.25);
+            const vida = 7.9 * Math.pow(peso, 0.25);
             const latidosMillones = (f * 525960 * vida) / 1e6;
 
             filas = [
@@ -475,13 +487,13 @@
                     icon: 'fa-heart-pulse',
                     label: 'Frecuencia cardíaca',
                     value: fmt(f, 0) + ' lpm',
-                    formula: 'f = 254 × m^−1/4   (' + fmt(254 * Math.pow(peso, -0.25), 2) + ')'
+                    formula: 'f = 241 × m^−1/4   (' + fmt(241 * Math.pow(peso, -0.25), 2) + ')'
                 },
                 {
                     icon: 'fa-hourglass-half',
                     label: 'Esperanza de vida',
                     value: fmt(vida, 1) + ' años',
-                    formula: 'Vida = 8,2 × m^1/4   (' + fmt(8.2 * Math.pow(peso, 0.25), 2) + ')'
+                    formula: 'Vida = 7,9 × m^1/4   (' + fmt(7.9 * Math.pow(peso, 0.25), 2) + ')'
                 },
                 {
                     icon: 'fa-heart',
