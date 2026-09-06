@@ -362,8 +362,9 @@
         </datalist>
         <div class="hint"><i class="fas fa-info-circle"></i> Ejemplos: humano, rata, conejo, elefante, perro...</div>
 
-        <label for="peso"><i class="fas fa-weight-hanging"></i> Peso (kg)</label>
-        <input type="number" id="peso" placeholder="p. ej. 60" min="0" step="any" inputmode="decimal">
+        <label for="peso"><i class="fas fa-weight-hanging"></i> Peso (kg) — se convierte a Newtons</label>
+        <input type="number" id="peso" placeholder="p. ej. 60 kg → 588,4 N" min="0" step="any" inputmode="decimal">
+        <div class="hint"><i class="fas fa-info-circle"></i> Se usa P = m × g con g = 9,80665 m/s² y luego m = P / g</div>
 
         <div class="btn-row">
             <button type="submit" class="btn-calc" id="btnCalcular"><i class="fas fa-calculator"></i> Calcular</button>
@@ -426,6 +427,8 @@
 
     const fmt = (n, d) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: d }).format(n);
 
+    const GRAVEDAD = 9.80665; // m/s² (Tierra)
+
     function esHumano(mamifero) {
         return HUMANOS.includes(normalizar(mamifero));
     }
@@ -449,8 +452,23 @@
         const human = esHumano(mamifero);
         let filas = [];
 
+        const pesoNewtons = peso * GRAVEDAD;   // P = m · g (convierte kg a Newtons)
+        const masa = pesoNewtons / GRAVEDAD;   // masa m = P / g (kg)
+
         if (human) {
             filas = [
+                {
+                    icon: 'fa-scale-balanced',
+                    label: 'Peso convertido a Newtons',
+                    value: fmt(pesoNewtons, 1) + ' N',
+                    formula: 'P = m × g   (' + fmt(peso, 2) + ' kg × ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                },
+                {
+                    icon: 'fa-weight-hanging',
+                    label: 'Masa (de P = m·g)',
+                    value: fmt(masa, 2) + ' kg',
+                    formula: 'm = P / g   (' + fmt(pesoNewtons, 1) + ' N / ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                },
                 {
                     icon: 'fa-heart-pulse',
                     label: 'Frecuencia cardíaca (real)',
@@ -471,29 +489,41 @@
                 }
             ];
         } else {
-            const B = 70 * Math.pow(peso, 0.75);
-            const f = 241 * Math.pow(peso, -0.25);
-            const vida = 7.9 * Math.pow(peso, 0.25);
+            const B = 70 * Math.pow(masa, 0.75);
+            const f = 241 * Math.pow(masa, -0.25);
+            const vida = 7.9 * Math.pow(masa, 0.25);
             const latidosMillones = (f * 525960 * vida) / 1e6;
 
             filas = [
                 {
+                    icon: 'fa-scale-balanced',
+                    label: 'Peso convertido a Newtons',
+                    value: fmt(pesoNewtons, 1) + ' N',
+                    formula: 'P = m × g   (' + fmt(peso, 2) + ' kg × ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                },
+                {
+                    icon: 'fa-weight-hanging',
+                    label: 'Masa (de P = m·g)',
+                    value: fmt(masa, 2) + ' kg',
+                    formula: 'm = P / g   (' + fmt(pesoNewtons, 1) + ' N / ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                },
+                {
                     icon: 'fa-bolt',
                     label: 'Metabolismo (ley de Kleiber)',
                     value: fmt(B, 0) + ' kcal/día',
-                    formula: 'B = 70 × m^0,75   (' + fmt(70 * Math.pow(peso, 0.75), 2) + ')'
+                    formula: 'B = 70 × m^0,75   (' + fmt(70 * Math.pow(masa, 0.75), 2) + ')'
                 },
                 {
                     icon: 'fa-heart-pulse',
                     label: 'Frecuencia cardíaca',
                     value: fmt(f, 0) + ' lpm',
-                    formula: 'f = 241 × m^−1/4   (' + fmt(241 * Math.pow(peso, -0.25), 2) + ')'
+                    formula: 'f = 241 × m^−1/4   (' + fmt(241 * Math.pow(masa, -0.25), 2) + ')'
                 },
                 {
                     icon: 'fa-hourglass-half',
                     label: 'Esperanza de vida',
                     value: fmt(vida, 1) + ' años',
-                    formula: 'Vida = 7,9 × m^1/4   (' + fmt(7.9 * Math.pow(peso, 0.25), 2) + ')'
+                    formula: 'Vida = 7,9 × m^1/4   (' + fmt(7.9 * Math.pow(masa, 0.25), 2) + ')'
                 },
                 {
                     icon: 'fa-heart',
