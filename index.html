@@ -14,6 +14,8 @@
     <meta name="geo.region" content="AR">
     <meta name="geo.country" content="AR">
     <meta name="geo.placename" content="Argentina">
+    <meta name="geo.region" content="ES">
+    <meta name="geo.placename" content="España">
     <meta http-equiv="content-language" content="es">
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/">
     <link rel="alternate" hreflang="x-default" href="https://tincanipablo.github.io/miperfil/">
@@ -41,14 +43,50 @@
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Pablo Alejandro Urueña Tincani",
-      "alternateName": "Pablo Urueña Tincani",
-      "jobTitle": "Analista en Sistemas de Información y Consultor IT Freelance",
-      "description": "Profesional con más de 20 años de experiencia en desarrollo de software, bases de datos, redes e infraestructura IT.",
-      "url": "/",
-      "sameAs": [
-        "https://www.linkedin.com/in/pablo-uruena-tincani"
+      "@graph": [
+        {
+          "@type": "ProfessionalService",
+          "@id": "https://tincanipablo.github.io/miperfil/#servicio",
+          "name": "Pablo Urueña Tincani | Consultor IT Freelance",
+          "description": "Servicios freelance de desarrollo de software, administración de bases de datos, redes e infraestructura y soporte técnico para empresas y particulares en Argentina y España.",
+          "url": "https://tincanipablo.github.io/miperfil/",
+          "image": "https://tincanipablo.github.io/miperfil/img/FotoCV.jpg",
+          "areaServed": [
+            "Argentina",
+            "España"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "San Miguel de Tucumán",
+            "addressRegion": "Tucumán",
+            "addressCountry": "AR"
+          },
+          "founder": {
+            "@id": "https://tincanipablo.github.io/miperfil/#persona"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/in/pablo-uruena-tincani",
+            "https://www.linkedin.com/in/pablo-urue%C3%B1a-838680185"
+          ]
+        },
+        {
+          "@type": "Person",
+          "@id": "https://tincanipablo.github.io/miperfil/#persona",
+          "name": "Pablo Alejandro Urueña Tincani",
+          "alternateName": "Pablo Urueña Tincani",
+          "jobTitle": "Analista en Sistemas de Información y Consultor IT Freelance",
+          "description": "Profesional con más de 20 años de experiencia en desarrollo de software, bases de datos, redes e infraestructura IT en Argentina y España.",
+          "url": "https://tincanipablo.github.io/miperfil/",
+          "image": "https://tincanipablo.github.io/miperfil/img/FotoCV.jpg",
+          "nationality": "Argentina",
+          "worksFor": {
+            "@id": "https://tincanipablo.github.io/miperfil/#servicio"
+          },
+          "sameAs": [
+            "https://www.linkedin.com/in/pablo-uruena-tincani",
+            "https://www.linkedin.com/in/pablo-urue%C3%B1a-838680185"
+          ]
+        }
       ]
     }
     </script>
