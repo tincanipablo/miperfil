@@ -1448,7 +1448,6 @@
 
                 const respuesta = await fetch(URL_APPS_SCRIPT, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         nombre: email || 'sin_email',
                         email: email,
