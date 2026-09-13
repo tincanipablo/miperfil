@@ -1403,71 +1403,23 @@
 
 
 
-    <!-- EXACT DROPBOX JAVASCRIPT LOGIC PRESERVED 100% -->
+    <!-- FORMULARIO QUE USA EL PUENTE APPS SCRIPT (sin credenciales expuestas) -->
     <script>
-        // ===== DATOS CORREGIDOS DROPBOX =====
-        const CLIENT_ID = '1wpdtwlh7fg0lxb';
-        const CLIENT_SECRET = 'ktf6yj0krxhelbm';
+        // URL del Web App de Google Apps Script (misma que formulario.html)
+        // Este JS NO contiene ninguna credencial de Dropbox.
+        const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
 
-        // ¡ES stE ES EL REFRESH TOKEN NUEVO y VÁLIDO!
-        const REFRESH_TOKEN = '9FeMnE_WNlMAAAAAAAAAAXHOIMZHTwKem0wOsQNkYVNq0jtTxuxfCWJ-kHvr_60s';
-        // ============================
-
-        async function obtenerToken() {
-            try {
-                const resp = await fetch('https://api.dropbox.com/oauth2/token', {
-                    method: 'POST',
-                    mode: 'cors',
-                    cache: 'no-store',
-                    credentials: 'omit',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams({
-                        'grant_type': 'refresh_token',
-                        'refresh_token': REFRESH_TOKEN,
-                        'client_id': CLIENT_ID,
-                        'client_secret': CLIENT_SECRET
-                    })
-                });
-
-                const data = await resp.json();
-
-                if (!resp.ok) {
-                    console.error('Error de Destino:', data);
-                    throw new Error(data.error_description || 'Error al conectar con Destino');
-                }
-
-                return data.access_token;
-            } catch (error) {
-                console.error('Error en obtenerToken:', error);
-                throw error;
-            }
-        }
-
-        async function dropboxUpload(path, content) {
-            const accessToken = await obtenerToken();
-            const response = await fetch('https://content.dropboxapi.com/2/files/upload', {
-                method: 'POST',
-                mode: 'cors',
-                cache: 'no-store',
-                credentials: 'omit',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/octet-stream',
-                    'Dropbox-API-Arg': JSON.stringify({
-                        path,
-                        mode: 'overwrite',
-                        autorename: false,
-                        mute: true
-                    })
-                },
-                body: content
+        async function getFileBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const result = reader.result;
+                    const base64 = result.split(',')[1] || result;
+                    resolve(base64);
+                };
+                reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+                reader.readAsDataURL(file);
             });
-
-            const data = await response.json();
-            if (!response.ok) {
-                throw data;
-            }
-            return data;
         }
 
         document.getElementById('formIndex').addEventListener('submit', async function (e) {
@@ -1478,7 +1430,7 @@
             status.style.display = 'block';
             status.style.backgroundColor = '#fff3cd';
             status.style.color = '#856404';
-            status.innerText = '⏳ Conectando con Destino...';
+            status.innerText = '⏳ Enviando reporte...';
 
             try {
                 const file = document.getElementById('archivo').files[0];
@@ -1490,25 +1442,28 @@
                     throw new Error('Solo se permiten archivos PDF');
                 }
 
-                status.innerText = '⏳ Obteniendo acceso...';
+                status.innerText = '⏳ Almacenando en el servidor seguro...';
 
                 const email = document.getElementById('email').value;
-                const cleanId = (email || 'sin_email')
-                    .toLowerCase()
-                    .replace(/[^a-z0-9._-]/g, '_')
-                    .replace(/_+/g, '_');
 
-                const infoTxt = [
-                    `Email: ${email}`,
-                    `Asunto: ${document.getElementById('asunto').value}`,
-                    `Mensaje: ${document.getElementById('mensaje').value}`,
-                    `Fecha: ${new Date().toLocaleString()}`
-                ].join('\n');
+                const respuesta = await fetch(URL_APPS_SCRIPT, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        nombre: email || 'sin_email',
+                        email: email,
+                        mensaje:
+                            `Asunto: ${document.getElementById('asunto').value}\n` +
+                            `Mensaje: ${document.getElementById('mensaje').value}`,
+                        archivoBase64: await getFileBase64(file),
+                        archivoNombre: file.name
+                    })
+                });
 
-                status.innerText = '⏳ Subiendo archivos ...';
-
-                await dropboxUpload('/' + cleanId + '_datos.txt', new TextEncoder().encode(infoTxt));
-                await dropboxUpload('/' + cleanId + '_' + file.name, file);
+                const datos = await respuesta.json();
+                if (!datos.ok) {
+                    throw new Error(datos.error || 'Error al guardar el reporte');
+                }
 
                 status.innerText = '✅ ¡Archivos enviados con éxito!';
                 status.style.backgroundColor = '#d4edda';
@@ -1517,13 +1472,7 @@
 
             } catch (err) {
                 console.error('Error completo:', err);
-
-                let mensajeError = err.message || JSON.stringify(err);
-                if (err.error && err.error.error_summary) {
-                    mensajeError = err.error.error_summary;
-                }
-
-                status.innerText = '❌ Error: ' + mensajeError;
+                status.innerText = '❌ Error: ' + (err.message || JSON.stringify(err));
                 status.style.backgroundColor = '#f8d7da';
                 status.style.color = '#721c24';
             } finally {
