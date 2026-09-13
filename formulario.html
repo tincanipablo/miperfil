@@ -235,7 +235,6 @@
 
             const respuesta = await fetch(URL_APPS_SCRIPT, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ nombre, email, mensaje, archivoBase64, archivoNombre })
             });
 
