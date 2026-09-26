@@ -1,27 +1,31 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proyecto 1000 Mil Latidos – Información y Recursos</title>
-    <meta name="description" content="Proyecto 1000 Mil Latidos. Información y contenido desarrollado por Pablo Tincani.">
+    <meta name="description"
+        content="Proyecto 1000 Mil Latidos. Información y contenido desarrollado por Pablo Tincani.">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/1000mlatidos.html">
     <meta property="og:title" content="¿Mil Millones de Latidos? | Pablo Urueña Tincani">
-    <meta property="og:description" content="Calculadora basada en la teoría de las leyes de escala: metabolismo, frecuencia cardíaca y esperanza de vida de los mamíferos.">
+    <meta property="og:description"
+        content="Calculadora basada en la teoría de las leyes de escala: metabolismo, frecuencia cardíaca y esperanza de vida de los mamíferos.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tincanipablo.github.io/miperfil/1000mlatidos.html">
     <meta property="og:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-dark: #0b0f19;
             --bg-card: #151c2c;
-            --border-color: rgba(255,255,255,0.08);
+            --border-color: rgba(255, 255, 255, 0.08);
             --primary: #2563eb;
             --primary-glow: rgba(37, 99, 235, 0.35);
             --accent: #06b6d4;
@@ -30,7 +34,11 @@
             --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: var(--font-family);
@@ -110,7 +118,7 @@
             border: 1px solid var(--border-color);
             padding: 32px;
             border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 560px;
             margin-top: 124px;
@@ -142,16 +150,23 @@
             width: 100%;
             padding: 12px 14px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             box-sizing: border-box;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-main);
             font-family: var(--font-family);
         }
 
-        input::placeholder { color: #64748b; }
-        input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+        input::placeholder {
+            color: #64748b;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
 
         .hint {
             font-size: 12px;
@@ -181,14 +196,17 @@
             box-shadow: 0 4px 15px var(--primary-glow);
         }
 
-        .btn-calc:hover { transform: translateY(-2px); box-shadow: 0 6px 22px var(--primary-glow); }
+        .btn-calc:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px var(--primary-glow);
+        }
 
         .btn-clear {
             flex: 1;
             padding: 14px 16px;
             background: transparent;
             color: var(--text-muted);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 10px;
             cursor: pointer;
             font-weight: 700;
@@ -197,7 +215,11 @@
             transition: all 0.2s ease;
         }
 
-        .btn-clear:hover { color: var(--text-main); border-color: rgba(255,255,255,0.3); background: rgba(255,255,255,0.04); }
+        .btn-clear:hover {
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+        }
 
         #msg {
             display: none;
@@ -210,7 +232,10 @@
             font-size: 0.9rem;
         }
 
-        #resultados { display: none; margin-bottom: 16px; }
+        #resultados {
+            display: none;
+            margin-bottom: 16px;
+        }
 
         .result-item {
             display: flex;
@@ -218,7 +243,7 @@
             gap: 14px;
             padding: 14px;
             margin-bottom: 10px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
             border-radius: 12px;
         }
@@ -231,14 +256,30 @@
             align-items: center;
             justify-content: center;
             border-radius: 10px;
-            background: linear-gradient(135deg, rgba(37,99,235,0.2), rgba(6,182,212,0.2));
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.2));
             color: var(--accent);
             font-size: 1rem;
         }
 
-        .result-label { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; }
-        .result-value { font-size: 1.25rem; font-weight: 800; color: var(--text-main); margin: 2px 0 4px; }
-        .result-formula { font-size: 0.78rem; color: var(--text-muted); }
+        .result-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 2px 0 4px;
+        }
+
+        .result-formula {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
 
         .nota-medicina {
             padding: 14px;
@@ -251,7 +292,9 @@
             margin-bottom: 16px;
         }
 
-        .nota-medicina i { margin-right: 8px; }
+        .nota-medicina i {
+            margin-right: 8px;
+        }
 
         .section-title {
             font-size: 0.85rem;
@@ -266,7 +309,7 @@
             display: none;
             text-align: center;
             padding: 16px;
-            background: rgba(255,255,255,0.03);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--border-color);
             border-radius: 12px;
         }
@@ -283,19 +326,31 @@
             display: inline-block;
             width: 32px;
             height: 32px;
-            border: 3px solid rgba(255,255,255,0.15);
+            border: 3px solid rgba(255, 255, 255, 0.15);
             border-top-color: var(--accent);
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
             margin: 10px 0;
         }
 
-        @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         @media (max-width: 768px) {
-            .card { padding: 24px; }
-            .header-wrapper { gap: 12px; }
-            .btn-row { flex-direction: column; }
+            .card {
+                padding: 24px;
+            }
+
+            .header-wrapper {
+                gap: 12px;
+            }
+
+            .btn-row {
+                flex-direction: column;
+            }
         }
 
         /* Shared Site Navigation */
@@ -323,357 +378,365 @@
         }
     </style>
 </head>
+
 <body>
 
-<header class="site-header">
-    <div class="header-wrapper">
-        <a href="index.html" class="brand-title">
-            <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border: 2px solid var(--primary);">
-            <span>Pablo Urueña Tincani</span>
-        </a>
+    <header class="site-header">
+        <div class="header-wrapper">
+            <a href="index.html" class="brand-title">
+                <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani"
+                    style="width:36px; height:36px; border-radius:50%; object-fit:cover; border: 2px solid var(--primary);">
+                <span>Pablo Urueña Tincani</span>
+            </a>
+        </div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="diplomas.html">Diplomas</a>
+            <a href="donaciones.html">Donaciones</a>
+            <a href="etnia.html">Etnias</a>
+            <a href="formulario.html">Contacto</a>
+            <a href="pyme.html">PYME</a>
+            <a href="1000mlatidos.html">1000 Mil Latidos</a>
+        </nav>
+    </header>
+
+    <div class="card">
+        <h1>Proyecto 1000 Mil Latidos</h1>
+        <p class="intro">Casi todos los mamíferos acumulan ~1.000 millones de latidos en toda su vida, según la teoría
+            de las leyes de escala (West, Brown &amp; Enquist). Elige un mamífero, ingresa su peso y calcula
+            metabolismo, frecuencia cardíaca y esperanza de vida.</p>
+
+        <form id="formLatidos" novalidate>
+            <label for="mamifero"><i class="fas fa-paw"></i> Mamífero</label>
+            <input type="text" id="mamifero" list="listaMamiferos" placeholder="Elige o escribe un mamífero..."
+                autocomplete="off">
+            <datalist id="listaMamiferos">
+                <option value="Musaraña etrusca"></option>
+                <option value="Ratón de campo"></option>
+                <option value="Murciélago"></option>
+                <option value="Rata"></option>
+                <option value="Ardilla"></option>
+                <option value="Erizo"></option>
+                <option value="Conejo"></option>
+                <option value="Gato"></option>
+                <option value="Perro"></option>
+                <option value="Lobo"></option>
+                <option value="Chimpancé"></option>
+                <option value="Guepardo"></option>
+                <option value="Humano"></option>
+                <option value="Hombre"></option>
+                <option value="Mujer"></option>
+                <option value="Oveja"></option>
+                <option value="Cabra"></option>
+                <option value="Caballo"></option>
+                <option value="Vaca"></option>
+                <option value="Cebra"></option>
+                <option value="Tigre"></option>
+                <option value="León"></option>
+                <option value="Oso pardo"></option>
+                <option value="Gorila"></option>
+                <option value="Delfín"></option>
+                <option value="Jirafa"></option>
+                <option value="Hipopótamo"></option>
+                <option value="Rinoceronte"></option>
+                <option value="Elefante africano"></option>
+                <option value="Elefante asiático"></option>
+                <option value="Ballena azul"></option>
+            </datalist>
+            <div class="hint"><i class="fas fa-info-circle"></i> Ejemplos: humano, rata, conejo, elefante, perro...
+            </div>
+
+            <label for="peso"><i class="fas fa-weight-hanging"></i> Peso (kg) — se convierte a Newtons</label>
+            <input type="number" id="peso" placeholder="p. ej. 60 kg → 588,4 N" min="0" step="any" inputmode="decimal">
+            <div class="hint"><i class="fas fa-info-circle"></i> P = m × g (1 kg ≡ 9,80665 N) y luego m = P / g</div>
+
+            <div class="btn-row">
+                <button type="submit" class="btn-calc" id="btnCalcular"><i class="fas fa-calculator"></i>
+                    Calcular</button>
+                <button type="button" class="btn-clear" id="btnBorrar"><i class="fas fa-eraser"></i> Borrar</button>
+            </div>
+
+            <div id="msg"></div>
+
+            <div id="resultados"></div>
+
+            <div id="imagenContainer">
+                <div id="imagenCarga"></div>
+                <div id="imagenContenido"></div>
+            </div>
+        </form>
     </div>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="diplomas.html">Diplomas</a>
-        <a href="donaciones.html">Donaciones</a>
-        <a href="etnia.html">Etnias</a>
-        <a href="formulario.html">Contacto</a>
-        <a href="pyme.html">PYME</a>
-        <a href="1000mlatidos.html">1000 Mil Latidos</a>
-    </nav>
-</header>
 
-<div class="card">
-    <h1>Proyecto 1000 Mil Latidos</h1>
-    <p class="intro">Casi todos los mamíferos acumulan ~1.000 millones de latidos en toda su vida, según la teoría de las leyes de escala (West, Brown &amp; Enquist). Elige un mamífero, ingresa su peso y calcula metabolismo, frecuencia cardíaca y esperanza de vida.</p>
+    <script>
+        const MAPA_MASAS = {
+            'musarana etrusca': 0.002,
+            'raton de campo': 0.03,
+            'murcielago': 0.03,
+            'rata': 0.3,
+            'ardilla': 0.5,
+            'erizo': 1,
+            'conejo': 2,
+            'gato': 4,
+            'perro': 12,
+            'lobo': 40,
+            'chimpance': 50,
+            'guepardo': 50,
+            'humano': 70,
+            'hombre': 70,
+            'mujer': 60,
+            'oveja': 70,
+            'cabra': 80,
+            'caballo': 500,
+            'vaca': 600,
+            'cebra': 300,
+            'tigre': 200,
+            'leon': 190,
+            'oso pardo': 350,
+            'gorila': 160,
+            'delfin': 150,
+            'jirafa': 1000,
+            'hipopotamo': 1500,
+            'rinoceronte': 2000,
+            'elefante africano': 4000,
+            'elefante asiatico': 4000,
+            'ballena azul': 150000
+        };
 
-    <form id="formLatidos" novalidate>
-        <label for="mamifero"><i class="fas fa-paw"></i> Mamífero</label>
-        <input type="text" id="mamifero" list="listaMamiferos" placeholder="Elige o escribe un mamífero..." autocomplete="off">
-        <datalist id="listaMamiferos">
-            <option value="Musaraña etrusca"></option>
-            <option value="Ratón de campo"></option>
-            <option value="Murciélago"></option>
-            <option value="Rata"></option>
-            <option value="Ardilla"></option>
-            <option value="Erizo"></option>
-            <option value="Conejo"></option>
-            <option value="Gato"></option>
-            <option value="Perro"></option>
-            <option value="Lobo"></option>
-            <option value="Chimpancé"></option>
-            <option value="Guepardo"></option>
-            <option value="Humano"></option>
-            <option value="Hombre"></option>
-            <option value="Mujer"></option>
-            <option value="Oveja"></option>
-            <option value="Cabra"></option>
-            <option value="Caballo"></option>
-            <option value="Vaca"></option>
-            <option value="Cebra"></option>
-            <option value="Tigre"></option>
-            <option value="León"></option>
-            <option value="Oso pardo"></option>
-            <option value="Gorila"></option>
-            <option value="Delfín"></option>
-            <option value="Jirafa"></option>
-            <option value="Hipopótamo"></option>
-            <option value="Rinoceronte"></option>
-            <option value="Elefante africano"></option>
-            <option value="Elefante asiático"></option>
-            <option value="Ballena azul"></option>
-        </datalist>
-        <div class="hint"><i class="fas fa-info-circle"></i> Ejemplos: humano, rata, conejo, elefante, perro...</div>
+        const HUMANOS = ['humano', 'hombre', 'mujer', 'ser humano', 'persona'];
 
-        <label for="peso"><i class="fas fa-weight-hanging"></i> Peso (kg) — se convierte a Newtons</label>
-        <input type="number" id="peso" placeholder="p. ej. 60 kg → 588,4 N" min="0" step="any" inputmode="decimal">
-        <div class="hint"><i class="fas fa-info-circle"></i> P = m × g (1 kg ≡ 9,80665 N) y luego m = P / g</div>
-
-        <div class="btn-row">
-            <button type="submit" class="btn-calc" id="btnCalcular"><i class="fas fa-calculator"></i> Calcular</button>
-            <button type="button" class="btn-clear" id="btnBorrar"><i class="fas fa-eraser"></i> Borrar</button>
-        </div>
-
-        <div id="msg"></div>
-
-        <div id="resultados"></div>
-
-        <div id="imagenContainer">
-            <div id="imagenCarga"></div>
-            <div id="imagenContenido"></div>
-        </div>
-    </form>
-</div>
-
-<script>
-    const MAPA_MASAS = {
-        'musarana etrusca': 0.002,
-        'raton de campo': 0.03,
-        'murcielago': 0.03,
-        'rata': 0.3,
-        'ardilla': 0.5,
-        'erizo': 1,
-        'conejo': 2,
-        'gato': 4,
-        'perro': 12,
-        'lobo': 40,
-        'chimpance': 50,
-        'guepardo': 50,
-        'humano': 70,
-        'hombre': 70,
-        'mujer': 60,
-        'oveja': 70,
-        'cabra': 80,
-        'caballo': 500,
-        'vaca': 600,
-        'cebra': 300,
-        'tigre': 200,
-        'leon': 190,
-        'oso pardo': 350,
-        'gorila': 160,
-        'delfin': 150,
-        'jirafa': 1000,
-        'hipopotamo': 1500,
-        'rinoceronte': 2000,
-        'elefante africano': 4000,
-        'elefante asiatico': 4000,
-        'ballena azul': 150000
-    };
-
-    const HUMANOS = ['humano', 'hombre', 'mujer', 'ser humano', 'persona'];
-
-    function normalizar(s) {
-        return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
-    }
-
-    const fmt = (n, d) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: d }).format(n);
-
-    const GRAVEDAD = 9.80665; // m/s² (Tierra)
-
-    function esHumano(mamifero) {
-        return HUMANOS.includes(normalizar(mamifero));
-    }
-
-    function calcularValores() {
-        const mamifero = document.getElementById('mamifero').value.trim();
-        const peso = parseFloat(document.getElementById('peso').value);
-        const msgDiv = document.getElementById('msg');
-
-        msgDiv.style.display = 'none';
-
-        if (!mamifero) {
-            mostrarError('Ingresa el nombre de un mamífero.');
-            return;
-        }
-        if (!(peso > 0)) {
-            mostrarError('Ingresa un peso válido en kg (puede ser decimal).');
-            return;
+        function normalizar(s) {
+            return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim();
         }
 
-        const human = esHumano(mamifero);
-        let filas = [];
+        const fmt = (n, d) => new Intl.NumberFormat('es-ES', { maximumFractionDigits: d }).format(n);
 
-        const pesoNewtons = peso * GRAVEDAD;   // P = m · g: 1 kg de peso ≡ 1 kgf = 9,80665 N (fuerza)
-        const masa = pesoNewtons / GRAVEDAD;   // m = P / g: masa (kg) = fuerza (N) / gravedad (m/s²)
+        const GRAVEDAD = 9.80665; // m/s² (Tierra)
 
-        if (human) {
-            filas = [
-                {
-                    icon: 'fa-scale-balanced',
-                    label: 'Peso convertido a Newtons',
-                    value: fmt(pesoNewtons, 1) + ' N',
-                    formula: 'P = m × g   (' + fmt(peso, 2) + ' kg × ' + fmt(GRAVEDAD, 5) + ' m/s²)'
-                },
-                {
-                    icon: 'fa-weight-hanging',
-                    label: 'Masa (de P = m·g)',
-                    value: fmt(masa, 2) + ' kg',
-                    formula: 'm = P / g   (' + fmt(pesoNewtons, 1) + ' N / ' + fmt(GRAVEDAD, 5) + ' m/s²)'
-                },
-                {
-                    icon: 'fa-heart-pulse',
-                    label: 'Frecuencia cardíaca (real)',
-                    value: '≈ 70 lpm',
-                    formula: 'Valor real de referencia del ser humano, no escala con la masa'
-                },
-                {
-                    icon: 'fa-hourglass-half',
-                    label: 'Esperanza de vida (real)',
-                    value: '≈ 75 años',
-                    formula: 'Esperanza de vida real del ser humano'
-                },
-                {
-                    icon: 'fa-heart',
-                    label: 'Latidos en toda la vida',
-                    value: '≈ 3.000 millones',
-                    formula: 'Medicina y saneamiento rompieron el equilibrio de ~1.000 millones'
+        function esHumano(mamifero) {
+            return HUMANOS.includes(normalizar(mamifero));
+        }
+
+        function calcularValores() {
+            const mamifero = document.getElementById('mamifero').value.trim();
+            const peso = parseFloat(document.getElementById('peso').value);
+            const msgDiv = document.getElementById('msg');
+
+            msgDiv.style.display = 'none';
+
+            if (!mamifero) {
+                mostrarError('Ingresa el nombre de un mamífero.');
+                return;
+            }
+            if (!(peso > 0)) {
+                mostrarError('Ingresa un peso válido en kg (puede ser decimal).');
+                return;
+            }
+
+            const human = esHumano(mamifero);
+            let filas = [];
+
+            const pesoNewtons = peso * GRAVEDAD;   // P = m · g: 1 kg de peso ≡ 1 kgf = 9,80665 N (fuerza)
+            const masa = pesoNewtons / GRAVEDAD;   // m = P / g: masa (kg) = fuerza (N) / gravedad (m/s²)
+
+            if (human) {
+                filas = [
+                    {
+                        icon: 'fa-scale-balanced',
+                        label: 'Peso convertido a Newtons',
+                        value: fmt(pesoNewtons, 1) + ' N',
+                        formula: 'P = m × g   (' + fmt(peso, 2) + ' kg × ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                    },
+                    {
+                        icon: 'fa-weight-hanging',
+                        label: 'Masa (de P = m·g)',
+                        value: fmt(masa, 2) + ' kg',
+                        formula: 'm = P / g   (' + fmt(pesoNewtons, 1) + ' N / ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                    },
+                    {
+                        icon: 'fa-heart-pulse',
+                        label: 'Frecuencia cardíaca (real)',
+                        value: '≈ 70 lpm',
+                        formula: 'Valor real de referencia del ser humano, no escala con la masa'
+                    },
+                    {
+                        icon: 'fa-hourglass-half',
+                        label: 'Esperanza de vida (real)',
+                        value: '≈ 75 años',
+                        formula: 'Esperanza de vida real del ser humano'
+                    },
+                    {
+                        icon: 'fa-heart',
+                        label: 'Latidos en toda la vida',
+                        value: '≈ 3.000 millones',
+                        formula: 'Medicina y saneamiento rompieron el equilibrio de ~1.000 millones'
+                    }
+                ];
+            } else {
+                const B = 70 * Math.pow(masa, 0.75);
+                const f = 241 * Math.pow(masa, -0.25);
+                const vida = 7.9 * Math.pow(masa, 0.25);
+                const latidosMillones = (f * 525960 * vida) / 1e6;
+
+                filas = [
+                    {
+                        icon: 'fa-scale-balanced',
+                        label: 'Peso convertido a Newtons',
+                        value: fmt(pesoNewtons, 1) + ' N',
+                        formula: 'P = m × g   (' + fmt(peso, 2) + ' kg × ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                    },
+                    {
+                        icon: 'fa-weight-hanging',
+                        label: 'Masa (de P = m·g)',
+                        value: fmt(masa, 2) + ' kg',
+                        formula: 'm = P / g   (' + fmt(pesoNewtons, 1) + ' N / ' + fmt(GRAVEDAD, 5) + ' m/s²)'
+                    },
+                    {
+                        icon: 'fa-bolt',
+                        label: 'Metabolismo (ley de Kleiber)',
+                        value: fmt(B, 0) + ' kcal/día',
+                        formula: 'B = 70 × m^0,75   (' + fmt(70 * Math.pow(masa, 0.75), 2) + ')'
+                    },
+                    {
+                        icon: 'fa-heart-pulse',
+                        label: 'Frecuencia cardíaca',
+                        value: fmt(f, 0) + ' lpm',
+                        formula: 'f = 241 × m^−1/4   (' + fmt(241 * Math.pow(masa, -0.25), 2) + ')'
+                    },
+                    {
+                        icon: 'fa-hourglass-half',
+                        label: 'Esperanza de vida',
+                        value: fmt(vida, 1) + ' años',
+                        formula: 'Vida = 7,9 × m^1/4   (' + fmt(7.9 * Math.pow(masa, 0.25), 2) + ')'
+                    },
+                    {
+                        icon: 'fa-heart',
+                        label: 'Latidos en toda la vida',
+                        value: '≈ ' + fmt(latidosMillones, 0) + ' millones',
+                        formula: 'f × vida ≈ constante (~1.000 millones para casi todos los mamíferos)'
+                    }
+                ];
+            }
+
+            renderResultados(filas, human);
+        }
+
+        function renderResultados(filas, human) {
+            const cont = document.getElementById('resultados');
+            let html = '<div class="section-title"><i class="fas fa-chart-line"></i> Resultados</div>';
+
+            filas.forEach((fil) => {
+                html +=
+                    '<div class="result-item">' +
+                    '<div class="result-icon"><i class="fas ' + fil.icon + '"></i></div>' +
+                    '<div style="flex:1; min-width:0;">' +
+                    '<div class="result-label">' + fil.label + '</div>' +
+                    '<div class="result-value">' + fil.value + '</div>' +
+                    '<div class="result-formula">' + fil.formula + '</div>' +
+                    '</div></div>';
+            });
+
+            if (human) {
+                html +=
+                    '<div class="nota-medicina"><i class="fas fa-user-doctor"></i>' +
+                    'El ser humano es la excepción: hace tres siglos estábamos cerca de los 1.000 millones, ' +
+                    'pero la <strong>medicina y el saneamiento</strong> (siglo XIX+) redujeron la mortalidad infantil ' +
+                    'y las enfermedades, alargando la vida sin compensar latidos. Hoy el humano medio acumula ' +
+                    '<strong>~3.000 millones</strong> de latidos.</div>';
+            }
+
+            cont.innerHTML = html;
+            cont.style.display = 'block';
+        }
+
+        function mostrarError(texto) {
+            const msgDiv = document.getElementById('msg');
+            const cont = document.getElementById('resultados');
+            const imgCont = document.getElementById('imagenContainer');
+            msgDiv.textContent = '❌ ' + texto;
+            msgDiv.style.backgroundColor = '#f8d7da';
+            msgDiv.style.color = '#721c24';
+            msgDiv.style.display = 'block';
+            cont.style.display = 'none';
+            imgCont.style.display = 'none';
+        }
+
+        async function buscarImagen(mamifero) {
+            const imgCont = document.getElementById('imagenContainer');
+            const imgCarga = document.getElementById('imagenCarga');
+            const imgContenido = document.getElementById('imagenContenido');
+
+            imgCont.style.display = 'block';
+            imgContenido.innerHTML = '';
+            imgCarga.innerHTML = '<div class="load-spinner"></div><div style="font-size:0.85rem; color:var(--text-muted);">Buscando imagen de "' + mamifero + '"...</div>';
+
+            try {
+                let thumbnail = null;
+
+                async function pageimages(t) {
+                    const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&titles=' + encodeURIComponent(t) + '&prop=pageimages&piprop=thumbnail&pithumbsize=500&format=json&origin=*&redirects=1');
+                    const d = await r.json();
+                    const paginas = Object.values(d.query.pages);
+                    if (paginas[0] && paginas[0].thumbnail) {
+                        return paginas[0].thumbnail.source;
+                    }
+                    return null;
                 }
-            ];
-        } else {
-            const B = 70 * Math.pow(masa, 0.75);
-            const f = 241 * Math.pow(masa, -0.25);
-            const vida = 7.9 * Math.pow(masa, 0.25);
-            const latidosMillones = (f * 525960 * vida) / 1e6;
 
-            filas = [
-                {
-                    icon: 'fa-scale-balanced',
-                    label: 'Peso convertido a Newtons',
-                    value: fmt(pesoNewtons, 1) + ' N',
-                    formula: 'P = m × g   (' + fmt(peso, 2) + ' kg × ' + fmt(GRAVEDAD, 5) + ' m/s²)'
-                },
-                {
-                    icon: 'fa-weight-hanging',
-                    label: 'Masa (de P = m·g)',
-                    value: fmt(masa, 2) + ' kg',
-                    formula: 'm = P / g   (' + fmt(pesoNewtons, 1) + ' N / ' + fmt(GRAVEDAD, 5) + ' m/s²)'
-                },
-                {
-                    icon: 'fa-bolt',
-                    label: 'Metabolismo (ley de Kleiber)',
-                    value: fmt(B, 0) + ' kcal/día',
-                    formula: 'B = 70 × m^0,75   (' + fmt(70 * Math.pow(masa, 0.75), 2) + ')'
-                },
-                {
-                    icon: 'fa-heart-pulse',
-                    label: 'Frecuencia cardíaca',
-                    value: fmt(f, 0) + ' lpm',
-                    formula: 'f = 241 × m^−1/4   (' + fmt(241 * Math.pow(masa, -0.25), 2) + ')'
-                },
-                {
-                    icon: 'fa-hourglass-half',
-                    label: 'Esperanza de vida',
-                    value: fmt(vida, 1) + ' años',
-                    formula: 'Vida = 7,9 × m^1/4   (' + fmt(7.9 * Math.pow(masa, 0.25), 2) + ')'
-                },
-                {
-                    icon: 'fa-heart',
-                    label: 'Latidos en toda la vida',
-                    value: '≈ ' + fmt(latidosMillones, 0) + ' millones',
-                    formula: 'f × vida ≈ constante (~1.000 millones para casi todos los mamíferos)'
+                const directo = await pageimages(mamifero);
+                if (directo) {
+                    thumbnail = directo;
+                } else {
+                    const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(mamifero) + '&srlimit=1&format=json&origin=*');
+                    const d = await r.json();
+                    if (d.query.search && d.query.search[0]) {
+                        thumbnail = await pageimages(d.query.search[0].title);
+                    }
                 }
-            ];
+
+                if (thumbnail) {
+                    imgContenido.innerHTML =
+                        '<img src="' + thumbnail + '" alt="' + mamifero + '" onerror="this.parentElement.innerHTML=\'<div style=\'font-size:0.85rem; color:var(--text-muted);\'>No se pudo cargar la imagen.</div>\'">';
+                } else {
+                    imgContenido.innerHTML = '<div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-image"></i> No se encontró imagen en Wikipedia para "' + mamifero + '".</div>';
+                }
+            } catch (e) {
+                imgContenido.innerHTML = '<div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-circle-exclamation"></i> No se pudo conectar con Wikipedia para buscar la imagen.</div>';
+            }
+
+            imgCarga.innerHTML = '';
         }
 
-        renderResultados(filas, human);
-    }
+        function borrar() {
+            document.getElementById('mamifero').value = '';
+            document.getElementById('peso').value = '';
+            document.getElementById('msg').style.display = 'none';
+            document.getElementById('resultados').style.display = 'none';
+            document.getElementById('resultados').innerHTML = '';
+            document.getElementById('imagenContainer').style.display = 'none';
+            document.getElementById('imagenContenido').innerHTML = '';
+            document.getElementById('imagenCarga').innerHTML = '';
+            document.getElementById('mamifero').focus();
+        }
 
-    function renderResultados(filas, human) {
-        const cont = document.getElementById('resultados');
-        let html = '<div class="section-title"><i class="fas fa-chart-line"></i> Resultados</div>';
-
-        filas.forEach((fil) => {
-            html +=
-                '<div class="result-item">' +
-                '<div class="result-icon"><i class="fas ' + fil.icon + '"></i></div>' +
-                '<div style="flex:1; min-width:0;">' +
-                '<div class="result-label">' + fil.label + '</div>' +
-                '<div class="result-value">' + fil.value + '</div>' +
-                '<div class="result-formula">' + fil.formula + '</div>' +
-                '</div></div>';
+        document.getElementById('formLatidos').addEventListener('submit', function (e) {
+            e.preventDefault();
+            calcularValores();
+            const mamifero = document.getElementById('mamifero').value.trim();
+            if (mamifero) {
+                buscarImagen(mamifero);
+            }
         });
 
-        if (human) {
-            html +=
-                '<div class="nota-medicina"><i class="fas fa-user-doctor"></i>' +
-                'El ser humano es la excepción: hace tres siglos estábamos cerca de los 1.000 millones, ' +
-                'pero la <strong>medicina y el saneamiento</strong> (siglo XIX+) redujeron la mortalidad infantil ' +
-                'y las enfermedades, alargando la vida sin compensar latidos. Hoy el humano medio acumula ' +
-                '<strong>~3.000 millones</strong> de latidos.</div>';
-        }
+        document.getElementById('btnBorrar').addEventListener('click', borrar);
 
-        cont.innerHTML = html;
-        cont.style.display = 'block';
-    }
-
-    function mostrarError(texto) {
-        const msgDiv = document.getElementById('msg');
-        const cont = document.getElementById('resultados');
-        const imgCont = document.getElementById('imagenContainer');
-        msgDiv.textContent = '❌ ' + texto;
-        msgDiv.style.backgroundColor = '#f8d7da';
-        msgDiv.style.color = '#721c24';
-        msgDiv.style.display = 'block';
-        cont.style.display = 'none';
-        imgCont.style.display = 'none';
-    }
-
-    async function buscarImagen(mamifero) {
-        const imgCont = document.getElementById('imagenContainer');
-        const imgCarga = document.getElementById('imagenCarga');
-        const imgContenido = document.getElementById('imagenContenido');
-
-        imgCont.style.display = 'block';
-        imgContenido.innerHTML = '';
-        imgCarga.innerHTML = '<div class="load-spinner"></div><div style="font-size:0.85rem; color:var(--text-muted);">Buscando imagen de "' + mamifero + '"...</div>';
-
-        try {
-            let thumbnail = null;
-
-            async function pageimages(t) {
-                const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&titles=' + encodeURIComponent(t) + '&prop=pageimages&piprop=thumbnail&pithumbsize=500&format=json&origin=*&redirects=1');
-                const d = await r.json();
-                const paginas = Object.values(d.query.pages);
-                if (paginas[0] && paginas[0].thumbnail) {
-                    return paginas[0].thumbnail.source;
-                }
-                return null;
+        document.getElementById('mamifero').addEventListener('change', function () {
+            const masas = MAPA_MASAS[normalizar(this.value)];
+            if (masas && !document.getElementById('peso').value) {
+                document.getElementById('peso').value = masas;
             }
-
-            const directo = await pageimages(mamifero);
-            if (directo) {
-                thumbnail = directo;
-            } else {
-                const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(mamifero) + '&srlimit=1&format=json&origin=*');
-                const d = await r.json();
-                if (d.query.search && d.query.search[0]) {
-                    thumbnail = await pageimages(d.query.search[0].title);
-                }
-            }
-
-            if (thumbnail) {
-                imgContenido.innerHTML =
-                    '<img src="' + thumbnail + '" alt="' + mamifero + '" onerror="this.parentElement.innerHTML=\'<div style=\'font-size:0.85rem; color:var(--text-muted);\'>No se pudo cargar la imagen.</div>\'">';
-            } else {
-                imgContenido.innerHTML = '<div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-image"></i> No se encontró imagen en Wikipedia para "' + mamifero + '".</div>';
-            }
-        } catch (e) {
-            imgContenido.innerHTML = '<div style="font-size:0.85rem; color:var(--text-muted);"><i class="fas fa-circle-exclamation"></i> No se pudo conectar con Wikipedia para buscar la imagen.</div>';
-        }
-
-        imgCarga.innerHTML = '';
-    }
-
-    function borrar() {
-        document.getElementById('mamifero').value = '';
-        document.getElementById('peso').value = '';
-        document.getElementById('msg').style.display = 'none';
-        document.getElementById('resultados').style.display = 'none';
-        document.getElementById('resultados').innerHTML = '';
-        document.getElementById('imagenContainer').style.display = 'none';
-        document.getElementById('imagenContenido').innerHTML = '';
-        document.getElementById('imagenCarga').innerHTML = '';
-        document.getElementById('mamifero').focus();
-    }
-
-    document.getElementById('formLatidos').addEventListener('submit', function (e) {
-        e.preventDefault();
-        calcularValores();
-        const mamifero = document.getElementById('mamifero').value.trim();
-        if (mamifero) {
-            buscarImagen(mamifero);
-        }
-    });
-
-    document.getElementById('btnBorrar').addEventListener('click', borrar);
-
-    document.getElementById('mamifero').addEventListener('change', function () {
-        const masas = MAPA_MASAS[normalizar(this.value)];
-        if (masas && !document.getElementById('peso').value) {
-            document.getElementById('peso').value = masas;
-        }
-    });
-</script>
+        });
+    </script>
 
 </body>
+
 </html>

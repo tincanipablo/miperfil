@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="es"> 
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Contacto – Pablo Tincani</title>
-    <meta name="description" content="Formulario de contacto para consultas, proyectos y colaboraciones con Pablo Tincani.">
+    <meta name="description"
+        content="Formulario de contacto para consultas, proyectos y colaboraciones con Pablo Tincani.">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
-    <meta property="og:description" content="Formulario de contacto y soporte técnico para consultas, proyectos o seguimiento de servicios de Pablo Urueña Tincani.">
+    <meta property="og:description"
+        content="Formulario de contacto y soporte técnico para consultas, proyectos o seguimiento de servicios de Pablo Urueña Tincani.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
@@ -17,7 +20,7 @@
         :root {
             --bg-dark: #0b0f19;
             --bg-card: #151c2c;
-            --border-color: rgba(255,255,255,0.08);
+            --border-color: rgba(255, 255, 255, 0.08);
             --primary: #2563eb;
             --primary-glow: rgba(37, 99, 235, 0.35);
             --accent: #06b6d4;
@@ -26,7 +29,11 @@
             --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             font-family: var(--font-family);
@@ -106,7 +113,7 @@
             border: 1px solid var(--border-color);
             padding: 32px;
             border-radius: 16px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             width: 100%;
             max-width: 520px;
             margin-top: 124px;
@@ -126,18 +133,22 @@
             line-height: 1.6;
         }
 
-        input, textarea {
+        input,
+        textarea {
             width: 100%;
             padding: 12px 14px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255,255,255,0.12);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             box-sizing: border-box;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255, 255, 255, 0.04);
             color: var(--text-main);
         }
 
-        input::placeholder, textarea::placeholder { color: #64748b; }
+        input::placeholder,
+        textarea::placeholder {
+            color: #64748b;
+        }
 
         label {
             display: block;
@@ -158,14 +169,40 @@
             transition: transform 0.2s ease;
         }
 
-        button:hover { transform: translateY(-2px); }
-        button:disabled { background: #6c757d; cursor: not-allowed; transform: none; }
-        #msg { margin-top: 20px; padding: 12px; border-radius: 8px; text-align: center; display: none; font-weight: bold; }
-        .file-info { font-size: 12px; color: var(--text-muted); margin-top: -10px; margin-bottom: 16px; }
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        #msg {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+            font-weight: bold;
+        }
+
+        .file-info {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: -10px;
+            margin-bottom: 16px;
+        }
 
         @media (max-width: 768px) {
-            .card { padding: 24px; }
-            .header-wrapper { gap: 12px; }
+            .card {
+                padding: 24px;
+            }
+
+            .header-wrapper {
+                gap: 12px;
+            }
         }
 
         /* Shared Site Navigation */
@@ -193,117 +230,121 @@
         }
     </style>
 </head>
+
 <body>
 
-<header class="site-header">
-    <div class="header-wrapper">
-        <a href="index.html" class="brand-title">
-            <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani" style="width:36px; height:36px; border-radius:50%; object-fit:cover; border: 2px solid var(--primary);">
-            <span>Pablo Urueña Tincani</span>
-        </a>
-        <a href="index.html" class="btn-back">
-            <i class="fas fa-arrow-left"></i> Volver al Perfil
-        </a>
+    <header class="site-header">
+        <div class="header-wrapper">
+            <a href="index.html" class="brand-title">
+                <img src="img/FotoCV.jpg" alt="Pablo Urueña Tincani"
+                    style="width:36px; height:36px; border-radius:50%; object-fit:cover; border: 2px solid var(--primary);">
+                <span>Pablo Urueña Tincani</span>
+            </a>
+            <a href="index.html" class="btn-back">
+                <i class="fas fa-arrow-left"></i> Volver al Perfil
+            </a>
+        </div>
+        <nav>
+            <a href="index.html">Inicio</a>
+            <a href="diplomas.html">Diplomas</a>
+            <a href="donaciones.html">Donaciones</a>
+            <a href="etnia.html">Etnias</a>
+            <a href="formulario.html">Contacto</a>
+            <a href="pyme.html">PYME</a>
+            <a href="1000mlatidos.html">1000 Mil Latidos</a>
+        </nav>
+    </header>
+
+    <div class="card">
+        <h1>Formulario de Contacto</h1>
+        <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico,
+            proyectos o seguimiento de servicios.</p>
+        <form id="formSoporte">
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
+            <label>Adjuntar archivo:</label>
+            <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
+            <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG</div>
+            <button type="submit" id="btnSoporte">Enviar Reporte</button>
+            <div id="msg"></div>
+        </form>
     </div>
-    <nav>
-        <a href="index.html">Inicio</a>
-        <a href="diplomas.html">Diplomas</a>
-        <a href="donaciones.html">Donaciones</a>
-        <a href="etnia.html">Etnias</a>
-        <a href="formulario.html">Contacto</a>
-        <a href="pyme.html">PYME</a>
-        <a href="1000mlatidos.html">1000 Mil Latidos</a>
-    </nav>
-</header>
 
-<div class="card">
-    <h1>Formulario de Contacto</h1>
-    <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico, proyectos o seguimiento de servicios.</p>
-    <form id="formSoporte">
-        <input type="text" id="nombre" placeholder="Nombre" required>
-        <input type="email" id="email" placeholder="Email" required>
-        <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
-        <label>Adjuntar archivo:</label>
-        <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
-        <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG</div>
-        <button type="submit" id="btnSoporte">Enviar Reporte</button>
-        <div id="msg"></div>
-    </form>
-</div>
+    <script>
+        // URL del Web App de Google Apps Script (la reemplazamos cuando la despliegues)
+        // Este JS NO contiene ninguna credencial de Dropbox.
+        const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
 
-<script>
-    // URL del Web App de Google Apps Script (la reemplazamos cuando la despliegues)
-    // Este JS NO contiene ninguna credencial de Dropbox.
-    const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
+        document.getElementById('formSoporte').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const btn = document.getElementById('btnSoporte');
+            const msgDiv = document.getElementById('msg');
 
-    document.getElementById('formSoporte').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const btn = document.getElementById('btnSoporte');
-        const msgDiv = document.getElementById('msg');
+            btn.disabled = true;
+            msgDiv.style.display = "block";
+            msgDiv.style.backgroundColor = "#e8f0fe";
+            msgDiv.style.color = "#004085";
+            msgDiv.innerText = "⏳ Enviando reporte...";
 
-        btn.disabled = true;
-        msgDiv.style.display = "block";
-        msgDiv.style.backgroundColor = "#e8f0fe";
-        msgDiv.style.color = "#004085";
-        msgDiv.innerText = "⏳ Enviando reporte...";
+            try {
+                const nombre = document.getElementById('nombre').value;
+                const email = document.getElementById('email').value;
+                const mensaje = document.getElementById('mensaje').value;
+                const file = document.getElementById('archivo').files[0];
 
-        try {
-            const nombre = document.getElementById('nombre').value;
-            const email = document.getElementById('email').value;
-            const mensaje = document.getElementById('mensaje').value;
-            const file = document.getElementById('archivo').files[0];
+                let archivoBase64 = '';
+                let archivoNombre = '';
 
-            let archivoBase64 = '';
-            let archivoNombre = '';
-
-            if (file) {
-                if (file.size > 50 * 1024 * 1024) {
-                    throw new Error('El archivo no puede ser mayor a 50MB');
+                if (file) {
+                    if (file.size > 50 * 1024 * 1024) {
+                        throw new Error('El archivo no puede ser mayor a 50MB');
+                    }
+                    archivoBase64 = await leerArchivoBase64(file);
+                    archivoNombre = file.name;
                 }
-                archivoBase64 = await leerArchivoBase64(file);
-                archivoNombre = file.name;
+
+                msgDiv.innerText = "⏳ Almacenando en el servidor seguro...";
+
+                const respuesta = await fetch(URL_APPS_SCRIPT, {
+                    method: 'POST',
+                    body: JSON.stringify({ nombre, email, mensaje, archivoBase64, archivoNombre })
+                });
+
+                const datos = await respuesta.json();
+
+                if (!datos.ok) {
+                    throw new Error(datos.error || 'Error al guardar el reporte');
+                }
+
+                msgDiv.innerText = "✅ ¡Reporte enviado con éxito!";
+                msgDiv.style.backgroundColor = "#d4edda";
+                msgDiv.style.color = "#155724";
+
+                this.reset();
+            } catch (err) {
+                console.error('Error completo:', err);
+                msgDiv.innerText = "❌ Error: " + err.message;
+                msgDiv.style.backgroundColor = "#f8d7da";
+                msgDiv.style.color = "#721c24";
+            } finally {
+                btn.disabled = false;
             }
-
-            msgDiv.innerText = "⏳ Almacenando en el servidor seguro...";
-
-            const respuesta = await fetch(URL_APPS_SCRIPT, {
-                method: 'POST',
-                body: JSON.stringify({ nombre, email, mensaje, archivoBase64, archivoNombre })
-            });
-
-            const datos = await respuesta.json();
-
-            if (!datos.ok) {
-                throw new Error(datos.error || 'Error al guardar el reporte');
-            }
-
-            msgDiv.innerText = "✅ ¡Reporte enviado con éxito!";
-            msgDiv.style.backgroundColor = "#d4edda";
-            msgDiv.style.color = "#155724";
-
-            this.reset();
-        } catch (err) {
-            console.error('Error completo:', err);
-            msgDiv.innerText = "❌ Error: " + err.message;
-            msgDiv.style.backgroundColor = "#f8d7da";
-            msgDiv.style.color = "#721c24";
-        } finally {
-            btn.disabled = false;
-        }
-    });
-
-    function leerArchivoBase64(file) {
-        return new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onload = () => {
-                const result = reader.result;
-                const base64 = result.split(',')[1] || result;
-                resolve(base64);
-            };
-            reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
-            reader.readAsDataURL(file);
         });
-    }
-</script>
+
+        function leerArchivoBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const result = reader.result;
+                    const base64 = result.split(',')[1] || result;
+                    resolve(base64);
+                };
+                reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
 </body>
+
 </html>
