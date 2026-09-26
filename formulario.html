@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Contacto y Soporte | Pablo Urueña Tincani</title>
-    <meta name="description" content="Formulario de contacto y soporte técnico para consultas, proyectos o seguimiento de servicios de Pablo Urueña Tincani.">
+    <title>Formulario de Contacto – Pablo Tincani</title>
+    <meta name="description" content="Formulario de contacto para consultas, proyectos y colaboraciones con Pablo Tincani.">
     <meta name="robots" content="index,follow">
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
@@ -109,7 +109,7 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
             width: 100%;
             max-width: 520px;
-            margin-top: 90px;
+            margin-top: 124px;
         }
 
         h1 {
@@ -167,6 +167,30 @@
             .card { padding: 24px; }
             .header-wrapper { gap: 12px; }
         }
+
+        /* Shared Site Navigation */
+        nav {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 14px;
+            max-width: 960px;
+            margin: 10px auto 0;
+            overflow-x: auto;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        nav a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -181,10 +205,19 @@
             <i class="fas fa-arrow-left"></i> Volver al Perfil
         </a>
     </div>
+    <nav>
+        <a href="index.html">Inicio</a>
+        <a href="diplomas.html">Diplomas</a>
+        <a href="donaciones.html">Donaciones</a>
+        <a href="etnia.html">Etnias</a>
+        <a href="formulario.html">Contacto</a>
+        <a href="pyme.html">PYME</a>
+        <a href="1000mlatidos.html">1000 Mil Latidos</a>
+    </nav>
 </header>
 
 <div class="card">
-    <h1>Centro de Soporte</h1>
+    <h1>Formulario de Contacto</h1>
     <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico, proyectos o seguimiento de servicios.</p>
     <form id="formSoporte">
         <input type="text" id="nombre" placeholder="Nombre" required>
