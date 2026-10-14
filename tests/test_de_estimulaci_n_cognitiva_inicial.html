@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluación y Estimulación Cognitiva para Adultos Mayores - Fundación Juan Cruzado</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            blue: '#1E3A8A',
+                            softBlue: '#EFF6FF',
+                            green: '#059669',
+                            softGreen: '#ECFDF5',
+                            coral: '#F43F5E',
+                            softCoral: '#FFF1F2',
+                            amber: '#D97706',
+                            softAmber: '#FFFBEB'
+                        }
+                    },
+                    fontSize: {
+                        'base-lg': '1.25rem', // 20px
+                        'xl-lg': '1.5rem',    // 24px
+                        '2xl-lg': '1.875rem' // 30px
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #F8FAFC;
+            color: #1E293B;
+            font-size: 20px;
+        }
+        .btn-option {
+            transition: all 0.2s ease-in-out;
+            min-height: 70px;
+        }
+        .btn-option:hover {
+            transform: translateY(-2px);
+        }
+        .svg-container svg {
+            max-height: 180px;
+            width: auto;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between p-3 sm:p-6">
+
+    <!-- HEADER / BARRA SUPERIOR -->
+    <header class="max-w-4xl w-full mx-auto bg-white rounded-2xl shadow-md p-4 sm:p-6 border-b-4 border-blue-600 mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-700 font-bold text-2xl">
+                🧠
+            </div>
+            <div>
+                <h1 class="text-xl sm:text-2xl font-bold text-blue-900 leading-tight">Test Cognitivo Nivel Intermedio</h1>
+                <p class="text-base text-gray-600">Inspirado en la Fundación Juan Cruzado</p>
+            </div>
+        </div>
+        <div class="flex gap-2 w-full md:w-auto justify-end">
+            <button onclick="showHistoryModal()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-base font-semibold rounded-xl border border-slate-300 flex items-center gap-2">
+                📊 Historial
+            </button>
+            <button onclick="resetTest()" class="px-4 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 text-base font-semibold rounded-xl border border-amber-300 flex items-center gap-2">
+                🔄 Reiniciar
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl w-full mx-auto flex-grow">
+
+        <!-- pantalla DE INICIO -->
+        <div id="start-screen" class="bg-white rounded-3xl shadow-lg p-6 sm:p-10 text-center border border-gray-100">
+            <div class="max-w-2xl mx-auto">
+                <span class="inline-block bg-blue-100 text-blue-800 font-bold px-4 py-1.5 rounded-full text-base mb-4">
+                    Nivel Intermedio • 25 Preguntas
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">
+                    ¡Le damos la bienvenida a su ejercicio de agilidad mental!
+                </h2>
+                <p class="text-gray-600 text-lg sm:text-xl mb-6 leading-relaxed">
+                    Este test está diseñado para ejercitar la memoria, atención, cálculo, lenguaje y orientación de forma agradable y sin prisa. Tómese todo el tiempo que necesite.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 text-left">
+                    <div class="p-4 bg-blue-50 rounded-2xl border border-blue-100">
+                        <p class="font-bold text-blue-900 text-lg mb-1">⏱️ Sin tiempo límite</p>
+                        <p class="text-base text-gray-600">Responda con tranquilidad a su propio ritmo.</p>
+                    </div>
+                    <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-100">
+                        <p class="font-bold text-emerald-900 text-lg mb-1">👁️ Visual y claro</p>
+                        <p class="text-base text-gray-600">Letra grande e ilustraciones adaptadas.</p>
+                    </div>
+                    <div class="p-4 bg-purple-50 rounded-2xl border border-purple-100">
+                        <p class="font-bold text-purple-900 text-lg mb-1">💡 Con explicaciones</p>
+                        <p class="text-base text-gray-600">Recibirá respuesta inmediata tras cada pregunta.</p>
+                    </div>
+                </div>
+
+                <button onclick="startTest()" class="w-full sm:w-auto px-10 py-5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl rounded-2xl shadow-lg transition hover:scale-105 active:scale-95">
+                    ▶️ Comenzar el Test
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE PREGUNTA -->
+        <div id="quiz-screen" class="hidden bg-white rounded-3xl shadow-lg p-5 sm:p-8 border border-gray-100">
+            
+            <!-- Barra de Progreso -->
+            <div class="mb-6">
+                <div class="flex justify-between items-center mb-2">
+                    <span id="question-category" class="font-bold text-blue-700 text-base uppercase tracking-wider bg-blue-50 px-3 py-1 rounded-lg">Categoría</span>
+                    <span id="question-progress" class="font-bold text-gray-500 text-lg">Pregunta 1 de 25</span>
+                </div>
+                <div class="w-full bg-gray-200 h-4 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-blue-600 h-full transition-all duration-300" style="width: 4%;"></div>
+                </div>
+            </div>
+
+            <!-- Enunciado y Gráfico SVG -->
+            <div class="mb-6">
+                <h3 id="question-text" class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 leading-snug">
+                    Cargando pregunta...
+                </h3>
+                
+                <!-- Ilustración SVG -->
+                <div id="question-svg" class="svg-container bg-slate-50 p-4 rounded-2xl border border-slate-200 flex items-center justify-center min-h-[160px] my-4">
+                    <!-- SVG dinámico -->
+                </div>
+            </div>
+
+            <!-- Opciones de Respuesta -->
+            <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-6">
+                <!-- Botones insertados dinámicamente -->
+            </div>
+
+            <!-- Retroalimentación / Explicación -->
+            <div id="feedback-container" class="hidden p-5 rounded-2xl mb-6">
+                <div id="feedback-title" class="font-bold text-xl mb-1 flex items-center gap-2"></div>
+                <p id="feedback-text" class="text-lg text-gray-700"></p>
+            </div>
+
+            <!-- Botón Siguiente -->
+            <div class="flex justify-end">
+                <button id="next-btn" onclick="nextQuestion()" class="hidden px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-xl shadow-md transition">
+                    Siguiente Pregunta ➔
+                </button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE RESULTADOS -->
+        <div id="results-screen" class="hidden bg-white rounded-3xl shadow-lg p-6 sm:p-10 border border-gray-100 text-center">
+            <div class="max-w-2xl mx-auto">
+                <div class="text-5xl mb-4">🎉</div>
+                <h2 class="text-3xl font-bold text-gray-800 mb-2">¡Felicitaciones! Has completado el test</h2>
+                <p class="text-lg text-gray-600 mb-6">Aquí tienes el resumen detallado de tu rendimiento cognitivo:</p>
+
+                <!-- Puntuación Global -->
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-3xl p-6 mb-8">
+                    <p class="text-base text-blue-800 font-semibold uppercase tracking-wider mb-1">Puntuación Total</p>
+                    <div class="text-5xl font-black text-blue-900 mb-2">
+                        <span id="final-score">0</span> / 25
+                    </div>
+                    <p id="performance-level" class="text-xl font-bold text-blue-700"></p>
+                </div>
+
+                <!-- Desglose por Áreas -->
+                <div class="mb-8 text-left">
+                    <h4 class="text-xl font-bold text-gray-800 mb-4">Rendimiento por Habilidades Cognitivas:</h4>
+                    <div id="skills-breakdown" class="space-y-4">
+                        <!-- Generado por JS -->
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <button onclick="startTest()" class="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg rounded-2xl shadow-md">
+                        🔄 Repetir Evaluación
+                    </button>
+                    <button onclick="showHistoryModal()" class="px-8 py-4 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-lg rounded-2xl border border-slate-300">
+                        📋 Ver Historial
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="max-w-4xl w-full mx-auto text-center mt-8 pt-4 border-t border-gray-200 text-base text-gray-500">
+        <p>Inspirado en el Cuadernillo de Estimulación Cognitiva Nivel Intermedio • <strong>Fundación Juan Cruzado</strong></p>
+        <p class="text-sm text-gray-400 mt-1">Primeras las Personas Mayores</p>
+    </footer>
+
+    <!-- MODAL DE HISTORIAL -->
+    <div id="history-modal" class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-gray-800">📊 Historial de Resultados</h3>
+                <button onclick="closeHistoryModal()" class="text-gray-400 hover:text-gray-600 text-3xl font-bold">&times;</button>
+            </div>
+            
+            <div id="history-list" class="overflow-y-auto flex-grow space-y-3 mb-6 pr-2">
+                <!-- Se llena con JS -->
+            </div>
+
+            <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                <button onclick="clearHistory()" class="text-red-600 hover:text-red-800 text-base font-semibold">
+                    🗑️ Borrar Historial
+                </button>
+                <button onclick="closeHistoryModal()" class="px-6 py-2 bg-gray-200 hover:bg-gray-300 rounded-xl font-bold text-gray-700">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT PRINCIPAL LÓGICA Y BANCO DE 25 PREGUNTAS -->
+    <script>
+        // BANCO COMPLETO DE 25 PREGUNTAS ESTRUCTURADAS
+        const questions = [
+            // ORIENTACIÓN TEMPORAL Y ESPACIAL (1 - 5)
+            {
+                id: 1,
+                category: "Orientación Temporal",
+                skill: "Orientación",
+                question: "¿Cuál de las siguientes secuencias muestra los meses del año en el orden correcto?",
+                svg: `<svg viewBox="0 0 300 100" class="w-full">
+                        <rect x="10" y="20" width="80" height="60" rx="10" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+                        <text x="50" y="55" font-size="16" font-weight="bold" text-anchor="middle" fill="#0369A1">Enero</text>
+                        <path d="M 100 50 L 115 50" stroke="#0284C7" stroke-width="3" marker-end="url(#arrow)"/>
+                        <rect x="120" y="20" width="80" height="60" rx="10" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+                        <text x="160" y="55" font-size="18" font-weight="bold" text-anchor="middle" fill="#0369A1">❓</text>
+                        <rect x="230" y="20" width="60" height="60" rx="10" fill="#E0F2FE" stroke="#0284C7" stroke-width="2"/>
+                        <text x="260" y="55" font-size="16" font-weight="bold" text-anchor="middle" fill="#0369A1">Marzo</text>
+                      </svg>`,
+                options: [
+                    "Enero, Febrero, Marzo",
+                    "Enero, Marzo, Febrero",
+                    "Febrero, Enero, Marzo",
+                    "Enero, Abril, Marzo"
+                ],
+                correct: 0,
+                explanation: "El orden cronológico estándar de los primeros tres meses es Enero, Febrero y Marzo."
+            },
+            {
+                id: 2,
+                category: "Orientación Temporal",
+                skill: "Orientación",
+                question: "Si hoy es JUEVES, ¿qué día fue ANTEAYER?",
+                svg: `<svg viewBox="0 0 300 100" class="w-full">
+                        <circle cx="60" cy="50" r="35" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+                        <text x="60" y="55" font-size="14" text-anchor="middle" font-weight="bold" fill="#B45309">Anteayer</text>
+                        <circle cx="150" cy="50" r="35" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+                        <text x="150" y="55" font-size="14" text-anchor="middle" font-weight="bold" fill="#B45309">Ayer</text>
+                        <circle cx="240" cy="50" r="35" fill="#DBEAFE" stroke="#2563EB" stroke-width="3"/>
+                        <text x="240" y="55" font-size="14" text-anchor="middle" font-weight="bold" fill="#1E40AF">Jueves (Hoy)</text>
+                      </svg>`,
+                options: ["Martes", "Miércoles", "Viernes", "Lunes"],
+                correct: 0,
+                explanation: "Si hoy es jueves, ayer fue miércoles y anteayer fue martes."
+            },
+            {
+                id: 3,
+                category: "Orientación Estacional",
+                skill: "Orientación",
+                question: "¿En qué estación del año suelen caer las hojas de los árboles e inicia el frío moderado?",
+                svg: `<svg viewBox="0 0 200 100" class="w-full">
+                        <path d="M 100 20 L 100 80" stroke="#78350F" stroke-width="8"/>
+                        <path d="M 100 50 L 70 30" stroke="#78350F" stroke-width="4"/>
+                        <path d="M 100 40 L 130 25" stroke="#78350F" stroke-width="4"/>
+                        <circle cx="60" cy="75" r="8" fill="#D97706"/>
+                        <circle cx="140" cy="80" r="7" fill="#EA580C"/>
+                        <circle cx="110" cy="82" r="6" fill="#B45309"/>
+                      </svg>`,
+                options: ["Primavera", "Verano", "Otoño", "Invierno"],
+                correct: 2,
+                explanation: "El otoño es la estación del año caracterizada por la caída de las hojas de los árboles caducifolios."
+            },
+            {
+                id: 4,
+                category: "Orientación Temporal",
+                skill: "Orientación",
+                question: "¿Qué hora marca exactamente el siguiente reloj analógico?",
+                svg: `<svg viewBox="0 0 120 120" class="w-32 h-32">
+                        <circle cx="60" cy="60" r="50" fill="white" stroke="#1E293B" stroke-width="4"/>
+                        <text x="60" y="25" text-anchor="middle" font-weight="bold" font-size="12">12</text>
+                        <text x="95" y="64" text-anchor="middle" font-weight="bold" font-size="12">3</text>
+                        <text x="60" y="102" text-anchor="middle" font-weight="bold" font-size="12">6</text>
+                        <text x="25" y="64" text-anchor="middle" font-weight="bold" font-size="12">9</text>
+                        <!-- Aguja corta en el 3, larga en el 12 -->
+                        <line x1="60" y1="60" x2="82" y2="60" stroke="#1E293B" stroke-width="5" stroke-linecap="round"/>
+                        <line x1="60" y1="60" x2="60" y2="28" stroke="#DC2626" stroke-width="3" stroke-linecap="round"/>
+                        <circle cx="60" cy="60" r="4" fill="#1E293B"/>
+                      </svg>`,
+                options: ["Las 12:15", "Las 3:00", "Las 9:00", "Las 6:15"],
+                correct: 1,
+                explanation: "La manecilla corta (horaria) apunta al 3 y la manecilla larga (minutero) al 12, indicando las 3:00 en punto."
+            },
+            {
+                id: 5,
+                category: "Orientación Diaria",
+                skill: "Orientación",
+                question: "¿Qué momento del día suele suceder inmediatamente después de medianoche?",
+                svg: `<svg viewBox="0 0 200 90" class="w-full">
+                        <path d="M 20 70 Q 100 10 180 70" stroke="#94A3B8" stroke-width="2" fill="none" stroke-dasharray="4"/>
+                        <circle cx="40" cy="60" r="15" fill="#1E293B"/> <!-- Noche -->
+                        <circle cx="100" cy="25" r="15" fill="#F59E0B"/> <!-- Madrugada / Amanecer -->
+                        <text x="40" y="85" text-anchor="middle" font-size="12">Noche</text>
+                        <text x="100" y="85" text-anchor="middle" font-size="12" font-weight="bold" fill="#0284C7">Madrugada</text>
+                      </svg>`,
+                options: ["Tarde", "Madrugada", "Atardecer", "Mediodía"],
+                correct: 1,
+                explanation: "La madrugada comprende las horas posteriores a la medianoche e intermedias hasta el amanecer."
+            },
+
+            // LENGUAJE Y VOCABULARIO (6 - 10)
+            {
+                id: 6,
+                category: "Lenguaje y Refranes",
+                skill: "Lenguaje",
+                question: "Complete el refrán popular: 'A caballo regalado no se le mira el...'",
+                svg: `<svg viewBox="0 0 200 80" class="w-full">
+                        <rect x="10" y="15" width="180" height="50" rx="10" fill="#F1F5F9" stroke="#64748B" stroke-width="2"/>
+                        <text x="100" y="45" font-size="16" text-anchor="middle" font-weight="bold" fill="#334155">"A caballo regalado..."</text>
+                      </svg>`,
+                options: ["Pelo", "Diente", "Lomo", "Tamaño"],
+                correct: 1,
+                explanation: "El refrán completo es: 'A caballo regalado no se le mira el diente'."
+            },
+            {
+                id: 7,
+                category: "Lenguaje - Intruso Semántico",
+                skill: "Lenguaje",
+                question: "¿Cuál de los siguientes elementos NO pertenece al grupo de las FRUTAS?",
+                svg: `<svg viewBox="0 0 240 80" class="w-full">
+                        <circle cx="40" cy="40" r="22" fill="#FCA5A5"/>
+                        <text x="40" y="46" font-size="20" text-anchor="middle">🍎</text>
+                        <circle cx="100" cy="40" r="22" fill="#FEF08A"/>
+                        <text x="100" y="46" font-size="20" text-anchor="middle">🍌</text>
+                        <circle cx="160" cy="40" r="22" fill="#BBF7D0"/>
+                        <text x="160" y="46" font-size="20" text-anchor="middle">🥦</text>
+                        <circle cx="200" cy="40" r="22" fill="#FED7AA"/>
+                        <text x="200" y="46" font-size="20" text-anchor="middle">🍊</text>
+                      </svg>`,
+                options: ["Manzana", "Plátano", "Brócoli", "Naranja"],
+                correct: 2,
+                explanation: "El brócoli es una verdura/hortaliza, mientras que manzana, plátano y naranja son frutas."
+            },
+            {
+                id: 8,
+                category: "Lenguaje - Sinónimos",
+                skill: "Lenguaje",
+                question: "¿Qué palabra significa lo mismo (sinónimo) que 'ALEGRE'?",
+                svg: `<svg viewBox="0 0 180 80" class="w-full">
+                        <circle cx="90" cy="40" r="30" fill="#FEF08A" stroke="#EAB308" stroke-width="3"/>
+                        <circle cx="78" cy="32" r="4" fill="#1E293B"/>
+                        <circle cx="102" cy="32" r="4" fill="#1E293B"/>
+                        <path d="M 75 48 Q 90 62 105 48" stroke="#1E293B" stroke-width="3" fill="none"/>
+                      </svg>`,
+                options: ["Triste", "Contento", "Enojado", "Cansado"],
+                correct: 1,
+                explanation: "'Contento' y 'Alegre' son palabras sinónimas, ya que expresan un estado de ánimo positivo similar."
+            },
+            {
+                id: 9,
+                category: "Lenguaje - Antónimos",
+                skill: "Lenguaje",
+                question: "¿Cuál es el opuesto (antónimo) de la palabra 'RÁPIDO'?",
+                svg: `<svg viewBox="0 0 200 70" class="w-full">
+                        <text x="40" y="45" font-size="30">🐇</text>
+                        <text x="100" y="45" font-size="20" font-weight="bold" fill="#64748B">VS</text>
+                        <text x="150" y="45" font-size="30">🐢</text>
+                      </svg>`,
+                options: ["Veloz", "Lento", "Agazapado", "Fuerte"],
+                correct: 1,
+                explanation: "Lo contrario de moverse con rapidez (rápido) es hacerlo con lentitud (lento)."
+            },
+            {
+                id: 10,
+                category: "Lenguaje - Categorías",
+                skill: "Lenguaje",
+                question: "El martillo, el destornillador y las alicates pertenecen a la categoría de:",
+                svg: `<svg viewBox="0 0 200 80" class="w-full">
+                        <rect x="20" y="15" width="160" height="50" rx="10" fill="#E2E8F0" stroke="#475569" stroke-width="2"/>
+                        <text x="100" y="47" font-size="28" text-anchor="middle">🔨 🪛 🛠️</text>
+                      </svg>`,
+                options: ["Muebles", "Herramientas", "Electrodomésticos", "Prendas de vestir"],
+                correct: 1,
+                explanation: "Todos estos objetos son utensilios diseñados para realizar trabajos manuales (herramientas)."
+            },
+
+            // CÁLCULO Y RAZONAMIENTO NÚMERICO (11 - 15)
+            {
+                id: 11,
+                category: "Cálculo Cotidiano",
+                skill: "Cálculo",
+                question: "Si compra un pan que cuesta 2 € y paga con un billete de 5 €, ¿cuánto dinero deben devolverle?",
+                svg: `<svg viewBox="0 0 260 90" class="w-full">
+                        <!-- Billete 5 -->
+                        <rect x="10" y="20" width="70" height="45" rx="5" fill="#BBF7D0" stroke="#16A34A" stroke-width="2"/>
+                        <text x="45" y="48" font-size="18" font-weight="bold" text-anchor="middle" fill="#15803D">5 €</text>
+                        <text x="95" y="50" font-size="20" font-weight="bold" fill="#64748B">-</text>
+                        <!-- Pan 2 -->
+                        <rect x="115" y="20" width="60" height="45" rx="5" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+                        <text x="145" y="48" font-size="16" font-weight="bold" text-anchor="middle" fill="#B45309">2 € 🥖</text>
+                        <text x="185" y="50" font-size="20" font-weight="bold" fill="#64748B">=</text>
+                        <text x="220" y="52" font-size="22" font-weight="bold" fill="#2563EB">❓</text>
+                      </svg>`,
+                options: ["1 €", "2 €", "3 €", "4 €"],
+                correct: 2,
+                explanation: "Resta básica: 5 € - 2 € = 3 € de cambio."
+            },
+            {
+                id: 12,
+                category: "Secuencias Numéricas",
+                skill: "Cálculo",
+                question: "¿Qué número falta en la siguiente serie numérica?  5 - 10 - 15 - ¿? - 25",
+                svg: `<svg viewBox="0 0 280 70" class="w-full">
+                        <circle cx="30" cy="35" r="20" fill="#DBEAFE"/><text x="30" y="42" text-anchor="middle" font-weight="bold" fill="#1E40AF">5</text>
+                        <circle cx="85" cy="35" r="20" fill="#DBEAFE"/><text x="85" y="42" text-anchor="middle" font-weight="bold" fill="#1E40AF">10</text>
+                        <circle cx="140" cy="35" r="20" fill="#DBEAFE"/><text x="140" y="42" text-anchor="middle" font-weight="bold" fill="#1E40AF">15</text>
+                        <circle cx="195" cy="35" r="22" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/><text x="195" y="42" text-anchor="middle" font-weight="bold" fill="#B45309">❓</text>
+                        <circle cx="250" cy="35" r="20" fill="#DBEAFE"/><text x="250" y="42" text-anchor="middle" font-weight="bold" fill="#1E40AF">25</text>
+                      </svg>`,
+                options: ["18", "20", "22", "30"],
+                correct: 1,
+                explanation: "La serie avanza sumando de 5 en 5. Por lo tanto: 15 + 5 = 20."
+            },
+            {
+                id: 13,
+                category: "Cálculo Sencillo",
+                skill: "Cálculo",
+                question: "Si en una cesta hay 12 manzanas y nos comemos 4, ¿cuántas manzanas quedan en la cesta?",
+                svg: `<svg viewBox="0 0 200 80" class="w-full">
+                        <rect x="30" y="20" width="140" height="50" rx="15" fill="#FFEDD5" stroke="#EA580C" stroke-width="2"/>
+                        <text x="100" y="50" font-size="18" font-weight="bold" text-anchor="middle" fill="#9A3412">12 🍎  menos  4 🍎</text>
+                      </svg>`,
+                options: ["6", "7", "8", "9"],
+                correct: 2,
+                explanation: "Al restar 4 a las 12 manzanas iniciales (12 - 4), quedan 8 manzanas."
+            },
+            {
+                id: 14,
+                category: "Razonamiento Numérico",
+                skill: "Cálculo",
+                question: "¿Cuánto es el doble de 15?",
+                svg: `<svg viewBox="0 0 200 70" class="w-full">
+                        <rect x="30" y="15" width="50" height="40" rx="8" fill="#E0E7FF" stroke="#4338CA" stroke-width="2"/>
+                        <text x="55" y="41" font-size="16" font-weight="bold" text-anchor="middle" fill="#3730A3">15</text>
+                        <text x="100" y="42" font-size="20" font-weight="bold" fill="#4338CA">+</text>
+                        <rect x="120" y="15" width="50" height="40" rx="8" fill="#E0E7FF" stroke="#4338CA" stroke-width="2"/>
+                        <text x="145" y="41" font-size="16" font-weight="bold" text-anchor="middle" fill="#3730A3">15</text>
+                      </svg>`,
+                options: ["20", "25", "30", "35"],
+                correct: 2,
+                explanation: "El doble de un número significa multiplicarlo por 2 o sumarlo consigo mismo: 15 + 15 = 30."
+            },
+            {
+                id: 15,
+                category: "Cálculo de Conteo",
+                skill: "Cálculo",
+                question: "Si sumamos 10 a 40, ¿cuál es el resultado final?",
+                svg: `<svg viewBox="0 0 200 70" class="w-full">
+                        <text x="100" y="45" font-size="22" font-weight="bold" text-anchor="middle" fill="#1E293B">40 + 10 = ❓</text>
+                      </svg>`,
+                options: ["45", "50", "60", "55"],
+                correct: 1,
+                explanation: "Sumar una decena a 40 resulta en 50."
+            },
+
+            // MEMORIA Y RECONOCIMIENTO / AUTOBIOGRÁFICA (16 - 20)
+            {
+                id: 16,
+                category: "Relaciones de Parentesco",
+                skill: "Memoria",
+                question: "El hijo de la hermana de su madre es su:",
+                svg: `<svg viewBox="0 0 260 90" class="w-full">
+                        <circle cx="50" cy="45" r="22" fill="#FCE7F3"/><text x="50" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#9D174D">Madre</text>
+                        <line x1="72" y1="45" x2="108" y2="45" stroke="#94A3B8" stroke-width="2"/>
+                        <circle cx="130" cy="45" r="22" fill="#FCE7F3"/><text x="130" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#9D174D">Tía</text>
+                        <line x1="130" y1="67" x2="130" y2="78" stroke="#94A3B8" stroke-width="2"/>
+                        <circle cx="210" cy="45" r="22" fill="#E0F2FE"/><text x="210" y="52" text-anchor="middle" font-size="12" font-weight="bold" fill="#0369A1">❓</text>
+                      </svg>`,
+                options: ["Tío", "Primo", "Sobrino", "Hermano"],
+                correct: 1,
+                explanation: "La hermana de su madre es su tía, y el hijo de su tía es su primo."
+            },
+            {
+                id: 17,
+                category: "Asociación de Objetos",
+                skill: "Memoria",
+                question: "¿Con cuál de los siguientes elementos se relaciona directamente un ZAPATO?",
+                svg: `<svg viewBox="0 0 180 80" class="w-full">
+                        <rect x="20" y="20" width="60" height="40" rx="8" fill="#F1F5F9" stroke="#475569" stroke-width="2"/>
+                        <text x="50" y="47" font-size="24" text-anchor="middle">👞</text>
+                        <text x="100" y="45" font-size="20" font-weight="bold" fill="#64748B">➔</text>
+                        <rect x="110" y="20" width="50" height="40" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+                        <text x="135" y="47" font-size="20" text-anchor="middle">❓</text>
+                      </svg>`,
+                options: ["Guante", "Calcetín", "Sombrero", "Bufanda"],
+                correct: 1,
+                explanation: "El calcetín es la prenda complementaria que se utiliza en el pie junto con el zapato."
+            },
+            {
+                id: 18,
+                category: "Asociación Funcional",
+                skill: "Memoria",
+                question: "¿Para cuál de estas actividades se utiliza de forma indispensable una SARTÉN?",
+                svg: `<svg viewBox="0 0 180 80" class="w-full">
+                        <text x="90" y="50" font-size="36" text-anchor="middle">🍳</text>
+                      </svg>`,
+                options: ["Planchar ropa", "Cocinar alimentos", "Barrer el suelo", "Coser botones"],
+                correct: 1,
+                explanation: "La sartén es un recipiente de cocina usado para freír y saltear alimentos."
+            },
+            {
+                id: 19,
+                category: "Parentesco Familiar",
+                skill: "Memoria",
+                question: "El padre de su padre es su:",
+                svg: `<svg viewBox="0 0 220 80" class="w-full">
+                        <circle cx="50" cy="40" r="22" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+                        <text x="50" y="46" font-size="13" font-weight="bold" text-anchor="middle" fill="#B45309">Abuelo</text>
+                        <text x="90" y="45" font-size="16" font-weight="bold">➔</text>
+                        <circle cx="130" cy="40" r="22" fill="#DBEAFE" stroke="#2563EB" stroke-width="2"/>
+                        <text x="130" y="46" font-size="13" font-weight="bold" text-anchor="middle" fill="#1E40AF">Padre</text>
+                      </svg>`,
+                options: ["Tío", "Abuelo", "Bisabuelo", "Sobrino"],
+                correct: 1,
+                explanation: "El progenitor masculino de su padre es su abuelo paterno."
+            },
+            {
+                id: 20,
+                category: "Asociación de Entorno",
+                skill: "Memoria",
+                question: "¿Dónde guardamos habitualmente la leche o los yogures para que no se estropeen?",
+                svg: `<svg viewBox="0 0 160 80" class="w-full">
+                        <text x="80" y="50" font-size="36" text-anchor="middle">🥛 🥛</text>
+                      </svg>`,
+                options: ["En el armario", "En el frigorífico (nevera)", "En el horno", "En la mesa"],
+                correct: 1,
+                explanation: "Los lácteos requieren frío para conservarse correctamente, por lo que se guardan en el frigorífico."
+            },
+
+            // AGUDEZA VISUAL Y PATRONES GEOMÉTRICOS (21 - 25)
+            {
+                id: 21,
+                category: "Agudeza Visual",
+                skill: "Agudeza Visual",
+                question: "¿Cuántos TRIÁNGULOS hay dibujados en la siguiente imagen?",
+                svg: `<svg viewBox="0 0 260 90" class="w-full">
+                        <polygon points="30,70 50,20 70,70" fill="#FCA5A5" stroke="#DC2626" stroke-width="2"/>
+                        <rect x="90" y="30" width="40" height="40" fill="#CBD5E1"/>
+                        <polygon points="150,70 170,20 190,70" fill="#FCA5A5" stroke="#DC2626" stroke-width="2"/>
+                        <polygon points="210,70 230,20 250,70" fill="#FCA5A5" stroke="#DC2626" stroke-width="2"/>
+                      </svg>`,
+                options: ["2", "3", "4", "5"],
+                correct: 1,
+                explanation: "Hay 3 triángulos (de color rojo/rosado) y 1 cuadrado (gris)."
+            },
+            {
+                id: 22,
+                category: "Patrones Geométricos",
+                skill: "Agudeza Visual",
+                question: "¿Qué figura completa lógicamente la serie visual? ( Círculo, Cuadrado, Círculo, Cuadrado, ... )",
+                svg: `<svg viewBox="0 0 280 70" class="w-full">
+                        <circle cx="30" cy="35" r="18" fill="#3B82F6"/>
+                        <rect x="70" y="17" width="36" height="36" fill="#10B981"/>
+                        <circle cx="140" cy="35" r="18" fill="#3B82F6"/>
+                        <rect x="180" y="17" width="36" height="36" fill="#10B981"/>
+                        <rect x="230" y="15" width="40" height="40" rx="8" fill="#FEF3C7" stroke="#D97706" stroke-width="2"/>
+                        <text x="250" y="42" text-anchor="middle" font-size="20" font-weight="bold" fill="#B45309">❓</text>
+                      </svg>`,
+                options: ["Triángulo", "Círculo", "Cuadrado", "Estrella"],
+                correct: 1,
+                explanation: "La secuencia alterna de forma regular: Círculo, Cuadrado... por lo que la siguiente figura es un Círculo."
+            },
+            {
+                id: 23,
+                category: "Reconocimiento de Formas",
+                skill: "Agudeza Visual",
+                question: "¿Cuál de las siguientes figuras tiene exactamente CUATRO lados iguales?",
+                svg: `<svg viewBox="0 0 260 80" class="w-full">
+                        <polygon points="20,60 40,20 60,60" fill="#E2E8F0" stroke="#475569" stroke-width="2"/>
+                        <circle cx="110" cy="40" r="22" fill="#E2E8F0" stroke="#475569" stroke-width="2"/>
+                        <rect x="170" y="18" width="44" height="44" fill="#3B82F6" stroke="#1D4ED8" stroke-width="2"/>
+                      </svg>`,
+                options: ["Triángulo", "Círculo", "Cuadrado", "Óvalo"],
+                correct: 2,
+                explanation: "El cuadrado es la figura geométrica plana que cuenta con cuatro lados rectos de igual longitud."
+            },
+            {
+                id: 24,
+                category: "Diferenciación Visual",
+                skill: "Agudeza Visual",
+                question: "¿Qué color tiene la estrella diferente dentro del grupo?",
+                svg: `<svg viewBox="0 0 260 80" class="w-full">
+                        <!-- Estrellas amarillas -->
+                        <text x="30" y="50" font-size="32">⭐</text>
+                        <text x="80" y="50" font-size="32">⭐</text>
+                        <!-- Estrella Azul -->
+                        <text x="130" y="50" font-size="32">🔷</text>
+                        <text x="180" y="50" font-size="32">⭐</text>
+                      </svg>`,
+                options: ["Amarilla", "Roja", "Azul", "Verde"],
+                correct: 2,
+                explanation: "La figura central es un rombo/estrella de color azul, diferenciándose de las demás."
+            },
+            {
+                id: 25,
+                category: "Conteo Visual",
+                skill: "Agudeza Visual",
+                question: "¿Cuánt de los siguientes círculos son de color VERDE?",
+                svg: `<svg viewBox="0 0 280 80" class="w-full">
+                        <circle cx="30" cy="40" r="20" fill="#10B981"/> <!-- Verde 1 -->
+                        <circle cx="80" cy="40" r="20" fill="#EF4444"/> <!-- Rojo -->
+                        <circle cx="130" cy="40" r="20" fill="#10B981"/> <!-- Verde 2 -->
+                        <circle cx="180" cy="40" r="20" fill="#3B82F6"/> <!-- Azul -->
+                        <circle cx="230" cy="40" r="20" fill="#10B981"/> <!-- Verde 3 -->
+                      </svg>`,
+                options: ["1", "2", "3", "4"],
+                correct: 2,
+                explanation: "Hay 3 círculos de color verde en la imagen (posiciones 1, 3 y 5)."
+            }
+        ];
+
+        // ESTADO DE LA APLICACIÓN
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let answersBySkill = {
+            "Orientación": { correct: 0, total: 0 },
+            "Lenguaje": { correct: 0, total: 0 },
+            "Cálculo": { correct: 0, total: 0 },
+            "Memoria": { correct: 0, total: 0 },
+            "Agudeza Visual": { correct: 0, total: 0 }
+        };
+
+        // INICIALIZACIÓN
+        window.onload = function() {
+            // Verificar si hay historial guardado previa
+            loadHistory();
+        };
+
+        function startTest() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            
+            // Resetear estadísticas por área
+            for (let skill in answersBySkill) {
+                answersBySkill[skill].correct = 0;
+                answersBySkill[skill].total = 0;
+            }
+
+            document.getElementById('start-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const q = questions[currentQuestionIndex];
+
+            // Actualizar progreso
+            document.getElementById('question-category').innerText = q.category;
+            document.getElementById('question-progress').innerText = `Pregunta ${currentQuestionIndex + 1} de ${questions.length}`;
+            const progressPercent = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            // Enunciado e Imagen SVG
+            document.getElementById('question-text').innerText = q.question;
+            document.getElementById('question-svg').innerHTML = q.svg;
+
+            // Limpiar Opciones y Retroalimentación
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            const feedbackContainer = document.getElementById('feedback-container');
+            feedbackContainer.classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+
+            // Renderizar Opciones de respuesta
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `btn-option w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-500 hover:bg-blue-50 text-left text-lg sm:text-xl font-semibold text-slate-800 flex items-center justify-between shadow-sm`;
+                btn.onclick = () => selectOption(idx);
+                btn.innerHTML = `
+                    <span>${opt}</span>
+                    <span class="w-8 h-8 rounded-full border border-slate-300 flex items-center justify-center text-sm text-slate-400 font-bold">${String.fromCharCode(65 + idx)}</span>
+                `;
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function selectOption(optionIndex) {
+            const q = questions[currentQuestionIndex];
+            const isCorrect = (optionIndex === q.correct);
+            const buttons = document.querySelectorAll('.btn-option');
+
+            // Deshabilitar todos los botones para evitar dobles clics
+            buttons.forEach(btn => btn.disabled = true);
+
+            // Contabilizar en habilidad
+            answersBySkill[q.skill].total++;
+
+            if (isCorrect) {
+                score++;
+                answersBySkill[q.skill].correct++;
+                buttons[optionIndex].classList.remove('bg-white', 'border-slate-200');
+                buttons[optionIndex].classList.add('bg-emerald-100', 'border-emerald-500', 'text-emerald-900');
+            } else {
+                buttons[optionIndex].classList.remove('bg-white', 'border-slate-200');
+                buttons[optionIndex].classList.add('bg-rose-100', 'border-rose-500', 'text-rose-900');
+                
+                // Mostrar también la correcta
+                buttons[q.correct].classList.remove('bg-white', 'border-slate-200');
+                buttons[q.correct].classList.add('bg-emerald-50', 'border-emerald-400', 'text-emerald-800');
+            }
+
+            // Mostrar Retroalimentación explicativa
+            const feedbackContainer = document.getElementById('feedback-container');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackText = document.getElementById('feedback-text');
+
+            feedbackContainer.classList.remove('hidden', 'bg-emerald-50', 'bg-rose-50', 'border-emerald-200', 'border-rose-200');
+            
+            if (isCorrect) {
+                feedbackContainer.classList.add('bg-emerald-50', 'border', 'border-emerald-200');
+                feedbackTitle.className = 'font-bold text-xl text-emerald-800 mb-1 flex items-center gap-2';
+                feedbackTitle.innerHTML = '✅ ¡Excelente! Respuesta Correcta';
+            } else {
+                feedbackContainer.classList.add('bg-rose-50', 'border', 'border-rose-200');
+                feedbackTitle.className = 'font-bold text-xl text-rose-800 mb-1 flex items-center gap-2';
+                feedbackTitle.innerHTML = '💡 Respuesta Incorrecta';
+            }
+
+            feedbackText.innerText = q.explanation;
+
+            // Mostrar botón siguiente
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                finishTest();
+            }
+        }
+
+        function finishTest() {
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = score;
+
+            // Determinar nivel de rendimiento
+            const percentage = (score / questions.length) * 100;
+            let levelText = "";
+            if (percentage >= 80) {
+                levelText = "🌟 ¡Excelente Agilidad Mental! Rendimiento óptimo.";
+            } else if (percentage >= 60) {
+                levelText = "👍 ¡Buen Trabajo! Buen nivel de conservación cognitiva.";
+            } else {
+                levelText = "💪 ¡Bien completado! La práctica constante ayudará a fortalecer las habilidades.";
+            }
+            document.getElementById('performance-level').innerText = levelText;
+
+            // Mostrar desglose por Habilidades
+            const breakdownContainer = document.getElementById('skills-breakdown');
+            breakdownContainer.innerHTML = '';
+
+            for (let skill in answersBySkill) {
+                const data = answersBySkill[skill];
+                const pct = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+                
+                const div = document.createElement('div');
+                div.className = "bg-slate-50 p-4 rounded-2xl border border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2";
+                div.innerHTML = `
+                    <div class="font-semibold text-gray-800 text-lg">${skill}</div>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <div class="w-full sm:w-32 bg-gray-200 h-3 rounded-full overflow-hidden">
+                            <div class="bg-blue-600 h-full" style="width: ${pct}%"></div>
+                        </div>
+                        <span class="font-bold text-gray-700 min-w-[60px] text-right">${data.correct}/${data.total} (${pct}%)</span>
+                    </div>
+                `;
+                breakdownContainer.appendChild(div);
+            }
+
+            // Guardar resultado en LocalStorage
+            saveResultToHistory(score, questions.length);
+        }
+
+        function resetTest() {
+            if (confirm("¿Desea reiniciar el test desde el principio?")) {
+                startTest();
+            }
+        }
+
+        // GUARDADO EN LOCALSTORAGE & HISTORIAL
+        function saveResultToHistory(score, total) {
+            const history = JSON.parse(localStorage.getItem('cognitive_test_history') || '[]');
+            const newRecord = {
+                date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                score: score,
+                total: total,
+                percentage: Math.round((score / total) * 100)
+            };
+            history.unshift(newRecord); // agregar al inicio
+            localStorage.setItem('cognitive_test_history', JSON.stringify(history));
+        }
+
+        function loadHistory() {
+            const history = JSON.parse(localStorage.getItem('cognitive_test_history') || '[]');
+            const historyList = document.getElementById('history-list');
+            
+            if (history.length === 0) {
+                historyList.innerHTML = `<p class="text-center text-gray-500 py-6">No hay evaluaciones registradas aún.</p>`;
+                return;
+            }
+
+            historyList.innerHTML = history.map((rec, index) => `
+                <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 flex justify-between items-center">
+                    <div>
+                        <p class="font-bold text-gray-800 text-lg">Sesión #${history.length - index}</p>
+                        <p class="text-sm text-gray-500">${rec.date}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-2xl font-black text-blue-700">${rec.score} / ${rec.total}</p>
+                        <p class="text-sm font-semibold ${rec.percentage >= 70 ? 'text-emerald-600' : 'text-amber-600'}">${rec.percentage}% acertado</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showHistoryModal() {
+            loadHistory();
+            document.getElementById('history-modal').classList.remove('hidden');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('history-modal').classList.add('hidden');
+        }
+
+        function clearHistory() {
+            if (confirm("¿Está seguro de que desea eliminar todo el historial acumulado?")) {
+                localStorage.removeItem('cognitive_test_history');
+                loadHistory();
+            }
+        }
+    </script>
+</body>
+</html>

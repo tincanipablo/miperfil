@@ -1,0 +1,13 @@
+# robots.txt - Tests de IQ y Cognición (subcarpeta /tests)
+# Sitio: https://tincanipablo.github.io/miperfil/tests/
+
+User-agent: *
+Allow: /
+
+# Rastreo de recursos necesarios para renderizar los tests
+Allow: /*.html$
+Allow: /*.css$
+Allow: /*.js$
+
+# Sitemap de la sección de tests
+Sitemap: https://tincanipablo.github.io/miperfil/tests/sitemap.xml

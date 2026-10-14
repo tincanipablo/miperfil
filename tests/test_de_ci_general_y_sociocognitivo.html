@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Inteligencia y Razonamiento Sociocognitivo</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #1e293b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between custom-scrollbar selection:bg-indigo-500 selection:text-white">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 px-4 py-3 shadow-lg">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center font-bold text-xl text-white shadow-md shadow-indigo-500/20">
+                    CI
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-100 leading-tight">Test CI & SocioCognitivo</h1>
+                    <p class="text-xs text-slate-400">Evaluación Psicológica para Adultos (>21 años)</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <!-- DOWNLOAD BUTTON -->
+                <button onclick="downloadApp()" class="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg font-medium text-sm transition-all shadow-md shadow-emerald-900/30 hover:scale-105 active:scale-95">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                    </svg>
+                    <span>Descargar Aplicación (.html)</span>
+                </button>
+
+                <!-- TIMER DISPLAY -->
+                <div id="timer-badge" class="hidden flex items-center gap-2 bg-slate-800 border border-slate-700 text-amber-400 px-3 py-1.5 rounded-lg font-mono text-sm font-semibold">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                    <span id="time-display">45:00</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-4xl mx-auto w-full px-4 py-8 flex-grow">
+
+        <!-- WELCOME / INSTRUCTIONS SCREEN -->
+        <div id="screen-welcome" class="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-xl backdrop-blur">
+            <div class="text-center max-w-2xl mx-auto space-y-4">
+                <span class="inline-block px-3 py-1 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-full text-xs font-semibold tracking-wide uppercase">
+                    Prueba Psicotécnica Estandarizada
+                </span>
+                <h2 class="text-3xl font-extrabold text-white">Evaluación de Inteligencia General y Adaptación Sociocognitiva</h2>
+                <p class="text-slate-400 text-sm md:text-base leading-relaxed">
+                    Esta prueba consta de <strong>50 preguntas exclusivas</strong> diseñadas específicamente para medir razonamiento lógico-matemático, patrones espaciales/visuales, vocabulario abstracto y juicio socioemocional.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-8">
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl text-center">
+                    <div class="text-indigo-400 font-bold text-2xl mb-1">50</div>
+                    <div class="text-xs text-slate-400">Preguntas Únicas</div>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl text-center">
+                    <div class="text-amber-400 font-bold text-2xl mb-1">45 min</div>
+                    <div class="text-xs text-slate-400">Límite de Tiempo</div>
+                </div>
+                <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl text-center">
+                    <div class="text-emerald-400 font-bold text-2xl mb-1">> 21 años</div>
+                    <div class="text-xs text-slate-400">Población Objetivo</div>
+                </div>
+            </div>
+
+            <div class="bg-slate-800/40 border border-slate-700/30 rounded-xl p-5 mb-8 text-sm text-slate-300 space-y-2">
+                <h3 class="font-semibold text-white flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    Instrucciones Importantes:
+                </h3>
+                <ul class="list-disc list-inside space-y-1 text-slate-400 pl-2">
+                    <li>Responde con la mayor precisión posible. No hay penalización por fallar.</li>
+                    <li>Puedes navegar entre las preguntas antes de entregar o agotar el tiempo.</li>
+                    <li>Las preguntas incluyen gráficos vectoriales abstractos, lógica numérica e interpretación de dilemas sociales.</li>
+                    <li>Puedes descargar esta aplicación con el botón superior para realizarla localmente en cualquier momento.</li>
+                </ul>
+            </div>
+
+            <div class="flex justify-center">
+                <button onclick="startTest()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-8 py-3.5 rounded-xl font-bold text-lg shadow-lg shadow-indigo-600/30 hover:scale-105 transition-all">
+                    Comenzar Evaluación Ahora
+                </button>
+            </div>
+        </div>
+
+        <!-- TEST INTERFACE -->
+        <div id="screen-test" class="hidden space-y-6">
+            <!-- Progress Bar & Navigator Header -->
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-3">
+                <div class="flex justify-between items-center text-xs font-medium text-slate-400">
+                    <span>Pregunta <strong id="current-num" class="text-indigo-400 text-sm">1</strong> de 50</span>
+                    <span id="answered-count">0/50 respondidas</span>
+                </div>
+                <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                    <div id="progress-bar" class="bg-indigo-500 h-2 transition-all duration-300" style="width: 2%"></div>
+                </div>
+                <!-- Question Dots Navigator -->
+                <div id="question-dots" class="flex flex-wrap gap-1.5 pt-2 max-h-24 overflow-y-auto custom-scrollbar"></div>
+            </div>
+
+            <!-- Question Card -->
+            <div id="question-card" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 md:p-8 shadow-xl min-h-[350px] flex flex-col justify-between">
+                <div>
+                    <!-- Category Badge -->
+                    <div class="flex justify-between items-center mb-4">
+                        <span id="question-category" class="px-2.5 py-1 bg-slate-800 text-indigo-400 border border-indigo-500/20 text-xs font-semibold rounded-md">
+                            Categoría
+                        </span>
+                    </div>
+
+                    <!-- Question Text -->
+                    <h3 id="question-text" class="text-lg md:text-xl font-semibold text-slate-100 mb-6 leading-snug">
+                        Texto de la pregunta...
+                    </h3>
+
+                    <!-- SVG Graphic Container (If available) -->
+                    <div id="svg-container" class="mb-6 hidden flex justify-center items-center bg-slate-950 p-4 rounded-xl border border-slate-800/80">
+                        <!-- SVG dynamically inserted -->
+                    </div>
+
+                    <!-- Options Grid -->
+                    <div id="options-container" class="grid grid-cols-1 gap-3">
+                        <!-- Options dynamically generated -->
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="flex justify-between items-center pt-6 mt-6 border-t border-slate-800">
+                    <button id="btn-prev" onclick="navigateQuestion(-1)" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-sm font-medium transition disabled:opacity-30 disabled:cursor-not-allowed">
+                        &larr; Anterior
+                    </button>
+                    <button id="btn-next" onclick="navigateQuestion(1)" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium transition shadow-md shadow-indigo-600/20">
+                        Siguiente &rarr;
+                    </button>
+                    <button id="btn-finish" onclick="confirmFinish()" class="hidden px-5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition shadow-md shadow-emerald-600/20">
+                        Finalizar Test
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS SCREEN -->
+        <div id="screen-results" class="hidden space-y-6">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 md:p-10 shadow-2xl text-center space-y-6">
+                <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full text-xs font-semibold uppercase tracking-wider">
+                    Evaluación Completada
+                </span>
+
+                <h2 class="text-3xl font-bold text-white">Informe de Resultados de Inteligencia</h2>
+
+                <!-- Main IQ Score Display -->
+                <div class="py-6 bg-slate-950 border border-slate-800 rounded-2xl max-w-sm mx-auto shadow-inner">
+                    <div class="text-xs text-slate-400 uppercase tracking-widest font-semibold mb-1">Cociente Intelectual Estimado (CI)</div>
+                    <div id="score-ci" class="text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">
+                        110
+                    </div>
+                    <div id="score-rank" class="text-sm font-semibold text-indigo-400 mt-2">
+                        Promedio Alto (Percentil 75)
+                    </div>
+                </div>
+
+                <!-- Metrics breakdown -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl">
+                        <div class="text-xs text-slate-400">Respuestas Correctas</div>
+                        <div id="score-raw" class="text-xl font-bold text-white mt-1">0 / 50</div>
+                        <div class="w-full bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+                            <div id="bar-raw" class="bg-emerald-500 h-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl">
+                        <div class="text-xs text-slate-400">Tiempo Utilizado</div>
+                        <div id="score-time" class="text-xl font-bold text-white mt-1">00:00</div>
+                        <div class="text-[10px] text-slate-500 mt-1">Límite: 45:00 min</div>
+                    </div>
+                    <div class="bg-slate-800/60 border border-slate-700/50 p-4 rounded-xl">
+                        <div class="text-xs text-slate-400">Precisión General</div>
+                        <div id="score-accuracy" class="text-xl font-bold text-white mt-1">0%</div>
+                        <div class="w-full bg-slate-700 h-1.5 rounded-full mt-2 overflow-hidden">
+                            <div id="bar-accuracy" class="bg-indigo-500 h-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Domain Scores Breakdown -->
+                <div class="bg-slate-800/40 border border-slate-800 p-5 rounded-xl text-left space-y-4">
+                    <h3 class="text-sm font-bold text-slate-200 uppercase tracking-wide">Desglose por Dominios Cognitivos</h3>
+                    <div id="domain-breakdown" class="space-y-3">
+                        <!-- Filled dynamically -->
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap justify-center gap-4 pt-4">
+                    <button onclick="restartTest()" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl font-medium transition">
+                        Reiniciar Prueba
+                    </button>
+                    <button onclick="downloadApp()" class="px-6 py-3 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-medium transition shadow-lg shadow-emerald-900/30">
+                        Descargar Copia Local (.html)
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-4 px-4 text-center text-xs text-slate-500">
+        <p>© 2026 Sistema de Evaluación Psicotécnica y SocioCognitiva Adultos. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPT DE LÓGICA DE PREGUNTAS Y SISTEMA -->
+    <script>
+        // 50 PREGUNTAS COMPLETAS SIN REPETIR (LÓGICA, ESPACIAL, SOCIOCOGNITIVA, NUMÉRICA)
+        const questionsData = [
+            // --- RAZONAMIENTO LÓGICO / PATRONES (1-12) ---
+            {
+                category: "Razonamiento Lógico",
+                question: "Si todos los Gerentes son Líderes y algunos Líderes son Innovadores, ¿cuál de las siguientes afirmaciones es indiscutiblemente cierta?",
+                options: [
+                    "Todos los Gerentes son Innovadores.",
+                    "Algunos Gerentes pueden no ser Innovadores.",
+                    "Ningún Gerente es Innovador.",
+                    "Todos los Innovadores son Gerentes."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Complete la secuencia lógica: 3, 7, 15, 31, 63, ...",
+                options: ["127", "125", "95", "128"],
+                answer: 0
+            },
+            {
+                category: "Visual / Espacial",
+                question: "¿Cuál de las siguientes figuras completa la matriz lógica según la rotación de los bloques?",
+                svg: `<svg width="220" height="90" viewBox="0 0 220 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="10" y="10" width="60" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                    <path d="M25 45L55 45M55 45L45 35M55 45L45 55" stroke="#818cf8" stroke-width="3" stroke-linecap="round"/>
+                    <rect x="80" y="10" width="60" height="70" rx="8" fill="#1e293b" stroke="#475569" stroke-width="2"/>
+                    <path d="M110 25L110 65M110 65L100 55M110 65L120 55" stroke="#818cf8" stroke-width="3" stroke-linecap="round"/>
+                    <rect x="150" y="10" width="60" height="70" rx="8" fill="#334155" stroke="#818cf8" stroke-width="2" stroke-dasharray="4 4"/>
+                    <text x="175" y="52" fill="#818cf8" font-weight="bold" font-size="20">?</text>
+                </svg>`,
+                options: [
+                    "Flecha apuntando hacia la izquierda",
+                    "Flecha apuntando hacia la derecha",
+                    "Flecha apuntando hacia arriba",
+                    "Flecha apuntando en diagonal"
+                ],
+                answer: 2
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "EPÍLOGO es a LIBRO como ... es a OBRATREATRAL.",
+                options: ["Prólogo", "Ato", "Desenlace", "Escena"],
+                answer: 2
+            },
+            {
+                category: "Sociocognitivo",
+                question: "Un compañero de equipo reacciona de manera defensiva ante una crítica constructiva en una reunión. ¿Cuál es la respuesta sociocognitivamente más asertiva?",
+                options: [
+                    "Ignorar su reacción y continuar la reunión como si nada hubiese pasado.",
+                    "Señalar inmediatamente frente al grupo que su actitud es inmadura.",
+                    "Validar su perspectiva en privado después de la reunión y aclarar la intención constructiva del comentario.",
+                    "Retirar la sugerencia para evitar tensiones interpersonales."
+                ],
+                answer: 2
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "¿Qué número falta en la serie? 2, 6, 12, 20, 30, 42, ...",
+                options: ["52", "56", "60", "48"],
+                answer: 1
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Indique la figura que rompe la regla de simetría interna en el siguiente patrón visual:",
+                svg: `<svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="25" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                    <line x1="40" y1="15" x2="40" y2="65" stroke="#38bdf8" stroke-width="2"/>
+                    <circle cx="120" cy="40" r="25" fill="#1e293b" stroke="#38bdf8" stroke-width="3"/>
+                    <line x1="95" y1="40" x2="145" y2="40" stroke="#38bdf8" stroke-width="2"/>
+                    <circle cx="200" cy="40" r="25" fill="#1e293b" stroke="#f43f5e" stroke-width="3"/>
+                    <line x1="182" y1="22" x2="215" y2="60" stroke="#f43f5e" stroke-width="2"/>
+                </svg>`,
+                options: [
+                    "Figura A (Eje Vertical)",
+                    "Figura B (Eje Horizontal)",
+                    "Figura C (Eje Asimétrico / Desalineado)",
+                    "Todas guardan idéntica simetría"
+                ],
+                answer: 2
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Si A > B, B = C y C > D, ¿cuál de las siguientes deducciones es falsa?",
+                options: ["A > D", "A > C", "B < D", "D < A"],
+                answer: 2
+            },
+            {
+                category: "Sociocognitivo",
+                question: "Al negociar un acuerdo comercial clave, la contraparte exige condiciones imprevisibles de última hora. ¿Qué habilidad sociocognitiva es prioritaria?",
+                options: [
+                    "Inflexibilidad para defender el plan inicial a toda costa.",
+                    "Flexibilidad cognitiva y autorregulación emocional para revaluar alternativas sin perder el objetivo.",
+                    "Ceder inmediatamente para cerrar el trato a tiempo.",
+                    "Interrumpir la negociación permanentemente por falta de profesionalismo."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "Seleccione la palabra que mejor complete la analogía: ANOMALÍA es a REGULARIDAD como ... es a CONSTANCIA.",
+                options: ["Lealtad", "Inestabilidad", "Firmeza", "Perseverancia"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Un producto sube un 20% su precio y luego sufre un descuento del 20%. ¿Cuál es el cambio porcentual neto respecto al precio original?",
+                options: ["Sin cambio (0%)", "Aumento del 4%", "Disminución del 4%", "Disminución del 2%"],
+                answer: 2
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Observa la secuencia geométrica de combinación de formas. ¿Qué elemento falta?",
+                svg: `<svg width="220" height="80" viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="15" y="15" width="50" height="50" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+                    <circle cx="40" cy="40" r="15" fill="#a855f7"/>
+                    <rect x="85" y="15" width="50" height="50" fill="#1e293b" stroke="#a855f7" stroke-width="2"/>
+                    <polygon points="110,20 125,55 95,55" fill="#a855f7"/>
+                    <rect x="155" y="15" width="50" height="50" stroke="#a855f7" stroke-width="2" stroke-dasharray="3 3"/>
+                    <text x="175" y="48" fill="#a855f7" font-weight="bold" font-size="20">?</text>
+                </svg>`,
+                options: [
+                    "Un cuadrado con una estrella inscrita",
+                    "Un cuadrado con un rombo inscrito",
+                    "Un círculo con un triángulo inscrito",
+                    "Un triángulo con un círculo exterior"
+                ],
+                answer: 1
+            },
+
+            // --- PREGUNTAS 13 A 25 ---
+            {
+                category: "Razonamiento Lógico",
+                question: "Ningún mamífero es un ave. Todos los delfines son mamíferos. Por lo tanto:",
+                options: [
+                    "Algunos delfines son aves.",
+                    "Ningún delfín es un ave.",
+                    "Todas las aves son delfines.",
+                    "No se puede concluir nada."
+                ],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "Detectas un sesgo sistemático en la evaluación de desempeño de tu departamento. ¿Cómo se aborda éticamente?",
+                options: [
+                    "Aprovechar el sesgo si te beneficia.",
+                    "Recopilar datos objetivos y presentar la inconsistencia de manera fundamentada a gestión humana.",
+                    "Quejarse anónimamente en redes sociales.",
+                    "Ignorarlo para evitar confrontaciones laborales."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "¿Cuál es el valor numérico de X en la ecuación lógica? (4 x 3) + 8 = (X / 2) + 10",
+                options: ["20", "10", "15", "20 -> 20 y resulta 20"],
+                answer: 0
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "Elija el antónimo absoluto de la palabra LÁBIL:",
+                options: ["Frágil", "Resiliente / Firme", "Cambiante", "Volátil"],
+                answer: 1
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Rotación espacial en 3D: Si plegamos este molde plano, ¿qué volumen genera?",
+                svg: `<svg width="200" height="90" viewBox="0 0 200 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="30" width="30" height="30" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="50" y="30" width="30" height="30" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="80" y="30" width="30" height="30" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="110" y="30" width="30" height="30" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="50" y="0" width="30" height="30" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="50" y="60" width="30" height="30" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                </svg>`,
+                options: ["Una Pirámide", "Un Cubo Perfecto", "Un Cilindro", "Un Prisma Triangular"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Si tardas 5 minutos en cortar un tronco en 5 partes, ¿cuánto tardarás en cortar otro tronco idéntico en 10 partes?",
+                options: ["10 minutos", "11.25 minutos", "9 minutos", "12.5 minutos"],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "En un equipo multicultural surge un malentendido por lenguaje no verbal. ¿Qué capacidad cognitiva es vital desplazar?",
+                options: [
+                    "Etnocentrismo y rigidez comunicativa.",
+                    "Teoría de la Mente y descentración cultural.",
+                    "Inferencia deductiva pura.",
+                    "Aislamiento de la interacción."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "¿Qué número continúa la serie de Fibonacci modificada? 1, 3, 4, 7, 11, 18, ...",
+                options: ["29", "25", "22", "31"],
+                answer: 0
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "SINOPSIS es a RESUMEN como DISERTACIÓN es a ...",
+                options: ["Esquema", "Exposición / Conferencia", "Diálogo", "Cuestionamiento"],
+                answer: 1
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Identifique la figura resultante al superponer la Forma A con la Forma B:",
+                svg: `<svg width="220" height="80" viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="25" fill="none" stroke="#22c55e" stroke-width="3"/>
+                    <text x="75" y="48" fill="#94a3b8" font-size="20">+</text>
+                    <line x1="110" y1="15" x2="160" y2="65" stroke="#22c55e" stroke-width="3"/>
+                    <text x="175" y="48" fill="#94a3b8" font-size="20">=</text>
+                </svg>`,
+                options: [
+                    "Un círculo dividido por una línea diagonal",
+                    "Un círculo con un punto central",
+                    "Un cuadrado tachado",
+                    "Dos líneas paralelas"
+                ],
+                answer: 0
+            },
+            {
+                category: "Sociocognitivo",
+                question: "La capacidad para demorar la gratificación inmediata a favor de un beneficio mayor a largo plazo se relaciona directamente con:",
+                options: [
+                    "Memoria ecoica a corto plazo.",
+                    "Funciones ejecutivas y autorregulación de la corteza prefrontal.",
+                    "Inteligencia cristalizada pura.",
+                    "Reflejos motores."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Si el ayer de mañana es lunes, ¿qué día será el mañana del ayer de pasado mañana?",
+                options: ["Martes", "Miércoles", "Jueves", "Lunes"],
+                answer: 0
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Resuelva la relación proporcional: 8 es a 64 como 9 es a ...",
+                options: ["72", "81", "90", "99"],
+                answer: 1
+            },
+
+            // --- PREGUNTAS 26 A 50 ---
+            {
+                category: "Razonamiento Verbal",
+                question: "Identifique la palabra que no pertenece al mismo grupo semántico:",
+                options: ["Dogmático", "Intolerante", "Ecléctico", "Inflexible"],
+                answer: 2
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Indique cuántos triángulos hay en la siguiente estructura geométrica:",
+                svg: `<svg width="150" height="100" viewBox="0 0 150 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="75,10 15,90 135,90" fill="#1e293b" stroke="#e2e8f0" stroke-width="2"/>
+                    <line x1="75" y1="10" x2="75" y2="90" stroke="#e2e8f0" stroke-width="2"/>
+                    <line x1="45" y1="50" x2="105" y2="50" stroke="#e2e8f0" stroke-width="2"/>
+                </svg>`,
+                options: ["6", "8", "10", "12"],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "¿A qué fenómeno sociocognitivo se le atribuye la tendencia a atribuir los éxitos propios a factores internos y los fracasos a causas externas?",
+                options: [
+                    "Efecto Dunning-Kruger",
+                    "Sesgo de autoservicio (Self-serving bias)",
+                    "Heurístico de disponibilidad",
+                    "Sesgo de confirmación"
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "En una fila de 5 personas, Juan está delante de Pedro pero detrás de María. Si Carlos está el primero y Luis el último, ¿quién está en la posición central?",
+                options: ["Juan", "María", "Pedro", "Carlos"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Complete la matriz numérica de 3x3 (Suma de filas constante = 15): [8, 1, 6] | [3, 5, 7] | [4, 9, X]",
+                options: ["2", "5", "8", "1"],
+                answer: 0
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "Hipotético es a Verificado como Premisa es a ...",
+                options: ["Supuesto", "Conclusión", "Teoría", "Duda"],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "La 'Escucha Activa' en el contexto sociocognitivo adulto implica prioritariamente:",
+                options: [
+                    "Permanecer en silencio esperando el turno para rebatir.",
+                    "Sintetizar y reflejar tanto el contenido verbal como la carga afectiva del interlocutor.",
+                    "Asentir mecánicamente con la cabeza continuamente.",
+                    "Analizar los fallos lógicos del argumento del otro mientras habla."
+                ],
+                answer: 1
+            },
+            {
+                category: "Visual / Espacial",
+                question: "¿Qué forma geométrica se obtiene al cortar oblicuamente un cono recto?",
+                options: ["Un Círculo perfecto", "Una Elipse", "Un Triángulo Rectángulo", "Un Cuadrado"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Si p -> q es verdadero y q es falso, ¿qué podemos afirmar rotundamente sobre p?",
+                options: ["p es verdadero", "p es falso", "p puede ser indeterminado", "No aplica la lógica deductiva"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Un grifo llena un depósito en 3 horas y otro en 6 horas. Abriendo ambos a la vez, ¿cuánto tardarán?",
+                options: ["4.5 horas", "2 horas", "3.5 horas", "1.5 horas"],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "El término 'Empatía Cognitiva' se diferencia de la 'Empatía Emocional' en que la primera:",
+                options: [
+                    "Siente el dolor del otro en el propio cuerpo.",
+                    "Comprende mentalmente el estado o perspectiva del otro sin necesariamente sentir su emoción.",
+                    "Inhibe cualquier tipo de respuesta social.",
+                    "Es exclusiva de las etapas infantiles."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "Encuentre el término que complete la serie semántica: ÁGORA, FORO, PLAZA, ...",
+                options: ["RECINTO", "ASAMBLEA", "DESIERTO", "BIBLIOTECA"],
+                answer: 1
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Si un reloj marca las 3:15, ¿cuál es el ángulo menor formado entre la aguja horaria y el minutero?",
+                options: ["0º", "7.5º", "15º", "22.5º"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Si tres gatos cazan tres ratones en tres minutos, ¿cuántos gatos se necesitan para cazar cien ratones en cien minutos?",
+                options: ["100 gatos", "3 gatos", "30 gatos", "1 gato"],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "¿Qué estrategia cognitiva favorece la resolución creativa de problemas (pensamiento divergente)?",
+                options: [
+                    "Fixación funcional sobre los objetos conocidos.",
+                    "Reorganización flexible de esquemas y pensamiento lateral.",
+                    "Aplicación estricta de algoritmos repetitivos.",
+                    "Rechazo intencional de la intuición."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Encuentre la incógnita: 5^2 - 3^2 = X^2",
+                options: ["2", "4", "16", "8"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "UBICUO es a OMNIPRESENTE como INEFABLE es a ...",
+                options: ["Inexplicable / Indescriptible", "Urgente", "Inviolable", "Efímero"],
+                answer: 0
+            },
+            {
+                category: "Visual / Espacial",
+                question: "Identifique cuál de los siguientes patrones NO se puede dibujar con un solo trazo continuo sin pasar dos veces por la misma línea:",
+                svg: `<svg width="220" height="80" viewBox="0 0 220 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="20" width="40" height="40" stroke="#f59e0b" stroke-width="2"/>
+                    <line x1="20" y1="20" x2="60" y2="60" stroke="#f59e0b" stroke-width="2"/>
+                    <line x1="60" y1="20" x2="20" y2="60" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="130" cy="40" r="20" stroke="#f59e0b" stroke-width="2"/>
+                    <circle cx="180" cy="40" r="20" stroke="#f59e0b" stroke-width="2"/>
+                </svg>`,
+                options: [
+                    "Cuadrado con cruz X interior completa",
+                    "Dos círculos tangentes",
+                    "Un triángulo simple",
+                    "Una estrella de 5 puntas"
+                ],
+                answer: 0
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Todos los libros de ciencia son rigurosos. Algunos libros de ciencia son antiguos. Por lo tanto:",
+                options: [
+                    "Todos los libros rigurosos son antiguos.",
+                    "Algunos libros rigurosos son antiguos.",
+                    "Ningún libro antiguo es riguroso.",
+                    "Todos los libros antiguos son de ciencia."
+                ],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "El concepto de 'Disonancia Cognitiva' planteado por Festinger se activa cuando:",
+                options: [
+                    "Existe inconsistencia entre las creencias de una persona y sus comportamientos.",
+                    "Aumenta la memoria de trabajo.",
+                    "El individuo experimenta sobrecarga sensorial.",
+                    "Se alcanza un acuerdo unánime en un grupo."
+                ],
+                answer: 0
+            },
+            {
+                category: "Razonamiento Numérico",
+                question: "Si el promedio de 4 números es 20, y se añade un quinto número X, el nuevo promedio es 22. ¿Cuál es el valor de X?",
+                options: ["22", "30", "28", "25"],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Verbal",
+                question: "Elija la pareja de palabras con la misma relación que SOL : INSOLACIÓN",
+                options: [
+                    "Agua : Deshidratación",
+                    "Frío : Congelación",
+                    "Viento : Calma",
+                    "Fuego : Ceniza"
+                ],
+                answer: 1
+            },
+            {
+                category: "Visual / Espacial",
+                question: "¿Cuál es el número mínimo de colores requeridos para colorear cualquier mapa plano sin que dos regiones adyacentes compartan color?",
+                options: ["3", "4", "5", "6"],
+                answer: 1
+            },
+            {
+                category: "Sociocognitivo",
+                question: "¿Qué factor cognitivo predice mejor la capacidad de adaptación laboral e innovación continua en el siglo XXI?",
+                options: [
+                    "Memoria de fijación rígida.",
+                    "Apertura a la experiencia y Metacognición (aprender a aprender).",
+                    "Velocidad mecanográfica.",
+                    "Coeficiente de agresividad competitiva."
+                ],
+                answer: 1
+            },
+            {
+                category: "Razonamiento Lógico",
+                question: "Un tren de 1 km de largo viaja a 60 km/h. Entra en un túnel de 1 km de largo. ¿Cuánto tarda el tren completo en atravesar totalmente el túnel?",
+                options: ["1 minuto", "2 minutos", "3 minutos", "1.5 minutos"],
+                answer: 1
+            }
+        ];
+
+        // GLOBAL APP STATE
+        let currentQuestion = 0;
+        let userAnswers = new Array(questionsData.length).fill(null);
+        let timerInterval = null;
+        let timeRemaining = 45 * 60; // 45 minutes in seconds
+        let startTime = null;
+
+        // DOWNLOAD FULL APP HTML CODE
+        function downloadApp() {
+            const htmlContent = "<!DOCTYPE html>\n" + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: "text/html;charset=utf-8" });
+            const a = document.createElement("a");
+            a.href = URL.createObjectURL(blob);
+            a.download = "Test_Inteligencia_SocioCognitivo.html";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        }
+
+        // START TEST LOGIC
+        function startTest() {
+            document.getElementById("screen-welcome").classList.add("hidden");
+            document.getElementById("screen-test").classList.remove("hidden");
+            document.getElementById("timer-badge").classList.remove("hidden");
+
+            startTime = Date.now();
+            initDotsNavigator();
+            renderQuestion();
+            startTimer();
+        }
+
+        // TIMER SYSTEM
+        function startTimer() {
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert("¡El tiempo límite de 45 minutos ha finalizado! Se procesarán tus respuestas actualizadas.");
+                    finishTest();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById("time-display").innerText = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // QUESTION DOTS NAVIGATOR
+        function initDotsNavigator() {
+            const dotsContainer = document.getElementById("question-dots");
+            dotsContainer.innerHTML = "";
+            questionsData.forEach((_, idx) => {
+                const btn = document.createElement("button");
+                btn.id = `dot-${idx}`;
+                btn.className = `w-7 h-7 text-xs font-semibold rounded-md border border-slate-700 bg-slate-800 text-slate-400 hover:border-indigo-500 transition flex items-center justify-center`;
+                btn.innerText = idx + 1;
+                btn.onclick = () => jumpToQuestion(idx);
+                dotsContainer.appendChild(btn);
+            });
+        }
+
+        function updateDotsState() {
+            questionsData.forEach((_, idx) => {
+                const btn = document.getElementById(`dot-${idx}`);
+                if (!btn) return;
+
+                btn.className = `w-7 h-7 text-xs font-semibold rounded-md transition flex items-center justify-center `;
+                if (idx === currentQuestion) {
+                    btn.className += "bg-indigo-600 text-white border-2 border-indigo-400 shadow-md shadow-indigo-600/30";
+                } else if (userAnswers[idx] !== null) {
+                    btn.className += "bg-emerald-950 text-emerald-400 border border-emerald-600/50";
+                } else {
+                    btn.className += "bg-slate-800 text-slate-400 border border-slate-700 hover:border-slate-500";
+                }
+            });
+
+            // Update answered counter
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            document.getElementById("answered-count").innerText = `${answeredCount}/50 respondidas`;
+            
+            // Show finish button if answered all or on last question
+            if (currentQuestion === questionsData.length - 1 || answeredCount === 50) {
+                document.getElementById("btn-finish").classList.remove("hidden");
+            }
+        }
+
+        // RENDER CURRENT QUESTION
+        function renderQuestion() {
+            const q = questionsData[currentQuestion];
+            document.getElementById("current-num").innerText = currentQuestion + 1;
+            document.getElementById("question-category").innerText = q.category;
+            document.getElementById("question-text").innerText = q.question;
+
+            // Render SVG if applicable
+            const svgContainer = document.getElementById("svg-container");
+            if (q.svg) {
+                svgContainer.innerHTML = q.svg;
+                svgContainer.classList.remove("hidden");
+            } else {
+                svgContainer.innerHTML = "";
+                svgContainer.classList.add("hidden");
+            }
+
+            // Render Options
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
+
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[currentQuestion] === optIdx;
+                const optBtn = document.createElement("button");
+                optBtn.className = `w-full text-left p-4 rounded-xl border text-sm font-medium transition flex items-center justify-between ${
+                    isSelected 
+                    ? "bg-indigo-600/20 border-indigo-500 text-indigo-200 shadow-md shadow-indigo-900/20" 
+                    : "bg-slate-800/50 border-slate-700/70 text-slate-300 hover:bg-slate-800 hover:border-slate-600"
+                }`;
+
+                optBtn.onclick = () => selectOption(optIdx);
+
+                optBtn.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <span class="w-6 h-6 rounded-full border flex items-center justify-center text-xs font-bold ${
+                            isSelected ? "border-indigo-400 bg-indigo-500 text-white" : "border-slate-600 text-slate-400"
+                        }">
+                            ${String.fromCharCode(65 + optIdx)}
+                        </span>
+                        <span>${optText}</span>
+                    </div>
+                    ${isSelected ? '<svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>' : ''}
+                `;
+                optionsContainer.appendChild(optBtn);
+            });
+
+            // Update Progress Bar
+            const progressPct = ((currentQuestion + 1) / questionsData.length) * 100;
+            document.getElementById("progress-bar").style.width = `${progressPct}%`;
+
+            // Navigation Buttons State
+            document.getElementById("btn-prev").disabled = currentQuestion === 0;
+            
+            updateDotsState();
+        }
+
+        // USER ACTIONS
+        function selectOption(index) {
+            userAnswers[currentQuestion] = index;
+            renderQuestion();
+        }
+
+        function navigateQuestion(step) {
+            const target = currentQuestion + step;
+            if (target >= 0 && target < questionsData.length) {
+                currentQuestion = target;
+                renderQuestion();
+            }
+        }
+
+        function jumpToQuestion(index) {
+            currentQuestion = index;
+            renderQuestion();
+        }
+
+        function confirmFinish() {
+            const unanswered = userAnswers.filter(a => a === null).length;
+            if (unanswered > 0) {
+                if (!confirm(`Tienes ${unanswered} preguntas sin responder. ¿Deseas finalizar la prueba de todos modos?`)) {
+                    return;
+                }
+            }
+            finishTest();
+        }
+
+        // FINISH & CALCULATE RESULTS
+        function finishTest() {
+            clearInterval(timerInterval);
+
+            // Hide test screen, show results
+            document.getElementById("screen-test").classList.add("hidden");
+            document.getElementById("screen-results").classList.remove("hidden");
+
+            // Compute metrics
+            let correctCount = 0;
+            const domainScores = {};
+
+            questionsData.forEach((q, idx) => {
+                if (!domainScores[q.category]) {
+                    domainScores[q.category] = { correct: 0, total: 0 };
+                }
+                domainScores[q.category].total++;
+
+                if (userAnswers[idx] === q.answer) {
+                    correctCount++;
+                    domainScores[q.category].correct++;
+                }
+            });
+
+            // Calculate Estimated CI Score (Base 100, SD 15, Max ~145)
+            // Raw score 0-50 maps to CI range ~70 to 142
+            const rawRatio = correctCount / questionsData.length;
+            const estimatedCI = Math.round(70 + (rawRatio * 72));
+
+            // Rank Interpretation
+            let rankText = "Promedio";
+            if (estimatedCI >= 130) rankText = "Muy Superior / Altas Capacidades (Percentil 98+)";
+            else if (estimatedCI >= 120) rankText = "Superior (Percentil 90-97)";
+            else if (estimatedCI >= 110) rankText = "Promedio Alto (Percentil 75-89)";
+            else if (estimatedCI >= 90) rankText = "Promedio Normal (Percentil 25-74)";
+            else rankText = "Promedio Bajo (Percentil <25)";
+
+            // Calculate Elapsed Time
+            const totalSecondsUsed = (45 * 60) - timeRemaining;
+            const usedMin = Math.floor(totalSecondsUsed / 60);
+            const usedSec = totalSecondsUsed % 60;
+            const accuracy = Math.round((correctCount / questionsData.length) * 100);
+
+            // Update Result UI
+            document.getElementById("score-ci").innerText = estimatedCI;
+            document.getElementById("score-rank").innerText = rankText;
+            document.getElementById("score-raw").innerText = `${correctCount} / 50`;
+            document.getElementById("bar-raw").style.width = `${(correctCount / 50) * 100}%`;
+            
+            document.getElementById("score-time").innerText = `${usedMin}m ${usedSec}s`;
+            document.getElementById("score-accuracy").innerText = `${accuracy}%`;
+            document.getElementById("bar-accuracy").style.width = `${accuracy}%`;
+
+            // Render Domain Breakdown
+            const domainContainer = document.getElementById("domain-breakdown");
+            domainContainer.innerHTML = "";
+
+            Object.keys(domainScores).forEach(cat => {
+                const data = domainScores[cat];
+                const pct = Math.round((data.correct / data.total) * 100);
+
+                const item = document.createElement("div");
+                item.className = "space-y-1";
+                item.innerHTML = `
+                    <div class="flex justify-between text-xs font-medium">
+                        <span class="text-slate-300">${cat}</span>
+                        <span class="text-indigo-400 font-bold">${data.correct}/${data.total} (${pct}%)</span>
+                    </div>
+                    <div class="w-full bg-slate-800 rounded-full h-2 overflow-hidden">
+                        <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full" style="width: ${pct}%"></div>
+                    </div>
+                `;
+                domainContainer.appendChild(item);
+            });
+        }
+
+        // RESTART TEST
+        function restartTest() {
+            currentQuestion = 0;
+            userAnswers = new Array(questionsData.length).fill(null);
+            timeRemaining = 45 * 60;
+
+            document.getElementById("screen-results").classList.add("hidden");
+            document.getElementById("screen-welcome").classList.remove("hidden");
+            document.getElementById("timer-badge").classList.add("hidden");
+        }
+    </script>
+</body>
+</html>
