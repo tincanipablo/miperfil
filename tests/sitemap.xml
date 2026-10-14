@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Página principal de la sección de tests -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-mx" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-ar" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-co" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-cl" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-pe" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-ve" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-ec" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="es-es" href="https://tincanipablo.github.io/miperfil/tests/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tincanipablo.github.io/miperfil/tests/"/>
+  </url>
+
+  <!-- IQ & Tech Logic Test - 60 preguntas -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/evaluaci_n_de_inteligencia_y_l_gica.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- IT Logic & Agility IQ Test - 30 preguntas -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/it_intelligence_agility_test.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Evaluación Cognitiva Senior 40-60 años - 50 preguntas -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_ci_profesional_40_60.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Test CI & SocioCognitivo - 50 preguntas -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_de_ci_general_y_sociocognitivo.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Test Cognitivo Nivel Intermedio - 25 preguntas (adultos mayores) -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_de_estimulaci_n_cognitiva_inicial.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>

@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Inteligencia y Agilidad Mental IT</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .code-font { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-sky-500 selection:text-white">
+
+    <!-- Header Navigation -->
+    <header class="border-b border-slate-800 bg-slate-900/80 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-sky-500/10 border border-sky-500/30 rounded-lg text-sky-400">
+                    <i class="fa-solid fa-brain text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight bg-gradient-to-r from-sky-400 to-indigo-400 bg-clip-text text-transparent">IT Logic & Agility IQ Test</h1>
+                    <p class="text-xs text-slate-400">Redes • Programación • Calendarios & SLA • Obligaciones IT</p>
+                </div>
+            </div>
+
+            <!-- Header Controls & Stats -->
+            <div class="flex items-center space-x-4">
+                <div id="timer-display" class="hidden items-center space-x-2 bg-slate-800 px-3 py-1.5 rounded-lg border border-slate-700 text-sky-400 font-mono text-sm">
+                    <i class="fa-regular fa-clock animate-pulse"></i>
+                    <span id="timer">00:00</span>
+                </div>
+                <button id="history-btn" onclick="toggleHistoryModal()" class="px-3 py-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 text-slate-300 text-xs font-medium transition flex items-center space-x-1.5">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <span class="hidden sm:inline">Historial</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 py-8 w-full flex-grow">
+
+        <!-- WELCOME / DASHBOARD VIEW -->
+        <div id="view-welcome" class="space-y-8">
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-10 relative overflow-hidden shadow-xl">
+                <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-sky-500/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 space-y-6">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-medium">
+                        <i class="fa-solid fa-terminal text-xs"></i>
+                        <span>Evaluación de Capacidad Analítica e IT</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                        Mantén activa tu agilidad mental profesional
+                    </h2>
+                    <p class="text-slate-400 max-w-2xl text-sm sm:text-base leading-relaxed">
+                        Este test consta de <span class="text-sky-400 font-semibold">30 preguntas únicas</span> basadas en fundamentos de <strong class="text-slate-200">redes Cisco/TCP-IP</strong>, <strong class="text-slate-200">lógica de programación y estructuras de datos</strong>, <strong class="text-slate-200">cálculos temporales y calendarios de IT</strong>, y <strong class="text-slate-200">gestión de SLA y guardias</strong>.
+                    </p>
+
+                    <!-- Feature Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 py-4">
+                        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-network-wired text-sky-400 text-xl mb-2"></i>
+                            <h3 class="font-semibold text-sm text-slate-200">Redes y Comandos</h3>
+                            <p class="text-xs text-slate-400 mt-1">IPs, subredes VLSM, IOS Cisco, puertos y protocolos.</p>
+                        </div>
+                        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-code text-indigo-400 text-xl mb-2"></i>
+                            <h3 class="font-semibold text-sm text-slate-200">Lógica y Algoritmos</h3>
+                            <p class="text-xs text-slate-400 mt-1">Diagramas de flujo, compilación vs interpretación, LIFO/FIFO.</p>
+                        </div>
+                        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                            <i class="fa-regular fa-calendar-check text-emerald-400 text-xl mb-2"></i>
+                            <h3 class="font-semibold text-sm text-slate-200">Fechas y Calendarios</h3>
+                            <p class="text-xs text-slate-400 mt-1">Cálculo de caducidad SSL, ventanas de mantenimiento y despliegues.</p>
+                        </div>
+                        <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                            <i class="fa-solid fa-user-shield text-amber-400 text-xl mb-2"></i>
+                            <h3 class="font-semibold text-sm text-slate-200">Obligaciones IT & SLA</h3>
+                            <p class="text-xs text-slate-400 mt-1">Guardias rotativas, acuerdos SLA (99.9%) y gestión de incidencias.</p>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+                        <button onclick="startTest('step')" class="flex-1 sm:flex-none px-6 py-3.5 bg-sky-600 hover:bg-sky-500 text-white font-semibold rounded-xl transition shadow-lg shadow-sky-600/20 flex items-center justify-center space-x-2">
+                            <span>Comenzar Test (Paso a Paso)</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </button>
+                        <button onclick="startTest('full')" class="flex-1 sm:flex-none px-6 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold rounded-xl border border-slate-700 transition flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-list-check text-xs"></i>
+                            <span>Modo Completo (Todas las preguntas)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats & Previous Record Overview -->
+            <div id="welcome-stats" class="hidden bg-slate-900 border border-slate-800 rounded-2xl p-6">
+                <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">Tu Último Resultado</h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-500">CI Estimado / Agilidad</div>
+                        <div id="stat-iq" class="text-2xl font-bold text-sky-400 mt-1">--</div>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-500">Puntuación</div>
+                        <div id="stat-score" class="text-2xl font-bold text-indigo-400 mt-1">--/30</div>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-500">Precisión</div>
+                        <div id="stat-acc" class="text-2xl font-bold text-emerald-400 mt-1">--%</div>
+                    </div>
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+                        <div class="text-xs text-slate-500">Tiempo Empleado</div>
+                        <div id="stat-time" class="text-2xl font-bold text-amber-400 mt-1">--:--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TEST VIEW (STEP OR FULL) -->
+        <div id="view-test" class="hidden space-y-6">
+            <!-- Progress Bar -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="w-full flex-1">
+                    <div class="flex justify-between text-xs text-slate-400 mb-1.5">
+                        <span id="progress-text">Pregunta 1 de 30</span>
+                        <span id="progress-percent">3%</span>
+                    </div>
+                    <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="bg-gradient-to-r from-sky-500 to-indigo-500 h-full w-[3%] transition-all duration-300"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questions Container -->
+            <div id="questions-container" class="space-y-6">
+                <!-- Dynamically Inserted Question Cards -->
+            </div>
+
+            <!-- Navigation Controls -->
+            <div id="test-nav" class="flex justify-between items-center bg-slate-900 border border-slate-800 rounded-xl p-4">
+                <button id="btn-prev" onclick="navigateQuestion(-1)" class="px-4 py-2 rounded-lg border border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700 text-sm font-medium transition disabled:opacity-40 disabled:cursor-not-allowed">
+                    <i class="fa-solid fa-chevron-left mr-1.5"></i> Anterior
+                </button>
+                <div class="flex space-x-2">
+                    <button id="btn-next" onclick="navigateQuestion(1)" class="px-5 py-2 rounded-lg bg-sky-600 hover:bg-sky-500 text-white text-sm font-medium transition">
+                        Siguiente <i class="fa-solid fa-chevron-right ml-1.5"></i>
+                    </button>
+                    <button id="btn-submit" onclick="finishTest()" class="hidden px-6 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold transition shadow-lg shadow-emerald-600/20">
+                        Finalizar Test <i class="fa-solid fa-check ml-1.5"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RESULTS & REVIEW VIEW -->
+        <div id="view-results" class="hidden space-y-8">
+            <!-- Score Card Header -->
+            <div class="bg-gradient-to-br from-slate-900 via-slate-900 to-slate-800 border border-slate-800 rounded-2xl p-6 sm:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
+                    <i class="fa-solid fa-square-check"></i>
+                    <span>Evaluación Completada</span>
+                </div>
+                
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white">Resultado de Agilidad e Inteligencia IT</h2>
+                    <p class="text-slate-400 text-sm mt-1">Análisis basado en respuestas correctas y tiempo de razonamiento</p>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-3xl mx-auto py-2">
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Índice CI / Agilidad</span>
+                        <span id="result-iq" class="text-3xl font-extrabold text-sky-400">115</span>
+                        <span id="result-iq-label" class="text-[10px] text-sky-300/80 block mt-0.5">Por encima del promedio</span>
+                    </div>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Aciertos</span>
+                        <span id="result-score" class="text-3xl font-extrabold text-indigo-400">25 / 30</span>
+                        <span id="result-percent" class="text-[10px] text-indigo-300/80 block mt-0.5">83% acierto</span>
+                    </div>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Tiempo Utilizado</span>
+                        <span id="result-time" class="text-3xl font-extrabold text-amber-400">08:45</span>
+                        <span class="text-[10px] text-amber-300/80 block mt-0.5">Promedio: 17s / preg</span>
+                    </div>
+                    <div class="bg-slate-950/80 p-4 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-400 block mb-1">Nivel Profesional</span>
+                        <span id="result-level" class="text-lg font-bold text-emerald-400 mt-2 block">SysAdmin Senior</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4 pt-2">
+                    <button onclick="resetTest()" class="px-6 py-2.5 bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold rounded-xl transition flex items-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Repetir Test</span>
+                    </button>
+                    <button onclick="scrollToReview()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold rounded-xl border border-slate-700 transition flex items-center space-x-2">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <span>Revisar Explicaciones Detalladas</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detailed Review Section -->
+            <div id="review-section" class="space-y-6">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <h3 class="text-xl font-bold text-white flex items-center space-x-2">
+                        <i class="fa-solid fa-book-open text-sky-400"></i>
+                        <span>Desglose de Respuestas y Explicaciones Técnicas</span>
+                    </h3>
+                    <span class="text-xs text-slate-400">Basado en documentación técnica oficial</span>
+                </div>
+
+                <div id="review-container" class="space-y-6">
+                    <!-- Detailed Answers Inserted Here -->
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- History Modal -->
+    <div id="history-modal" class="hidden fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <h3 class="font-bold text-lg text-white flex items-center space-x-2">
+                    <i class="fa-solid fa-clock-rotate-left text-sky-400"></i>
+                    <span>Historial de Intentos</span>
+                </h3>
+                <button onclick="toggleHistoryModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <div id="history-list" class="max-h-60 overflow-y-auto space-y-2 pr-1">
+                <!-- History Items -->
+            </div>
+            <div class="pt-2 flex justify-between items-center border-t border-slate-800">
+                <button onclick="clearHistory()" class="text-xs text-red-400 hover:text-red-300">Borrar Historial</button>
+                <button onclick="toggleHistoryModal()" class="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded-lg">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-slate-900/40 py-4 mt-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+            Test de CI e Inteligencia IT • Evaluación de Rendimiento Lógico y Redes
+        </div>
+    </footer>
+
+    <!-- LOGIC & QUESTIONS SCRIPT -->
+    <script>
+        // QUESTION BANK (30 Unique, Complete Questions with SVG Diagrams & Explanations)
+        const questionsData = [
+            // CATEGORY 1: REDES & COMANDOS CISCO
+            {
+                id: 1,
+                category: "Redes",
+                question: "¿Cuál es la función principal de la dirección IP de loopback local '127.0.0.1'?",
+                options: [
+                    "Asignar dinámicamente direcciones IP a los clientes de la red LAN.",
+                    "Probar la pila de protocolos TCP/IP del propio dispositivo local sin enviar tráfico a la red.",
+                    "Permitir el acceso remoto seguro a través de la interfaz de consola del router.",
+                    "Identificar la dirección broadcast de una subred de Clase C."
+                ],
+                correct: 1,
+                explanation: "La IP 127.0.0.1 es la dirección de loopback estándar en IPv4. Permite que el sistema operativo se comunique consigo mismo para verificar que la pila TCP/IP interna funciona correctamente."
+            },
+            {
+                id: 2,
+                category: "Redes",
+                question: "¿Qué protocolo de red se encarga de traducir un nombre de dominio (como 'servidor.empresa.com') a su correspondiente dirección IP?",
+                options: [
+                    "DHCP (Dynamic Host Configuration Protocol)",
+                    "ARP (Address Resolution Protocol)",
+                    "DNS (Domain Name System)",
+                    "ICMP (Internet Control Message Protocol)"
+                ],
+                correct: 2,
+                explanation: "DNS (Domain Name System) es el servicio encargado de resolver nombres de dominio legibles por humanos en direcciones IP numéricas necesarias para el enrutamiento."
+            },
+            {
+                id: 3,
+                category: "Redes",
+                question: "¿Por qué se prefiere utilizar SSH en lugar de Telnet para el acceso remoto a la administración de un router o switch?",
+                options: [
+                    "SSH es un protocolo sin conexión más rápido que opera en el puerto 80.",
+                    "Telnet requiere un cable especial 'Rollover', mientras que SSH funciona por fibra óptica.",
+                    "SSH cifra toda la sesión de comunicación (incluidas contraseñas), mientras que Telnet transmite en texto plano.",
+                    "Telnet solo permite conexiones de lectura y no puede ejecutar el comando 'configure terminal'."
+                ],
+                correct: 2,
+                explanation: "SSH (puerto 22) utiliza cifrado para proteger credenciales y comandos. Telnet (puerto 23) envía toda la información en texto plano, siendo vulnerable a captura de paquetes."
+            },
+            {
+                id: 4,
+                category: "Redes",
+                question: "En un router Cisco con interfaz GigabitEthernet0/0, ¿qué efecto tiene ejecutar el comando 'no shutdown'?",
+                options: [
+                    "Reinicia el router borrando la configuración actual.",
+                    "Desactiva administrativamente la interfaz para ahorrar energía.",
+                    "Activa o habilita administrativamente la interfaz para que pueda transmitir tráfico.",
+                    "Muestra un resumen rápido de las direcciones IP asignadas."
+                ],
+                correct: 2,
+                explanation: "Por defecto, las interfaces de un router Cisco están apagadas ('shutdown'). El comando 'no shutdown' las habilita administrativamente."
+            },
+            {
+                id: 5,
+                category: "Redes",
+                question: "¿Qué comando en un router/switch Cisco guarda la configuración activa (RAM) en la memoria no volátil (NVRAM) para que no se pierda al reiniciar?",
+                options: [
+                    "copy startup-config running-config",
+                    "copy running-config startup-config",
+                    "save memory nvram",
+                    "write erase"
+                ],
+                correct: 1,
+                explanation: "'copy running-config startup-config' copias los cambios de la RAM activa a la NVRAM permanentemente. (Equivalente al clásico 'write memory')."
+            },
+            {
+                id: 6,
+                category: "Redes",
+                question: "¿Cuál es el número máximo de hosts direccionables en una subred con máscara estándar 255.255.255.0 (/24)?",
+                options: [
+                    "256 hosts",
+                    "255 hosts",
+                    "254 hosts",
+                    "512 hosts"
+                ],
+                correct: 2,
+                explanation: "Una máscara /24 dispone de 8 bits para hosts (2^8 = 256). Se restan 2 direcciones: la dirección de red (primera) y la dirección de broadcast (última), quedando 254 IPs útiles."
+            },
+            {
+                id: 7,
+                category: "Redes",
+                question: "Observa la siguiente topología simplificada. ¿Cuál es el dispositivo responsable de conectar diferentes redes lógicas/subredes entre sí?",
+                svg: `<svg class="w-full max-w-md mx-auto h-28 my-2" viewBox="0 0 400 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="20" y="30" width="80" height="40" rx="6" fill="#1e293b" stroke="#38bdf8" stroke-width="2"/>
+                    <text x="60" y="55" fill="#e2e8f0" font-size="12" text-anchor="middle">LAN A</text>
+                    <line x1="100" y1="50" x2="160" y2="50" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
+                    <circle cx="200" cy="50" r="25" fill="#0369a1" stroke="#38bdf8" stroke-width="2"/>
+                    <text x="200" y="54" fill="#ffffff" font-size="11" font-weight="bold" text-anchor="middle">Router</text>
+                    <line x1="240" y1="50" x2="300" y2="50" stroke="#64748b" stroke-width="2" stroke-dasharray="4"/>
+                    <rect x="300" y="30" width="80" height="40" rx="6" fill="#1e293b" stroke="#818cf8" stroke-width="2"/>
+                    <text x="340" y="55" fill="#e2e8f0" font-size="12" text-anchor="middle">LAN B</text>
+                </svg>`,
+                options: [
+                    "Un Conmutador / Switch L2",
+                    "Un Enrutador / Router",
+                    "Un Hub de repetición",
+                    "Un Access Point inalámbrico"
+                ],
+                correct: 1,
+                explanation: "El Router es el dispositivo de Capa 3 del modelo OSI diseñado para interconectar redes o subredes lógicas diferentes analizando las direcciones IP de destino."
+            },
+            {
+                id: 8,
+                category: "Redes",
+                question: "¿Cuál de los siguientes rangos de direcciones IP corresponde a una dirección IP privada de Clase A?",
+                options: [
+                    "192.168.0.0 – 192.168.255.255",
+                    "172.16.0.0 – 172.31.255.255",
+                    "10.0.0.0 – 10.255.255.255",
+                    "127.0.0.0 – 127.255.255.255"
+                ],
+                correct: 2,
+                explanation: "El rango reservado RFC 1918 para redes privadas de Clase A es 10.0.0.0/8 (10.0.0.0 a 10.255.255.255)."
+            },
+
+            // CATEGORY 2: PROGRAMACIÓN & ALGORITMOS
+            {
+                id: 9,
+                category: "Programación",
+                question: "¿Cuál es la diferencia fundamental entre un Lenguaje Intérprete y un Lenguaje Compilado?",
+                options: [
+                    "El intérprete genera un archivo ejecutable (.exe) directo, mientras que el compilador no.",
+                    "El intérprete traduce y ejecuta el código línea por línea en tiempo real, mientras que el compilador traduce todo el código fuente a código máquina antes de la ejecución.",
+                    "Los lenguajes compilados no permiten usar estructuras repetitivas como for o while.",
+                    "El intérprete solo detecta errores de sintaxis al finalizar todo el programa."
+                ],
+                correct: 1,
+                explanation: "Un intérprete lee y ejecuta el código instrucción por instrucción y se detiene al encontrar un error. Un compilador procesa todo el programa de una vez generando un archivo binario independiente."
+            },
+            {
+                id: 10,
+                category: "Programación",
+                question: "En un diagrama de flujo de programación estándar, ¿qué representa la figura geométrica del ROMBO?",
+                svg: `<svg class="w-full max-w-xs mx-auto h-24 my-2" viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <polygon points="100,10 160,40 100,70 40,40" fill="#0284c7" stroke="#38bdf8" stroke-width="2"/>
+                    <text x="100" y="44" fill="#ffffff" font-size="12" font-weight="bold" text-anchor="middle">¿ x > 10 ?</text>
+                </svg>`,
+                options: [
+                    "Inicio o Fin del algoritmo (Terminal)",
+                    "Un proceso o cálculo aritmético",
+                    "Una Toma de Decisión / Condicional (evaluación lógica)",
+                    "Entrada/Salida de datos por teclado"
+                ],
+                correct: 2,
+                explanation: "El rombo representa una decisión condicional (if/else). Tiene una entrada y dos salidas posibles (Sí/No, Verdadero/Falso)."
+            },
+            {
+                id: 11,
+                category: "Programación",
+                question: "En lenguaje C y Java, ¿qué función cumple el operador lógico '||'?",
+                options: [
+                    "Operador de conjunción lógica AND (ambas condiciones deben ser verdaderas).",
+                    "Operador de disyunción lógica OR (al menos una condición debe ser verdadera).",
+                    "Operador de comparación de desigualdad 'distinto de'.",
+                    "Operador de concatenación de cadenas de texto."
+                ],
+                correct: 1,
+                explanation: "El operador '||' representa el OR lógico. Retorna verdadero si cualquiera de las expresiones evaluadas a sus lados es verdadera."
+            },
+            {
+                id: 12,
+                category: "Programación",
+                question: "¿Cuál es la secuencia ORDENADA de fases en el proceso estándar de desarrollo de software?",
+                options: [
+                    "Codificación, Definición, Diseño, Compilación, Explotación.",
+                    "Definición, Diseño, Codificación, Compilación, Depuración y Explotación.",
+                    "Diseño, Definición, Compilación, Depuración, Codificación.",
+                    "Explotación, Depuración, Codificación, Diseño, Definición."
+                ],
+                correct: 1,
+                explanation: "El ciclo clásico de programación inicia con la Definición del problema, el Diseño del algoritmo, la Codificación en lenguaje fuente, Compilación, Depuración de errores y finalmente Explotación/Mantenimiento."
+            },
+            {
+                id: 13,
+                category: "Programación",
+                question: "En el lenguaje de programación C, ¿cuál es la diferencia clave de ámbito (scope) entre una variable declarada DENTRO de una función y una fuera de ella?",
+                options: [
+                    "Las declaradas dentro son globales y las de fuera se borran al ejecutar el main().",
+                    "Las declaradas antes del main() son globales y perduran toda la ejecución; las declaradas dentro de una función son locales y se destruyen al finalizar dicha función.",
+                    "No existe diferencia de ámbito en C, todas las variables son públicas.",
+                    "Las variables locales consumen memoria ROM mientras que las globales usan registros del CPU."
+                ],
+                correct: 1,
+                explanation: "Las variables globales (fuera de funciones) existen durante todo el ciclo del programa. Las variables locales (dentro de funciones) tienen alcance restringido a su bloque de código."
+            },
+            {
+                id: 14,
+                category: "Programación",
+                question: "¿Qué tipo de estructura de datos sigue el principio LIFO (Last In, First Out - Último en entrar, Primero en salir)?",
+                svg: `<svg class="w-full max-w-xs mx-auto h-28 my-2" viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="70" y="20" width="60" height="70" rx="4" fill="#1e293b" stroke="#818cf8" stroke-width="2"/>
+                    <rect x="75" y="65" width="50" height="18" rx="2" fill="#6366f1"/>
+                    <rect x="75" y="42" width="50" height="18" rx="2" fill="#818cf8"/>
+                    <rect x="75" y="25" width="50" height="15" rx="2" fill="#a5b4fc"/>
+                    <path d="M100,5 L100,20 M95,12 L100,20 L105,12" stroke="#38bdf8" stroke-width="2" fill="none"/>
+                </svg>`,
+                options: [
+                    "Cola (Queue)",
+                    "Pila (Stack)",
+                    "Lista Enlazada Doble",
+                    "Árbol Binario de Búsqueda"
+                ],
+                correct: 1,
+                explanation: "Una Pila (Stack) es una estructura LIFO donde el último elemento apilado (push) es el primero en ser desapilado (pop)."
+            },
+            {
+                id: 15,
+                category: "Programación",
+                question: "Analiza el siguiente bucle en C: `for(int i=0; i<5; i++) { printf(\"%d \", i); }`. ¿Cuál será la salida por pantalla?",
+                options: [
+                    "1 2 3 4 5",
+                    "0 1 2 3 4",
+                    "0 1 2 3 4 5",
+                    "1 2 3 4"
+                ],
+                correct: 1,
+                explanation: "El contador `i` empieza en 0. El bucle se ejecuta mientras `i < 5` (es decir, para i=0, 1, 2, 3, 4). Al llegar a 5 la condición es falsa y finaliza."
+            },
+            {
+                id: 16,
+                category: "Programación",
+                question: "En C, ¿qué tipo de datos se utiliza para almacenar números reales con precisión de decimales simples?",
+                options: [
+                    "int",
+                    "char",
+                    "float",
+                    "void"
+                ],
+                correct: 2,
+                explanation: "`float` es el tipo estándar para números en coma flotante de precisión simple. `int` es para enteros y `char` para caracteres."
+            },
+
+            // CATEGORY 3: FECHAS, CALENDARIOS Y PLANIFICACIÓN IT
+            {
+                id: 17,
+                category: "Fechas & IT",
+                question: "Un certificado SSL/TLS de producción se renueva el 15 de Octubre de un año no bisiesto y tiene una validez estricta de 90 días. ¿En qué mes vencerá dicho certificado?",
+                options: [
+                    "Diciembre",
+                    "Enero",
+                    "Febrero",
+                    "Marzo"
+                ],
+                correct: 1,
+                explanation: "Octubre tiene 31 días (quedan 16 días). Noviembre tiene 30 días. Diciembre tiene 31 días. 16 (Oct) + 30 (Nov) + 31 (Dic) = 77 días transcurridos al 31 de Dic. Faltan 13 días, por lo que vence el 13 de Enero."
+            },
+            {
+                id: 18,
+                category: "Fechas & IT",
+                question: "Una política de mantenimiento establece que las copias de respaldo completas se ejecutan 'El tercer martes de cada mes'. Si el día 1 de un mes cae en MÉRCOLES, ¿qué día del mes será el tercer martes?",
+                options: [
+                    "Día 14",
+                    "Día 21",
+                    "Día 15",
+                    "Día 20"
+                ],
+                correct: 1,
+                explanation: "Si el 1 es miércoles, el primer martes cae el día 7. El segundo martes es el día 14 (7+7). El tercer martes es el día 21 (14+7)."
+            },
+            {
+                id: 19,
+                category: "Fechas & IT",
+                question: "Un equipo de desarrollo programa un despliegue crítico de software dentro de exactamente 100 días laborales (excluyendo sábados y domingos). Si el trabajo comienza un lunes 1 de un mes de 30 días, ¿cuántas semanas completas de 5 días de trabajo abarca este periodo?",
+                options: [
+                    "15 semanas",
+                    "20 semanas",
+                    "10 semanas",
+                    "25 semanas"
+                ],
+                correct: 1,
+                explanation: "Cada semana laboral tiene 5 días hábiles. 100 días laborales / 5 días por semana = exactamente 20 semanas completas."
+            },
+            {
+                id: 20,
+                category: "Fechas & IT",
+                question: "Un sistema de logs elimina registros antiguos que superen los 180 días. Si hoy es 1 de Julio, ¿aproximadamente de qué mes serán los logs más antiguos que aún se conservan?",
+                options: [
+                    "Febrero / Marzo",
+                    "Enero / Diciembre",
+                    "Mayo",
+                    "Agosto del año pasado"
+                ],
+                correct: 1,
+                explanation: "180 días equivalen a 6 meses de 30 días. Contando 6 meses hacia atrás desde el 1 de Julio (Junio, Mayo, Abril, Marzo, Febrero, Enero), los logs conservados se remontan a Enero."
+            },
+            {
+                id: 21,
+                category: "Fechas & IT",
+                question: "Un plan de rotación de contraseñas de servicio obliga al cambio cada 45 días. Si el último cambio fue el 1 de Febrero en un año bisiesto (Febrero tiene 29 días), ¿qué día de Marzo vencerá la clave?",
+                options: [
+                    "16 de Marzo",
+                    "17 de Marzo",
+                    "18 de Marzo",
+                    "15 de Marzo"
+                ],
+                correct: 1,
+                explanation: "De Febrero quedan 28 días tras el día 1 (29 - 1 = 28 días). Para llegar a 45 días: 45 - 28 = 17. Por tanto, la clave vence el 17 de Marzo."
+            },
+            {
+                id: 22,
+                category: "Fechas & IT",
+                question: "Un contrato de soporte exige parches de seguridad aplicados en un máximo de 72 horas desde su publicación. Si un parche crítico se publica un viernes a las 18:00 h, ¿cuál es el límite exacto para aplicarlo?",
+                options: [
+                    "Sábado a las 18:00 h",
+                    "Lunes a las 18:00 h",
+                    "Martes a las 09:00 h",
+                    "Domingo a las 23:59 h"
+                ],
+                correct: 1,
+                explanation: "72 horas equivalen a 3 días completos (3 x 24h). Viernes 18:00 + 3 días = Lunes a las 18:00 h."
+            },
+
+            // CATEGORY 4: OBLIGACIONES IT, GUARDIA & SLA
+            {
+                id: 23,
+                category: "Obligaciones IT",
+                question: "Un acuerdo de Nivel de Servicio (SLA) garantiza una disponibilidad del 99.9% anual para un servidor web crítico. ¿Cuál es el tiempo MÁXIMO aproximado de caída no planificada permitido al año? (365 días = 8760 horas)",
+                options: [
+                    "Aproximadamente 87 horas",
+                    "Aproximadamente 8.76 horas (unas 8h 45m)",
+                    "Aproximadamente 45 minutos",
+                    "Exactamente 24 horas"
+                ],
+                correct: 1,
+                explanation: "Disponibilidad 99.9% implica una indisponibilidad del 0.1%. El 0.1% de 8,760 horas es 8.76 horas al año (alrededor de 8 horas y 45 minutos)."
+            },
+            {
+                id: 24,
+                category: "Obligaciones IT",
+                question: "Un equipo de 4 ingenieros IT realiza guardias de soporte semanal rotativas (7 días continuos de viernes a las 17:00h a viernes siguiente). Si el Ingeniero A inicia su guardia el viernes 2 de mayo, ¿cuándo comenzará su SIGUIENTE turno de guardia?",
+                options: [
+                    "Viernes 9 de mayo",
+                    "Viernes 16 de mayo",
+                    "Viernes 23 de mayo",
+                    "Viernes 30 de mayo"
+                ],
+                correct: 3,
+                explanation: "Con 4 ingenieros rotando 1 semana cada uno, el ciclo completo dura 4 semanas (28 días). Semana 1: Ing A (2 mayo), Sem 2: Ing B (9 mayo), Sem 3: Ing C (16 mayo), Sem 4: Ing D (23 mayo). El Ing A vuelve el 30 de mayo."
+            },
+            {
+                id: 25,
+                category: "Obligaciones IT",
+                question: "Durante un incidente grave (Sev-1) de caída de la red corporativa, ¿cuál es la primera obligación operativa según las buenas prácticas ITIL/IT?",
+                options: [
+                    "Buscar inmediatamente al programador que cometió el error para sancionarlo.",
+                    "Restablecer el servicio lo antes posible (mitigación/workaround) y comunicar el estado a los interesados.",
+                    "Reescribir todo el código fuente del sistema afectado desde cero.",
+                    "Apagar todos los routers sin guardar los registros de auditoría."
+                ],
+                correct: 1,
+                explanation: "En la gestión de incidentes graves, la prioridad absoluta es restaurar la operación normal del servicio a la brevedad y mantener la comunicación. El análisis de causa raíz (RCA) se realiza a posteriori."
+            },
+            {
+                id: 26,
+                category: "Obligaciones IT",
+                question: "Si el tiempo medio de reparación (MTTR - Mean Time to Repair) de una infraestructura es de 2 horas y el tiempo medio entre fallos (MTBF) es de 1000 horas, ¿qué métrica refleja el MTTR?",
+                options: [
+                    "La frecuencia con la que se producen los fallos.",
+                    "El tiempo promedio necesario para diagnosticar y solucionar una avería.",
+                    "El tiempo máximo que una guardia de IT dura sin recibir alertas.",
+                    "El rendimiento de la tasa de transferencia de la red."
+                ],
+                correct: 1,
+                explanation: "MTTR representa el tiempo medio requerido para reparar un sistema averiado y devolverlo a su estado operativo."
+            },
+            {
+                id: 27,
+                category: "Obligaciones IT",
+                question: "¿Cuál de las siguientes tareas forma parte de las obligaciones normativas clave de Auditoría y Seguridad IT?",
+                options: [
+                    "Compartir la contraseña de administrador con todos los empleados para agilizar las tareas.",
+                    "Mantener un registro (logs) de accesos y realizar copias de seguridad probadas periódicamente.",
+                    "Desactivar el cortafuegos (firewall) para acelerar las descargas.",
+                    "Evitar aplicar actualizaciones del sistema operativo para no cambiar la interfaz."
+                ],
+                correct: 1,
+                explanation: "La gestión de logs de acceso, trazabilidad y verificación de backups son pilares fundamentales para el cumplimiento normativo de seguridad e historia de auditoría en IT."
+            },
+            {
+                id: 28,
+                category: "Obligaciones IT",
+                question: "Un contrato SLA define que un incidente de Prioridad Alta debe atenderse en menos de 15 minutos (Tiempo de Respuesta) y resolverse en menos de 4 horas. Si una alerta entra a las 10:10 h, ¿cuál es el límite para el primer acuse de recibo y atención?",
+                options: [
+                    "10:25 h",
+                    "14:10 h",
+                    "11:00 h",
+                    "10:15 h"
+                ],
+                correct: 0,
+                explanation: "El Tiempo de Respuesta es de 15 minutos. 10:10 h + 15 min = 10:25 h. El límite de resolución definitiva sería las 14:10 h."
+            },
+
+            // CATEGORY 5: AGILIDAD LÓGICA & PUZZLES DE PROGRAMADOR
+            {
+                id: 29,
+                category: "Agilidad Lógica",
+                question: "¿Cuál es el resultado de la expresión condicional ternaria en C/JS: `int x = (5 > 3 && 8 < 10) ? 20 : 40;`?",
+                options: [
+                    "40",
+                    "20",
+                    "True",
+                    "5"
+                ],
+                correct: 1,
+                explanation: "(5 > 3) es verdadero Y (8 < 10) es verdadero. Verdadero && Verdadero es Verdadero. Al evaluarse como verdadero, se asigna el primer valor después del '?': 20."
+            },
+            {
+                id: 30,
+                category: "Agilidad Lógica",
+                question: "Analiza la siguiente serie de IPs de una regla de enrutamiento: 10.0.1.0, 10.0.2.0, 10.0.4.0, 10.0.8.0... ¿Cuál es la siguiente dirección lógica en la secuencia?",
+                options: [
+                    "10.0.10.0",
+                    "10.0.12.0",
+                    "10.0.16.0",
+                    "10.0.32.0"
+                ],
+                correct: 2,
+                explanation: "El tercer octeto sigue una progresión geométrica basada en potencias de 2 (2^0=1, 2^1=2, 2^2=4, 2^3=8). La siguiente potencia es 2^4 = 16. Por tanto, la IP es 10.0.16.0."
+            }
+        ];
+
+        // APP STATE
+        let currentMode = 'step'; // 'step' or 'full'
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // { qId: optionIndex }
+        let timerInterval = null;
+        let secondsElapsed = 0;
+
+        // INITIALIZATION
+        window.onload = function() {
+            loadStatsFromStorage();
+        };
+
+        function startTest(mode) {
+            currentMode = mode;
+            currentQuestionIndex = 0;
+            userAnswers = {};
+            secondsElapsed = 0;
+
+            // Update UI Views
+            document.getElementById('view-welcome').classList.add('hidden');
+            document.getElementById('view-results').classList.add('hidden');
+            document.getElementById('view-test').classList.remove('hidden');
+            document.getElementById('timer-display').classList.remove('hidden');
+            document.getElementById('timer-display').classList.add('flex');
+
+            startTimer();
+            renderQuestions();
+            updateProgress();
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                secondsElapsed++;
+                const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+                const secs = String(secondsElapsed % 60).padStart(2, '0');
+                document.getElementById('timer').innerText = `${mins}:${secs}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            clearInterval(timerInterval);
+        }
+
+        function renderQuestions() {
+            const container = document.getElementById('questions-container');
+            container.innerHTML = '';
+
+            if (currentMode === 'step') {
+                // Render only current question
+                const q = questionsData[currentQuestionIndex];
+                container.appendChild(createQuestionCard(q, currentQuestionIndex));
+                
+                // Show/hide navigation buttons
+                document.getElementById('test-nav').classList.remove('hidden');
+                document.getElementById('btn-prev').disabled = (currentQuestionIndex === 0);
+                
+                if (currentQuestionIndex === questionsData.length - 1) {
+                    document.getElementById('btn-next').classList.add('hidden');
+                    document.getElementById('btn-submit').classList.remove('hidden');
+                } else {
+                    document.getElementById('btn-next').classList.remove('hidden');
+                    document.getElementById('btn-submit').classList.add('hidden');
+                }
+            } else {
+                // Render all questions in full list
+                questionsData.forEach((q, idx) => {
+                    container.appendChild(createQuestionCard(q, idx));
+                });
+                
+                document.getElementById('btn-prev').classList.add('hidden');
+                document.getElementById('btn-next').classList.add('hidden');
+                document.getElementById('btn-submit').classList.remove('hidden');
+            }
+        }
+
+        function createQuestionCard(q, index) {
+            const card = document.createElement('div');
+            card.className = "bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 space-y-5 shadow-lg relative";
+            
+            const selectedOpt = userAnswers[q.id];
+
+            let svgContent = q.svg ? `<div class="bg-slate-950 p-4 rounded-xl border border-slate-800/80 my-3">${q.svg}</div>` : '';
+
+            card.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/10 border border-sky-500/30 text-sky-400">
+                        ${q.category}
+                    </span>
+                    <span class="text-xs text-slate-500 font-mono">Pregunta ${index + 1} de ${questionsData.length}</span>
+                </div>
+
+                <h3 class="text-base sm:text-lg font-medium text-slate-100 leading-snug">
+                    ${q.question}
+                </h3>
+
+                ${svgContent}
+
+                <div class="space-y-2.5 pt-2">
+                    ${q.options.map((opt, optIdx) => {
+                        const isChecked = (selectedOpt === optIdx) ? 'checked' : '';
+                        const activeBorder = (selectedOpt === optIdx) ? 'border-sky-500 bg-sky-500/10' : 'border-slate-800 hover:border-slate-700 bg-slate-950/50';
+                        return `
+                            <label onclick="selectOption(${q.id}, ${optIdx})" class="flex items-start space-x-3 p-3.5 rounded-xl border ${activeBorder} cursor-pointer transition">
+                                <input type="radio" name="q_${q.id}" value="${optIdx}" ${isChecked} class="mt-0.5 text-sky-500 focus:ring-sky-500 bg-slate-900 border-slate-700">
+                                <span class="text-xs sm:text-sm text-slate-300 leading-normal">${opt}</span>
+                            </label>
+                        `;
+                    }).join('')}
+                </div>
+            `;
+            return card;
+        }
+
+        function selectOption(questionId, optionIndex) {
+            userAnswers[questionId] = optionIndex;
+            updateProgress();
+            if (currentMode === 'step') {
+                renderQuestions();
+            }
+        }
+
+        function navigateQuestion(direction) {
+            currentQuestionIndex += direction;
+            if (currentQuestionIndex < 0) currentQuestionIndex = 0;
+            if (currentQuestionIndex >= questionsData.length) currentQuestionIndex = questionsData.length - 1;
+            
+            renderQuestions();
+            updateProgress();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateProgress() {
+            const answeredCount = Object.keys(userAnswers).length;
+            const total = questionsData.length;
+            const percent = Math.round((answeredCount / total) * 100);
+
+            document.getElementById('progress-bar').style.width = `${percent}%`;
+            document.getElementById('progress-percent').innerText = `${percent}%`;
+            
+            if (currentMode === 'step') {
+                document.getElementById('progress-text').innerText = `Pregunta ${currentQuestionIndex + 1} de ${total} (${answeredCount} respondidas)`;
+            } else {
+                document.getElementById('progress-text').innerText = `${answeredCount} de ${total} preguntas respondidas`;
+            }
+        }
+
+        function finishTest() {
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < questionsData.length) {
+                const confirmFinish = confirm(`Has respondido ${answeredCount} de 30 preguntas. ¿Deseas finalizar el test de todos modos?`);
+                if (!confirmFinish) return;
+            }
+
+            stopTimer();
+            calculateAndShowResults();
+        }
+
+        function calculateAndShowResults() {
+            let correctCount = 0;
+
+            questionsData.forEach(q => {
+                if (userAnswers[q.id] === q.correct) {
+                    correctCount++;
+                }
+            });
+
+            const percent = Math.round((correctCount / questionsData.length) * 100);
+            
+            // IQ Calculation Model: Base 85 + (Correct * 2) + Time Bonus (Max 15 pts if fast)
+            // Baseline ideal time: 15 seconds per question = 450s total.
+            let timeBonus = 0;
+            if (secondsElapsed < 600) { // Under 10 mins
+                timeBonus = Math.min(15, Math.floor((600 - secondsElapsed) / 25));
+            }
+            let estimatedIQ = Math.min(145, 80 + Math.round((correctCount / 30) * 50) + timeBonus);
+
+            // Level Label
+            let levelLabel = "Soporte Nivel 1";
+            if (estimatedIQ >= 125) levelLabel = "Arquitecto / Lead IT";
+            else if (estimatedIQ >= 110) levelLabel = "SysAdmin Senior";
+            else if (estimatedIQ >= 95) levelLabel = "Técnico Especialista";
+
+            // Update DOM Results
+            document.getElementById('result-iq').innerText = estimatedIQ;
+            document.getElementById('result-score').innerText = `${correctCount} / ${questionsData.length}`;
+            document.getElementById('result-percent').innerText = `${percent}% de aciertos`;
+            
+            const mins = String(Math.floor(secondsElapsed / 60)).padStart(2, '0');
+            const secs = String(secondsElapsed % 60).padStart(2, '0');
+            document.getElementById('result-time').innerText = `${mins}:${secs}`;
+            document.getElementById('result-level').innerText = levelLabel;
+
+            // Render Detailed Review Section
+            renderDetailedReview();
+
+            // Save to LocalStorage
+            saveResultToStorage({
+                date: new Date().toLocaleDateString() + ' ' + new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                iq: estimatedIQ,
+                score: correctCount,
+                percent: percent,
+                time: `${mins}:${secs}`
+            });
+
+            // Switch Views
+            document.getElementById('view-test').classList.add('hidden');
+            document.getElementById('timer-display').classList.add('hidden');
+            document.getElementById('view-results').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderDetailedReview() {
+            const container = document.getElementById('review-container');
+            container.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[q.id];
+                const isCorrect = (userAns === q.correct);
+
+                const card = document.createElement('div');
+                card.className = `p-6 rounded-2xl border ${isCorrect ? 'bg-slate-900/90 border-emerald-500/40' : 'bg-slate-900/90 border-red-500/40'} space-y-4`;
+
+                let statusBadge = isCorrect 
+                    ? `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"><i class="fa-solid fa-check mr-1"></i> Correcto</span>`
+                    : `<span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-red-500/10 text-red-400 border border-red-500/30"><i class="fa-solid fa-xmark mr-1"></i> Incorrecto</span>`;
+
+                let optionsList = q.options.map((opt, oIdx) => {
+                    let optStyle = "text-slate-400 border-slate-800 bg-slate-950/40";
+                    let icon = "";
+
+                    if (oIdx === q.correct) {
+                        optStyle = "text-emerald-300 font-medium border-emerald-500/50 bg-emerald-950/30";
+                        icon = `<i class="fa-solid fa-check text-emerald-400 ml-auto"></i>`;
+                    } else if (oIdx === userAns && !isCorrect) {
+                        optStyle = "text-red-300 border-red-500/50 bg-red-950/30";
+                        icon = `<i class="fa-solid fa-xmark text-red-400 ml-auto"></i>`;
+                    }
+
+                    return `
+                        <div class="flex items-center justify-between p-3 rounded-lg border text-xs sm:text-sm ${optStyle}">
+                            <span>${opt}</span>
+                            ${icon}
+                        </div>
+                    `;
+                }).join('');
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-mono text-slate-500">Pregunta ${idx + 1} • ${q.category}</span>
+                        ${statusBadge}
+                    </div>
+
+                    <h4 class="font-medium text-slate-100 text-sm sm:text-base">${q.question}</h4>
+
+                    <div class="space-y-2 pt-1">
+                        ${optionsList}
+                    </div>
+
+                    <div class="mt-3 p-3.5 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-300 space-y-1">
+                        <span class="font-semibold text-sky-400 block"><i class="fa-solid fa-circle-info mr-1"></i> Explicación Técnica:</span>
+                        <p class="leading-relaxed text-slate-400">${q.explanation}</p>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        }
+
+        function resetTest() {
+            document.getElementById('view-results').classList.add('hidden');
+            document.getElementById('view-welcome').classList.remove('hidden');
+            loadStatsFromStorage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToReview() {
+            document.getElementById('review-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // STORAGE FUNCTIONS
+        function saveResultToStorage(resultObj) {
+            let history = JSON.parse(localStorage.getItem('it_iq_history') || '[]');
+            history.unshift(resultObj);
+            if (history.length > 10) history = history.slice(0, 10);
+            localStorage.setItem('it_iq_history', JSON.stringify(history));
+        }
+
+        function loadStatsFromStorage() {
+            const history = JSON.parse(localStorage.getItem('it_iq_history') || '[]');
+            if (history.length > 0) {
+                const last = history[0];
+                document.getElementById('welcome-stats').classList.remove('hidden');
+                document.getElementById('stat-iq').innerText = last.iq;
+                document.getElementById('stat-score').innerText = `${last.score}/30`;
+                document.getElementById('stat-acc').innerText = `${last.percent}%`;
+                document.getElementById('stat-time').innerText = last.time;
+            }
+        }
+
+        function toggleHistoryModal() {
+            const modal = document.getElementById('history-modal');
+            if (modal.classList.contains('hidden')) {
+                renderHistoryList();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function renderHistoryList() {
+            const history = JSON.parse(localStorage.getItem('it_iq_history') || '[]');
+            const list = document.getElementById('history-list');
+            list.innerHTML = '';
+
+            if (history.length === 0) {
+                list.innerHTML = `<div class="text-xs text-slate-500 text-center py-4">No hay intentos guardados previamente.</div>`;
+                return;
+            }
+
+            history.forEach((item) => {
+                const el = document.createElement('div');
+                el.className = "bg-slate-950 p-3 rounded-xl border border-slate-800 flex items-center justify-between text-xs";
+                el.innerHTML = `
+                    <div>
+                        <div class="text-slate-300 font-medium">${item.date}</div>
+                        <div class="text-slate-500 mt-0.5">${item.score}/30 Aciertos (${item.percent}%) • Tiempo: ${item.time}</div>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-sky-400 font-bold text-sm block">CI ${item.iq}</span>
+                    </div>
+                `;
+                list.appendChild(el);
+            });
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('it_iq_history');
+            renderHistoryList();
+            document.getElementById('welcome-stats').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

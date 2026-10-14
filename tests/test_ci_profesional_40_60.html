@@ -1,0 +1,1487 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Inteligencia y Razonamiento Cognitivo para Profesionales</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#035485',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 min-h-full flex flex-col transition-colors duration-200">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-800/90 backdrop-blur border-b border-slate-200 dark:border-slate-700 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="p-2 bg-brand-600 text-white rounded-lg shadow-md">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight text-slate-900 dark:text-white">Evaluación Cognitiva Senior</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Multidisciplinar • 40-60 Años</p>
+                </div>
+            </div>
+
+            <!-- Quiz Active Info Bar -->
+            <div id="header-quiz-info" class="hidden flex items-center space-x-4 sm:space-x-6">
+                <!-- Timer -->
+                <div class="flex items-center space-x-2 bg-slate-100 dark:bg-slate-700/60 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600">
+                    <svg class="w-5 h-5 text-brand-600 dark:text-brand-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span id="timer-display" class="font-mono font-bold text-base sm:text-lg text-slate-800 dark:text-slate-200">45:00</span>
+                </div>
+                <!-- Submit early button -->
+                <button onclick="confirmEarlySubmit()" class="text-xs sm:text-sm font-medium px-3 py-1.5 bg-rose-50 text-rose-600 hover:bg-rose-100 dark:bg-rose-950/40 dark:text-rose-400 border border-rose-200 dark:border-rose-800 rounded-lg transition">
+                    Finalizar
+                </button>
+            </div>
+
+            <!-- Dark Mode Toggle -->
+            <button onclick="toggleDarkMode()" class="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-700 transition" aria-label="Cambiar tema">
+                <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+
+        <!-- SCREEN 1: INTRO / INSTRUCCIONES -->
+        <section id="screen-intro" class="max-w-3xl mx-auto w-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 sm:p-10 space-y-8">
+            <div class="text-center space-y-3">
+                <span class="inline-block px-3 py-1 bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-300 rounded-full text-xs font-semibold tracking-wide uppercase">Batería Psicométrica de Razonamiento</span>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">Evaluación de Capacidad Cognitiva y CI</h2>
+                <p class="text-sm sm:text-base text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
+                    Diseñado específicamente para profesionales con trayectoria en áreas directivas, de gestión, ingeniería, finanzas y análisis estratégico. Evalúa la inteligencia fluida y la flexibilidad cognitiva ajustada por franja etaria.
+                </p>
+            </div>
+
+            <!-- Features Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <div class="w-8 h-8 text-brand-600 dark:text-brand-400 font-bold text-lg mb-1">50</div>
+                    <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Preguntas Únicas</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Sin repeticiones. Abarca 5 áreas clave del razonamiento profesional.</p>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <div class="w-8 h-8 text-brand-600 dark:text-brand-400 font-bold text-lg mb-1">45m</div>
+                    <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Límite Estricto</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">El tiempo simula exigencia de toma de decisiones bajo presión real.</p>
+                </div>
+                <div class="p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl border border-slate-100 dark:border-slate-700">
+                    <div class="w-8 h-8 text-brand-600 dark:text-brand-400 font-bold text-lg mb-1">M=100</div>
+                    <h3 class="font-semibold text-slate-900 dark:text-white text-sm">Baremos Estándar</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cálculo estadístico ajustado (SD 15) basado en principios cognitivos.</p>
+                </div>
+            </div>
+
+            <!-- Instructions list -->
+            <div class="bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 rounded-xl p-4 text-xs sm:text-sm text-amber-800 dark:text-amber-300 space-y-2">
+                <div class="font-bold flex items-center gap-1.5 text-amber-900 dark:text-amber-200">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Recomendaciones antes de iniciar:
+                </div>
+                <ul class="list-disc list-inside space-y-1 opacity-90">
+                    <li>Utiliza papel y lápiz si lo requieres para esquemas numéricos o espaciales.</li>
+                    <li>No utilices calculadoras ni ayudas externas de procesamiento de datos.</li>
+                    <li>Responde todas las preguntas que puedas; las respuestas erróneas no restan puntos.</li>
+                </ul>
+            </div>
+
+            <div class="pt-2 flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="startQuiz()" class="w-full sm:w-auto px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-semibold rounded-xl shadow-lg shadow-brand-600/30 transition transform active:scale-95 text-center">
+                    Iniciar Evaluación (45 Min)
+                </button>
+                <button onclick="showHistoryModal()" class="w-full sm:w-auto px-6 py-3.5 bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 font-medium rounded-xl transition text-center">
+                    Historial de Intentos
+                </button>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: QUIZ INTERACTIVE INTERFACE -->
+        <section id="screen-quiz" class="hidden max-w-5xl mx-auto w-full space-y-6">
+            <!-- Progress Bar and Grid Nav Toggle -->
+            <div class="bg-white dark:bg-slate-800 rounded-xl p-4 shadow-sm border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div class="flex-1 space-y-1.5">
+                    <div class="flex justify-between text-xs font-semibold text-slate-600 dark:text-slate-400">
+                        <span id="progress-text">Pregunta 1 de 50</span>
+                        <span id="progress-percent">0% completado</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-700 h-2.5 rounded-full overflow-hidden">
+                        <div id="progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between sm:justify-end gap-3">
+                    <span id="category-badge" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-medium rounded-md">
+                        Categoría
+                    </span>
+                    <button onclick="toggleGridModal()" class="px-3 py-1.5 border border-slate-300 dark:border-slate-600 rounded-lg text-xs font-medium hover:bg-slate-50 dark:hover:bg-slate-700 flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                        Mapa Preguntas
+                    </button>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 p-6 sm:p-8 space-y-6">
+                <!-- Question Header -->
+                <div class="space-y-3">
+                    <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-900 dark:text-white leading-relaxed">
+                        Cargando pregunta...
+                    </h3>
+                    <div id="visual-container" class="hidden my-4 p-4 bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-700 flex justify-center items-center">
+                        <!-- SVG graphic dynamically injected here -->
+                    </div>
+                </div>
+
+                <!-- Options List -->
+                <div id="options-container" class="grid grid-cols-1 gap-3">
+                    <!-- Options injected dynamically -->
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex items-center justify-between">
+                    <button id="btn-prev" onclick="navigate(-1)" class="px-5 py-2.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl font-medium text-sm hover:bg-slate-200 dark:hover:bg-slate-600 transition disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-1">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        Anterior
+                    </button>
+                    <button id="btn-next" onclick="navigate(1)" class="px-6 py-2.5 bg-brand-600 text-white rounded-xl font-semibold text-sm hover:bg-brand-700 transition shadow-md flex items-center gap-1">
+                        Siguiente
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: RESULTS AND DETAILED REPORT -->
+        <section id="screen-results" class="hidden max-w-4xl mx-auto w-full space-y-8">
+            <!-- Score Overview Header -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-6 sm:p-8 text-center space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 bg-green-100 dark:bg-green-950/60 text-green-700 dark:text-green-300 rounded-full text-xs font-semibold">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    Evaluación Completada
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/30 rounded-xl">
+                        <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block mb-1">Cociente Intelectual Estimado</span>
+                        <div id="res-iq-score" class="text-4xl sm:text-5xl font-extrabold text-brand-600 dark:text-brand-400">115</div>
+                        <span id="res-iq-percentile" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">Percentil 84</span>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/30 rounded-xl">
+                        <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block mb-1">Aciertos Totales</span>
+                        <div id="res-correct-count" class="text-4xl sm:text-5xl font-extrabold text-slate-900 dark:text-white">38 / 50</div>
+                        <span id="res-accuracy-pct" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">76% Eficiencia</span>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 dark:bg-slate-700/30 rounded-xl">
+                        <span class="text-xs font-medium text-slate-500 dark:text-slate-400 block mb-1">Tiempo Utilizado</span>
+                        <div id="res-time-used" class="text-3xl font-bold text-slate-800 dark:text-slate-200">32m 15s</div>
+                        <span id="res-time-per-q" class="text-xs text-slate-500 dark:text-slate-400 mt-1 block">Promedio: 38s / preg</span>
+                    </div>
+                </div>
+
+                <!-- Strategic Qualitative Interpretation -->
+                <div id="res-qualitative" class="p-4 bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800/50 rounded-xl text-sm text-slate-700 dark:text-slate-300 text-left">
+                    <!-- Text injected dynamically -->
+                </div>
+            </div>
+
+            <!-- Breakdown by Cognitive Domains -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 p-6 sm:p-8 space-y-4">
+                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Desglose por Áreas Competenciales</h3>
+                <div id="domain-breakdown-container" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Dynamic domains -->
+                </div>
+            </div>
+
+            <!-- Detailed Question Review Header -->
+            <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-md border border-slate-200 dark:border-slate-700 p-6 sm:p-8 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-700 pb-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">Revisión Soluciones y Explicaciones</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Análisis detallado paso a paso para las 50 preguntas</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="restartTest()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white rounded-lg text-xs font-semibold transition">
+                            Repetir Test
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Detailed review items list -->
+                <div id="review-list-container" class="space-y-4 max-h-[600px] overflow-y-auto custom-scrollbar pr-2">
+                    <!-- Review items injected dynamically -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL: Question Quick Grid Navigation -->
+    <div id="modal-grid" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">Mapa de Preguntas</h3>
+                <button onclick="toggleGridModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">✕</button>
+            </div>
+            <div class="text-xs text-slate-500 dark:text-slate-400 flex gap-4">
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-brand-600 inline-block"></span> Respondida</span>
+                <span class="flex items-center gap-1"><span class="w-3 h-3 rounded border border-slate-400 inline-block"></span> Pendiente</span>
+            </div>
+            <div id="grid-buttons-container" class="grid grid-cols-10 gap-2 max-h-64 overflow-y-auto custom-scrollbar p-1">
+                <!-- 50 buttons injected dynamically -->
+            </div>
+            <div class="text-right pt-2">
+                <button onclick="toggleGridModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-medium">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: History -->
+    <div id="modal-history" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl border border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+                <h3 class="font-bold text-slate-900 dark:text-white text-base">Historial de Intentos</h3>
+                <button onclick="closeHistoryModal()" class="text-slate-400 hover:text-slate-600 text-lg">✕</button>
+            </div>
+            <div id="history-items-container" class="space-y-3 max-h-80 overflow-y-auto custom-scrollbar">
+                <!-- History list -->
+            </div>
+            <div class="flex justify-between items-center pt-2">
+                <button onclick="clearHistory()" class="text-xs text-rose-600 hover:underline">Borrar Historial</button>
+                <button onclick="closeHistoryModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-medium">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Confirm Early Submit -->
+    <div id="modal-confirm" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-sm w-full p-6 space-y-4 text-center shadow-2xl border border-slate-200 dark:border-slate-700">
+            <h3 class="font-bold text-slate-900 dark:text-white text-lg">¿Finalizar Evaluación?</h3>
+            <p id="confirm-msg" class="text-xs text-slate-600 dark:text-slate-300">¿Estás seguro de que deseas entregar el test ahora?</p>
+            <div class="flex gap-3 justify-center pt-2">
+                <button onclick="closeConfirmModal()" class="px-4 py-2 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-medium">Continuar Test</button>
+                <button onclick="submitQuiz()" class="px-4 py-2 bg-rose-600 text-white rounded-lg text-xs font-semibold">Sí, Evaluar</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ==========================================================================
+           1. DATASET: 50 UNIQUE MULTIDISCIPLINARY QUESTIONS
+           Categories: 
+           - 'RL': Razonamiento Lógico / Matrices
+           - 'QC': Análisis Cuantitativo / Financiero
+           - 'LV': Lógica Verbal y Abstracta
+           - 'VE': Visión Espacial y Mecánica
+           - 'ED': Gestión y Estrategia
+           ========================================================================== */
+
+        const questionsData = [
+            // 1 - 10: RL & Matrices / Patrones
+            {
+                id: 1,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'En la siguiente secuencia de transformación de matriz visual: La figura gira 90° en sentido horario en cada paso y el círculo central alterna entre blanco y relleno. ¿Qué opción completa el espacio faltante?',
+                visualSVG: `<svg class="w-64 h-24" viewBox="0 0 260 80">
+                    <rect x="10" y="10" width="60" height="60" rx="8" fill="none" stroke="#0284c7" stroke-width="2"/>
+                    <line x1="10" y1="40" x2="70" y2="40" stroke="#0284c7" stroke-width="3"/>
+                    <circle cx="40" cy="40" r="8" fill="#0284c7"/>
+                    
+                    <text x="85" y="45" font-size="20" fill="#94a3b8">→</text>
+
+                    <rect x="100" y="10" width="60" height="60" rx="8" fill="none" stroke="#0284c7" stroke-width="2"/>
+                    <line x1="130" y1="10" x2="130" y2="70" stroke="#0284c7" stroke-width="3"/>
+                    <circle cx="130" cy="40" r="8" fill="none" stroke="#0284c7" stroke-width="2"/>
+
+                    <text x="175" y="45" font-size="20" fill="#94a3b8">→</text>
+
+                    <rect x="190" y="10" width="60" height="60" rx="8" fill="none" stroke="#0284c7" stroke-width="2" stroke-dasharray="4"/>
+                    <text x="215" y="48" font-size="24" font-weight="bold" fill="#0284c7">?</text>
+                </svg>`,
+                options: [
+                    "Línea horizontal con círculo interior relleno",
+                    "Línea horizontal con círculo interior hueco",
+                    "Línea vertical con círculo interior relleno",
+                    "Línea diagonal con círculo interior hueco"
+                ],
+                correct: 0,
+                explanation: "La rotación de 90° aplica: de línea horizontal a vertical y luego regresa a horizontal. La alternancia del núcleo pasa de Relleno -> Hueco -> Relleno. Por ende, corresponde línea horizontal con núcleo relleno."
+            },
+            {
+                id: 2,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Una inversión en un fondo genera un rendimiento del 20% el primer año. En el segundo año, sufre una pérdida del 20% sobre el saldo acumulado. Con respecto al capital inicial original, la inversión:',
+                options: [
+                    "Ha quedado exactamente en el punto de equilibrio (0%)",
+                    "Ha ganado un 4% de rentabilidad neta",
+                    "Ha perdido un 4% del capital inicial",
+                    "Ha perdido un 2% del capital inicial"
+                ],
+                correct: 2,
+                explanation: "Tomando Base 100: Año 1 aumenta 20% = 120. Año 2 pierde el 20% de 120 = 24. Saldo final = 120 - 24 = 96. Representa una pérdida neta del 4% (100 - 96)."
+            },
+            {
+                id: 3,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'Identifique la pareja de palabras cuya relación analógica sea equivalente a la relación entre SINOPSIS e INFORME:',
+                options: [
+                    "Boceto : Edificio",
+                    "Epílogo : Novela",
+                    "Compendio : Tratado",
+                    "Índice : Capítulo"
+                ],
+                correct: 2,
+                explanation: "Una sinopsis es un resumen condensado de un informe denso. De igual forma, un compendio es la versión condensada y sintetizada de un tratado extenso."
+            },
+            {
+                id: 4,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Analice el engranaje compuesto por 3 ruedas A, B y C. Si el engranaje A gira en sentido contrario a las agujas del reloj (antihorario), ¿en qué sentido gira el engranaje C?',
+                visualSVG: `<svg class="w-64 h-24" viewBox="0 0 260 80">
+                    <circle cx="50" cy="40" r="28" stroke="#0284c7" stroke-width="3" fill="none" stroke-dasharray="6 3"/>
+                    <text x="45" y="45" font-weight="bold" fill="#0284c7">A</text>
+                    
+                    <circle cx="110" cy="40" r="28" stroke="#64748b" stroke-width="3" fill="none" stroke-dasharray="6 3"/>
+                    <text x="105" y="45" font-weight="bold" fill="#64748b">B</text>
+
+                    <circle cx="170" cy="40" r="28" stroke="#0284c7" stroke-width="3" fill="none" stroke-dasharray="6 3"/>
+                    <text x="165" y="45" font-weight="bold" fill="#0284c7">C</text>
+                </svg>`,
+                options: [
+                    "Sentido horario",
+                    "Sentido antihorario",
+                    "Permanece estático por bloqueo de carga",
+                    "Gira en sentido oscilante"
+                ],
+                correct: 1,
+                explanation: "Dos engranajes acoplados directamente invierten su sentido de rotación. Si A gira antihorario -> B gira horario -> C invierte nuevamente a antihorario."
+            },
+            {
+                id: 5,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En un proyecto estratégico con un índice de desempeño del costo (CPI) de 0,85 e índice de desempeño del cronograma (SPI) de 1,15, ¿cuál es el estado real del proyecto?',
+                options: [
+                    "Por debajo del presupuesto y adelantado respecto al cronograma",
+                    "Por encima del presupuesto (sobrecosto) y adelantado en cronograma",
+                    "Con ahorro de costos y retrasado en el plazo previsto",
+                    "En sobrecosto y retrasado en el plazo previsto"
+                ],
+                correct: 1,
+                explanation: "Un CPI < 1,0 indica que se está gastando más dinero del valor ejecutado (sobrecosto). Un SPI > 1,0 indica que la ejecución avance a un ritmo superior al planificado (adelantado)."
+            },
+            {
+                id: 6,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Premisa 1: Todos los auditores sénior conocen la normativa ISO 27001.\nPremisa 2: Ningún consultor júnior conoce la normativa ISO 27001.\nConclusión válida:',
+                options: [
+                    "Algunos consultores júnior son auditores sénior",
+                    "Ningún auditor sénior es consultor júnior",
+                    "Todos los consultores júnior son auditores sénior",
+                    "Ningún conocedor de ISO 27001 es auditor sénior"
+                ],
+                correct: 1,
+                explanation: "Puesto que el conjunto de auditores sénior está completamente contenido en los que conocen ISO 27001 y los consultores júnior están excluidos de ese mismo grupo, la intersección entre auditores sénior y consultores júnior es totalmente vacía."
+            },
+            {
+                id: 7,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Encuentre el número que completa lógicamente la secuencia financiera de rendimiento acumulado: 3, 7, 15, 31, 63, ___',
+                options: [
+                    "95",
+                    "127",
+                    "128",
+                    "125"
+                ],
+                correct: 1,
+                explanation: "El patrón regla es (x * 2) + 1. Operando: 3*2+1=7; 7*2+1=15; 15*2+1=31; 31*2+1=63; 63*2+1 = 127."
+            },
+            {
+                id: 8,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'Elija el antónimo complementario directo del término "DISRUPTIVO" en el ámbito de la innovación corporativa:',
+                options: [
+                    "Incremental",
+                    "Conservador",
+                    "Arcaico",
+                    "Revolucionario"
+                ],
+                correct: 1,
+                explanation: "En la jerga de innovación y negocios, la innovación disrupción rompe los paradigmas de mercado. Su opuesto conceptual funcional y directo es la innovación incremental o conservadora."
+            },
+            {
+                id: 9,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Observe el cubo desplegado en 2D. ¿Cuál de las opciones no puede formarse al plegarlo?',
+                visualSVG: `<svg class="w-48 h-32" viewBox="0 0 200 140">
+                    <rect x="70" y="10" width="30" height="30" stroke="#0284c7" fill="#f0f7ff" stroke-width="2"/>
+                    <circle cx="85" cy="25" r="5" fill="#0284c7"/>
+                    
+                    <rect x="40" y="40" width="30" height="30" stroke="#0284c7" fill="#f0f7ff" stroke-width="2"/>
+                    <rect x="70" y="40" width="30" height="30" stroke="#0284c7" fill="#f0f7ff" stroke-width="2"/>
+                    <line x1="75" y1="55" x2="95" y2="55" stroke="#0284c7" stroke-width="3"/>
+                    
+                    <rect x="100" y="40" width="30" height="30" stroke="#0284c7" fill="#f0f7ff" stroke-width="2"/>
+                    <rect x="70" y="70" width="30" height="30" stroke="#0284c7" fill="#f0f7ff" stroke-width="2"/>
+                    <rect x="70" y="100" width="30" height="30" stroke="#0284c7" fill="#f0f7ff" stroke-width="2"/>
+                </svg>`,
+                options: [
+                    "Un cubo donde la cara del punto sea opuesta a la cara de la línea horizontal",
+                    "Un cubo donde la cara del punto sea adyacente a la cara limpia",
+                    "Un cubo donde dos caras opuestas estén separadas por 1 cara intermedia en el desarrollo",
+                    "Un cubo donde todas las caras tengan iconos superpuestos"
+                ],
+                correct: 3,
+                explanation: "En la red desplegada observamos únicamente dos caras con símbolos y cuatro caras limpias. Por ende, es imposible formar un cubo con todas las caras mostrando iconos."
+            },
+            {
+                id: 10,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En un proceso de optimización presupuestaria, ¿qué costo debe ignorarse por completo al decidir la continuidad o abandono de una línea de producto deficiente?',
+                options: [
+                    "Costo marginal de producción",
+                    "Costo de oportunidad",
+                    "Costo undido (sunk cost)",
+                    "Costo variable de distribución"
+                ],
+                correct: 2,
+                explanation: "El costo undido (sunk cost) es irrecuperable y pertenece al pasado. En la teoría de la decisión racional, no debe influir en las evaluaciones futuras."
+            },
+
+            // 11 - 20
+            {
+                id: 11,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Analice la red de flujo estratégico de nodos. ¿Cuál es la ruta mínima de costo total para conectar el Nodo A con el Nodo E?',
+                visualSVG: `<svg class="w-64 h-28" viewBox="0 0 280 100">
+                    <circle cx="30" cy="50" r="14" fill="#0284c7"/><text x="25" y="55" font-weight="bold" fill="white">A</text>
+                    <circle cx="100" cy="20" r="14" fill="#64748b"/><text x="95" y="25" font-weight="bold" fill="white">B</text>
+                    <circle cx="100" cy="80" r="14" fill="#64748b"/><text x="95" y="85" font-weight="bold" fill="white">C</text>
+                    <circle cx="180" cy="50" r="14" fill="#64748b"/><text x="175" y="55" font-weight="bold" fill="white">D</text>
+                    <circle cx="250" cy="50" r="14" fill="#0284c7"/><text x="245" y="55" font-weight="bold" fill="white">E</text>
+
+                    <line x1="42" y1="42" x2="88" y2="28" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="60" y="30" font-size="10" font-weight="bold" fill="#0284c7">3</text>
+
+                    <line x1="42" y1="58" x2="88" y2="72" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="60" y="75" font-size="10" font-weight="bold" fill="#0284c7">5</text>
+
+                    <line x1="114" y1="28" x2="168" y2="42" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="140" y="30" font-size="10" font-weight="bold" fill="#0284c7">4</text>
+
+                    <line x1="114" y1="72" x2="168" y2="58" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="140" y="75" font-size="10" font-weight="bold" fill="#0284c7">1</text>
+
+                    <line x1="194" y1="50" x2="236" y2="50" stroke="#94a3b8" stroke-width="2"/>
+                    <text x="210" y="45" font-size="10" font-weight="bold" fill="#0284c7">2</text>
+                </svg>`,
+                options: [
+                    "Ruta A - B - D - E (Costo 9)",
+                    "Ruta A - C - D - E (Costo 8)",
+                    "Ruta A - B - E (Directo 11)",
+                    "Ruta A - C - E (Costo 10)"
+                ],
+                correct: 1,
+                explanation: "Ruta 1 (A-B-D-E): 3 + 4 + 2 = 9. Ruta 2 (A-C-D-E): 5 + 1 + 2 = 8. La ruta mínima óptima es A-C-D-E con un costo total de 8."
+            },
+            {
+                id: 12,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Un equipo operacional de 6 especialistas completa un análisis de auditoría en 12 días. Si se reducen 2 especialistas, ¿cuántos días requerirá el equipo restante manteniendo el mismo ritmo de producción individual?',
+                options: [
+                    "8 días",
+                    "16 días",
+                    "18 días",
+                    "15 días"
+                ],
+                correct: 2,
+                explanation: "Regla de tres inversa: Especialistas * Días = Total Trabajo (Hombre-Días). 6 * 12 = 72 Hombre-Días. Con 4 especialistas (6 - 2): 72 / 4 = 18 días."
+            },
+            {
+                id: 13,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: '¿Qué término no pertenece a la misma familia semántica organizacional?',
+                options: [
+                    "Pregonar",
+                    "Promulgar",
+                    "Estipular",
+                    "Difuminar"
+                ],
+                correct: 3,
+                explanation: "Pregonar, promulgar y estipular implican declarar oficial o públicamente una norma o acuerdo. 'Difuminar' significa hacer perder claridad o precisión, siendo semánticamente ajeno."
+            },
+            {
+                id: 14,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Se proyecta una figura en 3D en tres vistas ortogonales. Si la vista frontal es un triángulo y la vista superior (planta) es un círculo perfecto, ¿cuál es el sólido geométrico real?',
+                options: [
+                    "Cilindro",
+                    "Esfera",
+                    "Cono",
+                    "Pirámide cuadrangular"
+                ],
+                correct: 2,
+                explanation: "El cono tiene como proyección superior (planta) un círculo y como proyección frontal o alzado un triángulo."
+            },
+            {
+                id: 15,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'Según la matriz de urgencia e importancia de Eisenhower, un imprevisto operativo crítico en la cadena de suministro debe ser clasificado inmediatamente como:',
+                options: [
+                    "Importante y Urgente (Delegar inmediatamente)",
+                    "Importante y Urgente (Hacer de inmediato)",
+                    "No Importante pero Urgente (Planificar fecha)",
+                    "Importante pero No Urgente (Eliminar del plan)"
+                ],
+                correct: 1,
+                explanation: "Las tareas críticas con alto impacto y tiempo limitado caen en el cuadrante 1: Importante y Urgente, requiriendo acción resolutiva inmediata."
+            },
+            {
+                id: 16,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Si P implica Q, y Q implica R, pero sabemos que R es FALSO; entonces se deduce rigurosamente que:',
+                options: [
+                    "P es verdadero y Q es falso",
+                    "Tanto P como Q son verdaderos",
+                    "Tanto P como Q son falsos",
+                    "Q es verdadero y P es incierto"
+                ],
+                correct: 2,
+                explanation: "Por la regla lógica del Modus Tollens: Si R es falso y Q -> R, entonces Q debe ser falso. Y si Q es falso y P -> Q, entonces P también debe ser falso."
+            },
+            {
+                id: 17,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Si la media ponderada de ventas mensuales de un ejecutivo durante los primeros 5 meses fue de $10.000, ¿cuánto debe vender en el 6º mes para elevar la media semestral a $12.000?',
+                options: [
+                    "$22.000",
+                    "$14.000",
+                    "$20.000",
+                    "$18.000"
+                ],
+                correct: 0,
+                explanation: "Total acumulado en 5 meses = 5 * 10.000 = $50.000. Total necesario para 6 meses con promedio de 12.000 = 6 * 12.000 = $72.000. Venta requerida mes 6 = 72.000 - 50.000 = $22.000."
+            },
+            {
+                id: 18,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'Complete la oración con los conectores lógicos adecuados:\n"El plan de expansión es altamente prometedor; ______, la falta de liquidez inmediata podría frenar la ejecución, ______ se apruebe una línea de crédito adicional."',
+                options: [
+                    "por consiguiente / a menos que",
+                    "sin embargo / a menos que",
+                    "es decir / ya que",
+                    "por el contrario / dado que"
+                ],
+                correct: 1,
+                explanation: "'Sin embargo' introduce una objeción contrapuesta al entusiasmo del plan, y 'a menos que' establece la condición restrictiva para evitar el freno operativo."
+            },
+            {
+                id: 19,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: '¿Cuántos bloques idénticos se requieren en total para formar una pirámide maciza de base cuadrada de 4x4 bloques en el nivel 1, 3x3 en el nivel 2, 2x2 en el nivel 3 y 1 bloque en la cúspide?',
+                options: [
+                    "30 bloques",
+                    "28 bloques",
+                    "32 bloques",
+                    "25 bloques"
+                ],
+                correct: 0,
+                explanation: "Cálculo suma de cuadrados: 4² + 3² + 2² + 1² = 16 + 9 + 4 + 1 = 30 bloques."
+            },
+            {
+                id: 20,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En la gestión de riesgos corporativos, la estrategia de contratación de una póliza de seguro contra desastres operacionales se clasifica formalmente como:',
+                options: [
+                    "Mitigación del riesgo",
+                    "Transferencia del riesgo",
+                    "Aceptación del riesgo",
+                    "Evitación del riesgo"
+                ],
+                correct: 1,
+                explanation: "Transferir un riesgo consiste en desplazar el impacto financiero a un tercero (como una aseguradora) mediante contrato o prima."
+            },
+
+            // 21 - 30
+            {
+                id: 21,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Complete el elemento faltante en la matriz de símbolos combinados:\nFila 1: [▲ Blanco, Circle Relleno]\nFila 2: [▲ Relleno, Circle Hueco]\nFila 3: [■ Relleno, _____]',
+                options: [
+                    "■ Hueco",
+                    "▲ Hueco",
+                    "Circle Relleno",
+                    "■ Relleno"
+                ],
+                correct: 0,
+                explanation: "El patrón de transformación mantiene la misma forma base en la fila e invierte el estado de relleno. Fila 3 mantiene ■ e invierte de Relleno a Hueco."
+            },
+            {
+                id: 22,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Un depósito genera un interés simple del 5% anual. ¿En cuántos años se duplicará exactamente el capital depositado originalmente?',
+                options: [
+                    "10 años",
+                    "15 años",
+                    "20 años",
+                    "25 años"
+                ],
+                correct: 2,
+                explanation: "Con interés simple, la fórmula de rendimiento es Interés = Capital * r * t. Para duplicar (Interés = Capital), 1 = 0,05 * t => t = 1 / 0,05 = 20 años."
+            },
+            {
+                id: 23,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'SOGUERO es a CUERO como EBANISTA es a:',
+                options: [
+                    "Metal",
+                    "Madera",
+                    "Plástico",
+                    "Vidrio"
+                ],
+                correct: 1,
+                explanation: "Analogía de materia prima: El soguero trabaja artesanalmente el cuero; el ebanista trabaja artesanalmente la madera fina."
+            },
+            {
+                id: 24,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Si observamos una columna cilíndrica vertical cortada por un plano inclinado a 45 grados de la horizontal, la sección transversal resultante del corte es:',
+                options: [
+                    "Un círculo",
+                    "Una elipse",
+                    "Una parábola",
+                    "Un rectángulo"
+                ],
+                correct: 1,
+                explanation: "El corte de un cilindro por un plano no paralelo a la base ni perpendicular produce conceptualmente una figura geométrica elíptica."
+            },
+            {
+                id: 25,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: '¿Qué métrica permite evaluar la viabilidad de un proyecto actualizando los flujos futuros de caja mediante una tasa de descuento?',
+                options: [
+                    "VAN (Valor Actual Neto)",
+                    "EBITDA",
+                    "ROE (Return on Equity)",
+                    "WACC"
+                ],
+                correct: 0,
+                explanation: "El VAN (Valor Actual Neto) descuenta los flujos de caja futuros a una tasa elegida para determinar la rentabilidad real presente del proyecto."
+            },
+            {
+                id: 26,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Si A es más alto que B, C es más bajo que A, pero más alto que B. D es más alto que A. ¿Quién ocupa la tercera posición en altura descendente?',
+                options: [
+                    "D",
+                    "A",
+                    "C",
+                    "B"
+                ],
+                correct: 2,
+                explanation: "Ordenando de mayor a menor altura: D > A > C > B. La primera posición es D, la segunda A, la tercera C y la cuarta B."
+            },
+            {
+                id: 27,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Un producto tiene un precio de venta de $150 con un margen de contribución del 40%. Si los costos fijos mensuales son $12.000, ¿cuántas unidades deben venderse para alcanzar el punto de equilibrio?',
+                options: [
+                    "150 unidades",
+                    "200 unidades",
+                    "100 unidades",
+                    "300 unidades"
+                ],
+                correct: 1,
+                explanation: "Margen de contribución unitario = 40% de 150 = $60. Punto de Equilibrio = Costos Fijos / Margen Unitario = 12.000 / 60 = 200 unidades."
+            },
+            {
+                id: 28,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'Seleccione la opción que exprese el significado más afín al adagio directivo: "A palabras necias, oídos sordos".',
+                options: [
+                    "Hay que analizar minuciosamente todas las críticas",
+                    "No hay que dar crédito a comentarios carentes de fundamento o malintencionados",
+                    "La sordera profesional previene la falta de atención laboral",
+                    "Es prudente evitar la comunicación oral en conflictos directivos"
+                ],
+                correct: 1,
+                explanation: "El refrán pondera la prudencia de descartar activamente la información o comentarios sin rigor ni fundamento constructivo."
+            },
+            {
+                id: 29,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Una aguja de brújula marca el Norte. Si gira 135° en sentido horario y luego 180° en sentido antihorario, ¿en qué dirección apunta finalmente?',
+                options: [
+                    "Norponiente / Noroeste (NW)",
+                    "Noreste (NE)",
+                    "Suroeste (SW)",
+                    "Sureste (SE)"
+                ],
+                correct: 1,
+                explanation: "Norte = 0°. Giro +135° (Horario) = 135° (SE). Giro -180° (Antihorario) = 135 - 180 = -45° (equivalente a 315° respecto al origen o 45° a la izquierda del Norte), lo que equivale al Noreste (NE)."
+            },
+            {
+                id: 30,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En el análisis DAFO/SWOT de una empresa de manufactura, la aparición de una nueva regulación ambiental restrictiva para el sector constituye una:',
+                options: [
+                    "Debilidad de la organización",
+                    "Oportunidad de mercado",
+                    "Amenaza del entorno",
+                    "Fortaleza técnica"
+                ],
+                correct: 2,
+                explanation: "Las variables del entorno externo fuera del control directo de la empresa que afectan negativamente se clasifican estrictamente como Amenazas."
+            },
+
+            // 31 - 40
+            {
+                id: 31,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Descubra el patrón de esta serie numérica: 2, 6, 12, 20, 30, 42, ___',
+                options: [
+                    "54",
+                    "56",
+                    "60",
+                    "48"
+                ],
+                correct: 1,
+                explanation: "Diferencias entre términos consecutivos: +4, +6, +8, +10, +12. La siguiente diferencia es +14. Término = 42 + 14 = 56. (También expresable como n*(n+1))."
+            },
+            {
+                id: 32,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'En una prueba estadística de satisfacción laboral, el 60% de los empleados está satisfecho. Si se selecciona una muestra de 3 empleados al azar, ¿cuál es la probabilidad exacta de que los 3 estén satisfechos?',
+                options: [
+                    "21,6%",
+                    "18,0%",
+                    "36,0%",
+                    "60,0%"
+                ],
+                correct: 0,
+                explanation: "Eventos independientes: 0,6 * 0,6 * 0,6 = 0,216, es decir, el 21,6%."
+            },
+            {
+                id: 33,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: '¿Cuál de las siguientes combinaciones presenta una incorrección léxica o de concordancia semántica?',
+                options: [
+                    "Aprobación explícita del presupuesto",
+                    "Aseveración verídica comprobada",
+                    "Infracción culposa involuntaria",
+                    "Lapso temporal de tiempo"
+                ],
+                correct: 3,
+                explanation: "'Lapso' significa por definición un periodo de tiempo. Decir 'lapso de tiempo' constituye un pleonasmo o redundancia semántica."
+            },
+            {
+                id: 34,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Si se observa un reloj analógico estándar reflejado frontalmente en un espejo plano y el reflejo marca exactamente las 03:30, ¿qué hora real indica el reloj?',
+                options: [
+                    "08:30",
+                    "09:30",
+                    "03:30",
+                    "06:30"
+                ],
+                correct: 0,
+                explanation: "La simetría en el espejo invierte la posición horizontal respecto al eje vertical 12-6. La posición simétrica de las 3 en un reloj de 12 horas es las 8 y media (11:60 - 3:30 = 8:30)."
+            },
+            {
+                id: 35,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En la teoría de gestión de procesos Kanban, el límite de Trabajo en Proceso (WIP - Work in Progress) tiene como objetivo principal:',
+                options: [
+                    "Aumentar las horas de trabajo extraordinarias del personal",
+                    "Evitar cuellos de botella y reducir el tiempo de ciclo (Lead Time)",
+                    "Incrementar la cantidad de tareas asignadas simultáneamente",
+                    "Reducir los costos directos de materia prima"
+                ],
+                correct: 1,
+                explanation: "Limitar el WIP evita la sobrecarga del sistema, permitiendo un flujo continuo, visibilizando cuellos de botella y optimizando el tiempo total de ciclo."
+            },
+            {
+                id: 36,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Analice el siguiente silogismo: "Todos los procesos optimizados son eficientes. Ningún proceso eficiente genera desperdicios." Por lo tanto:',
+                options: [
+                    "Ningún proceso optimizado genera desperdicios",
+                    "Algunos procesos optimizados generan desperdicios",
+                    "Todos los procesos que generan desperdicios son optimizados",
+                    "Ningún proceso ineficiente es optimizado"
+                ],
+                correct: 0,
+                explanation: "Silogismo categórico en modo Celarent: Si A ⊂ B y B ∩ C = ∅, se deduce irrebatiblemente que A ∩ C = ∅."
+            },
+            {
+                id: 37,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Un activo corporativo pierde el 10% de su valor residual contable cada año. Si se adquirió por $100.000, ¿cuál es su valor contable al finalizar el segundo año?',
+                options: [
+                    "$80.000",
+                    "$81.000",
+                    "$85.000",
+                    "$90.000"
+                ],
+                correct: 1,
+                explanation: "Año 1: 100.000 - 10% = $90.000. Año 2: 90.000 - 10% de 90.000 ($9.000) = $81.000."
+            },
+            {
+                id: 38,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'Seleccione el término que completa la analogía: HITO es a PROYECTO como CLÍMAX es a:',
+                options: [
+                    "Introducción",
+                    "Desenlace",
+                    "DRAMA",
+                    "Biografía"
+                ],
+                correct: 2,
+                explanation: "Un hito es el momento o punto de demarcación crítico en la estructura de un proyecto; el clímax es el momento cúspide de máxima tensión en un drama o narrativa."
+            },
+            {
+                id: 39,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Visualice un cilindro cuya superficie exterior está pintada de azul. Si se realizan 2 cortes transversales paralelos y 2 cortes longitudinales que pasan por el centro, ¿cuántas piezas resultantes tienen pintura azul?',
+                options: [
+                    "Todas las piezas resultantes",
+                    "Sólo las piezas centrales",
+                    "4 piezas",
+                    "Ninguna pieza"
+                ],
+                correct: 0,
+                explanation: "Como la pintura recubre la cara exterior cilíndrica circundante, cada subsección sectorial conserva una porción del perímetro curvado exterior pintado."
+            },
+            {
+                id: 40,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En el ciclo de mejora continua Deming (PDCA / PHVA), la fase "A" (Act / Actuar) corresponde a:',
+                options: [
+                    "Ejecutar el plan piloto inicial",
+                    "Medir los resultados operacionales",
+                    "Estandarizar las soluciones exitosas o corregir desviaciones",
+                    "Diseñar la estrategia inicial"
+                ],
+                correct: 2,
+                explanation: "PDCA representa: Plan (Planificar), Do (Hacer), Check (Verificar), Act (Actuar/Ajustar). En Act se aplican las correcciones o se estandariza el cambio comprobado."
+            },
+
+            // 41 - 50
+            {
+                id: 41,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'Identifique el número que rompe la regla lógica de formación en este conjunto: [4, 9, 16, 25, 35, 49, 64]',
+                options: [
+                    "25",
+                    "35",
+                    "49",
+                    "64"
+                ],
+                correct: 1,
+                explanation: "Todos los elementos son cuadrados perfectos de números enteros (2², 3², 4², 5², 7², 8²), excepto 35 que rompe la regla (6² debería ser 36)."
+            },
+            {
+                id: 42,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'Un vehículo corporativo consume 8 litros de combustible por cada 100 km recorridos en carretera. Si el costo del litro es de $1,50, ¿cuál es el costo total en combustible para un viaje de 450 km?',
+                options: [
+                    "$54,00",
+                    "$36,00",
+                    "$48,00",
+                    "$60,00"
+                ],
+                correct: 0,
+                explanation: "Consumo total de litros = (450 km / 100) * 8 = 36 litros. Costo total = 36 * $1,50 = $54,00."
+            },
+            {
+                id: 43,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: 'Elija la opción que mejor define la falacia lógica "Ad Hominem":',
+                options: [
+                    "Desviar la atención hacia un tema irrelevante",
+                    "Atacar el carácter o circunstancia del interlocutor para descalificar su argumento",
+                    "Asumir que lo expuesto por una autoridad es incuestionable",
+                    "Afirmar que una propuesta es cierta porque no se ha demostrado lo contrario"
+                ],
+                correct: 1,
+                explanation: "La falacia Ad Hominem descalifica la validez de un razonamiento atacando directamente a la persona que lo emite en lugar de rebatir su argumento."
+            },
+            {
+                id: 44,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Si rotamos una hoja de papel transparente rectangular con un trazo en diagonal 180° en el plano bidimensional, la orientación del trazo:',
+                options: [
+                    "Invierte completamente su sentido de pendiente",
+                    "Se mantiene en la misma orientación espacial de pendiente",
+                    "Se transforma en una línea totalmente horizontal",
+                    "Se transforma en una línea totalmente vertical"
+                ],
+                correct: 1,
+                explanation: "Una rotación plana de 180° invierte tanto el eje X como el Y. Matemáticamente, la pendiente m = Δy/Δx pasa a (-Δy)/(-Δx) = m, conservando la misma inclinación."
+            },
+            {
+                id: 45,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: '¿Qué principio de negociación harvardiana recomienda separar a las personas del problema?',
+                options: [
+                    "Negociación basada en posiciones inflexibles",
+                    "Negociación de principios (Principled Negotiation)",
+                    "Modelo de regateo distributivo de suma cero",
+                    "Estrategia de intimidación asimétrica"
+                ],
+                correct: 1,
+                explanation: "El modelo de negociación de Harvard propone centrarse en los intereses reales y en criterios objetivos, separando las relaciones interpersonales de la materia del conflicto."
+            },
+            {
+                id: 46,
+                category: 'RL',
+                catName: 'Razonamiento Lógico',
+                question: 'En un panel de 4 consultores (A, B, C, D), se sabe que:\n- A solo habla con B.\n- C habla con todos excepto con A.\n- D solo habla con C.\n¿Quién puede actuar como intermediario directo para transmitir un mensaje de A a D?',
+                options: [
+                    "B pasando el mensaje a C, y C a D",
+                    "C directamente",
+                    "D pasando a B",
+                    "No se requiere intermediario"
+                ],
+                correct: 0,
+                explanation: "A solo se comunica con B. C se comunica con B y con D. Por tanto, la cadena lógica de transmisión es A -> B -> C -> D."
+            },
+            {
+                id: 47,
+                category: 'QC',
+                catName: 'Análisis Cuantitativo',
+                question: 'El valor de una acción subió un 10% el lunes y cayó un 10% el martes. Si la acción cerró el martes a $99, ¿cuál era su precio de apertura el lunes?',
+                options: [
+                    "$100",
+                    "$99",
+                    "$101",
+                    "$105"
+                ],
+                correct: 0,
+                explanation: "Sea P el precio inicial. P * 1,10 * 0,90 = 0,99 * P = 99. Por lo tanto P = 99 / 0,99 = $100."
+            },
+            {
+                id: 48,
+                category: 'LV',
+                catName: 'Lógica Verbal',
+                question: '¿Qué palabra no encaja en la secuencia por diferenciación conceptual?\n[Altruismo, Filantropía, Benevolencia, Egoísmo, Empatía]',
+                options: [
+                    "Altruismo",
+                    "Filantropía",
+                    "Egoísmo",
+                    "Empatía"
+                ],
+                correct: 2,
+                explanation: "Altruismo, filantropía, benevolencia y empatía son actitudes orientadas al bienestar ajeno. 'Egoísmo' es la actitud contrapuesta centrada exclusivamente en el interés propio."
+            },
+            {
+                id: 49,
+                category: 'VE',
+                catName: 'Visión Espacial',
+                question: 'Si plegamos una hoja cuadrada por sus dos diagonales y posteriormente cortamos la punta del centro uniendo los dobleces, al desplegar la hoja obtenemos:',
+                options: [
+                    "Un cuadrado agujereado en el centro",
+                    "Cuatro pequeños orificios separados",
+                    "Un corte perimetral en los cuatro bordes externos",
+                    "Dos ranuras paralelas"
+                ],
+                correct: 0,
+                explanation: "La intersección de las dos diagonales coincide exactamente con el centro del cuadrado. Cortar esa cúspide genera un único orificio central regular."
+            },
+            {
+                id: 50,
+                category: 'ED',
+                catName: 'Gestión y Decisión',
+                question: 'En gestión de talento corporativo, el sesgo cognitivo denominado "Efecto Halo" consiste en:',
+                options: [
+                    "Juzgar el desempeño de un profesional según la última impresión reciente",
+                    "Generalizar una evaluación positiva global a partir de un solo rasgo o característica sobresaliente",
+                    "Favorecer a candidatos con antecedentes similares a los del entrevistador",
+                    "Evaluar por debajo de la media debido a un sesgo de alta exigencia"
+                ],
+                correct: 1,
+                explanation: "El efecto Halo ocurre cuando la percepción positiva de una sola cualidad particular influye favorablemente en la valoración holística o global de un individuo."
+            }
+        ];
+
+        /* ==========================================================================
+           2. STATE MANAGEMENT & APP LOGIC
+           ========================================================================== */
+
+        let currentIndex = 0;
+        let userAnswers = new Array(questionsData.length).fill(null);
+        let timerInterval = null;
+        const TOTAL_TIME_SECONDS = 45 * 60; // 45 minutes
+        let secondsRemaining = TOTAL_TIME_SECONDS;
+        let quizStartTime = null;
+
+        // Init App
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+        });
+
+        // Theme Toggle
+        function initTheme() {
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Start Quiz
+        function startQuiz() {
+            currentIndex = 0;
+            userAnswers.fill(null);
+            secondsRemaining = TOTAL_TIME_SECONDS;
+            quizStartTime = new Date();
+
+            document.getElementById('screen-intro').classList.add('hidden');
+            document.getElementById('screen-results').classList.add('hidden');
+            document.getElementById('screen-quiz').classList.remove('hidden');
+            document.getElementById('header-quiz-info').classList.remove('hidden');
+
+            startTimer();
+            renderQuestion();
+            renderGridModalButtons();
+        }
+
+        // Timer Logic
+        function startTimer() {
+            clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                secondsRemaining--;
+                updateTimerDisplay();
+                if (secondsRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    alert("¡El tiempo límite de 45 minutos ha finalizado! Evaluando respuestas...");
+                    submitQuiz();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(secondsRemaining / 60);
+            const secs = secondsRemaining % 60;
+            const displayStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+            document.getElementById('timer-display').textContent = displayStr;
+        }
+
+        // Render Question
+        function renderQuestion() {
+            const q = questionsData[currentIndex];
+
+            // Header info
+            document.getElementById('progress-text').textContent = `Pregunta ${currentIndex + 1} de ${questionsData.length}`;
+            const pct = Math.round(((currentIndex + 1) / questionsData.length) * 100);
+            document.getElementById('progress-percent').textContent = `${pct}% completado`;
+            document.getElementById('progress-bar').style.width = `${pct}%`;
+
+            document.getElementById('category-badge').textContent = `${q.catName}`;
+            document.getElementById('question-text').textContent = `${q.id}. ${q.question}`;
+
+            // Visual SVG
+            const visContainer = document.getElementById('visual-container');
+            if (q.visualSVG) {
+                visContainer.innerHTML = q.visualSVG;
+                visContainer.classList.remove('hidden');
+            } else {
+                visContainer.innerHTML = '';
+                visContainer.classList.add('hidden');
+            }
+
+            // Options
+            const optsContainer = document.getElementById('options-container');
+            optsContainer.innerHTML = '';
+
+            q.options.forEach((optText, optIdx) => {
+                const isSelected = userAnswers[currentIndex] === optIdx;
+                const optBtn = document.createElement('button');
+                optBtn.type = 'button';
+                optBtn.onclick = () => selectOption(optIdx);
+                optBtn.className = `w-full text-left p-4 rounded-xl border transition flex items-center justify-between ${
+                    isSelected 
+                        ? 'border-brand-600 bg-brand-50 dark:bg-brand-950/50 text-brand-900 dark:text-brand-100 font-semibold ring-2 ring-brand-600/30' 
+                        : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700/50'
+                }`;
+
+                optBtn.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <span class="w-6 h-6 rounded-full border text-xs flex items-center justify-center ${
+                            isSelected 
+                                ? 'border-brand-600 bg-brand-600 text-white font-bold' 
+                                : 'border-slate-300 dark:border-slate-600 text-slate-500'
+                        }">${String.fromCharCode(65 + optIdx)}</span>
+                        <span class="text-sm sm:text-base">${optText}</span>
+                    </div>
+                    ${isSelected ? '<svg class="w-5 h-5 text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>' : ''}
+                `;
+                optsContainer.appendChild(optBtn);
+            });
+
+            // Nav buttons
+            document.getElementById('btn-prev').disabled = currentIndex === 0;
+            const btnNext = document.getElementById('btn-next');
+            if (currentIndex === questionsData.length - 1) {
+                btnNext.textContent = 'Finalizar Evaluacion';
+            } else {
+                btnNext.innerHTML = `Siguiente <svg class="w-4 h-4 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>`;
+            }
+
+            renderGridModalButtons();
+        }
+
+        function selectOption(optIdx) {
+            userAnswers[currentIndex] = optIdx;
+            renderQuestion();
+        }
+
+        function navigate(dir) {
+            if (dir === 1 && currentIndex === questionsData.length - 1) {
+                confirmEarlySubmit();
+                return;
+            }
+            currentIndex = Math.max(0, Math.min(questionsData.length - 1, currentIndex + dir));
+            renderQuestion();
+        }
+
+        // Quick Nav Grid Modal
+        function toggleGridModal() {
+            const modal = document.getElementById('modal-grid');
+            modal.classList.toggle('hidden');
+        }
+
+        function renderGridModalButtons() {
+            const container = document.getElementById('grid-buttons-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                const isAnswered = userAnswers[idx] !== null;
+                const isCurrent = idx === currentIndex;
+
+                btn.className = `w-8 h-8 rounded-lg text-xs font-bold transition flex items-center justify-center ${
+                    isCurrent ? 'ring-2 ring-brand-600 font-extrabold' : ''
+                } ${
+                    isAnswered 
+                        ? 'bg-brand-600 text-white' 
+                        : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600'
+                }`;
+                btn.textContent = idx + 1;
+                btn.onclick = () => {
+                    currentIndex = idx;
+                    renderQuestion();
+                    toggleGridModal();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Early Submit Confirmation
+        function confirmEarlySubmit() {
+            const answeredCount = userAnswers.filter(a => a !== null).length;
+            const msg = `Has respondido ${answeredCount} de 50 preguntas. ${answeredCount < 50 ? 'Aún tienes preguntas pendientes.' : '¿Deseas procesar tu informe ahora?'}`;
+            document.getElementById('confirm-msg').textContent = msg;
+            document.getElementById('modal-confirm').classList.remove('hidden');
+        }
+
+        function closeConfirmModal() {
+            document.getElementById('modal-confirm').classList.add('hidden');
+        }
+
+        /* ==========================================================================
+           3. EVALUATION & RESULTS SYSTEM
+           ========================================================================== */
+
+        function submitQuiz() {
+            closeConfirmModal();
+            clearInterval(timerInterval);
+
+            const timeUsedSeconds = TOTAL_TIME_SECONDS - secondsRemaining;
+
+            // Calculate score
+            let correctCount = 0;
+            const domainScores = {
+                'RL': { total: 0, correct: 0, name: 'Razonamiento Lógico' },
+                'QC': { total: 0, correct: 0, name: 'Análisis Cuantitativo' },
+                'LV': { total: 0, correct: 0, name: 'Lógica Verbal' },
+                'VE': { total: 0, correct: 0, name: 'Visión Espacial' },
+                'ED': { total: 0, correct: 0, name: 'Gestión y Decisión' }
+            };
+
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                domainScores[q.category].total++;
+                if (userAns === q.correct) {
+                    correctCount++;
+                    domainScores[q.category].correct++;
+                }
+            });
+
+            // Standardized IQ Formula: Mean = 100, SD = 15
+            // Standard expected mean for population = 25/50; SD ~ 7.5
+            const zScore = (correctCount - 25) / 7.5;
+            let estimatedIQ = Math.round(100 + (zScore * 15));
+            estimatedIQ = Math.max(70, Math.min(160, estimatedIQ)); // Clamp 70-160
+
+            // Percentile estimation
+            let percentile = Math.round(100 / (1 + Math.exp(-0.07 * (estimatedIQ - 100))));
+            if (percentile > 99) percentile = 99;
+            if (percentile < 1) percentile = 1;
+
+            // Save to LocalStorage History
+            saveHistory({
+                date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                score: correctCount,
+                iq: estimatedIQ,
+                timeUsed: timeUsedSeconds
+            });
+
+            // Render Results Screen
+            renderResultsScreen(correctCount, estimatedIQ, percentile, timeUsedSeconds, domainScores);
+        }
+
+        function renderResultsScreen(correctCount, iq, percentile, timeUsedSec, domainScores) {
+            document.getElementById('screen-quiz').classList.add('hidden');
+            document.getElementById('header-quiz-info').classList.add('hidden');
+            document.getElementById('screen-results').classList.remove('hidden');
+
+            document.getElementById('res-iq-score').textContent = iq;
+            document.getElementById('res-iq-percentile').textContent = `Percentil Aprox. ${percentile}`;
+            document.getElementById('res-correct-count').textContent = `${correctCount} / 50`;
+            
+            const accuracyPct = Math.round((correctCount / 50) * 100);
+            document.getElementById('res-accuracy-pct').textContent = `${accuracyPct}% de Eficiencia`;
+
+            const mins = Math.floor(timeUsedSec / 60);
+            const secs = timeUsedSec % 60;
+            document.getElementById('res-time-used').textContent = `${mins}m ${secs}s`;
+            
+            const avgSec = Math.round(timeUsedSec / 50);
+            document.getElementById('res-time-per-q').textContent = `Promedio: ${avgSec}s / pregunta`;
+
+            // Qualitative Interpretation
+            const qualBox = document.getElementById('res-qualitative');
+            let interpText = "";
+            if (iq >= 130) {
+                interpText = "<strong>Desempeño Sobresaliente (Alta Capacidad):</strong> Demuestra una flexibilidad cognitiva superior, excelente capacidad de abstracción y resolución estratégica bajo presión de tiempo.";
+            } else if (iq >= 115) {
+                interpText = "<strong>Desempeño Alto (Por Encima del Promedio):</strong> Destacada aptitud analítica, sólidas habilidades cuantitativas y alta precisión en la toma de decisiones profesionales.";
+            } else if (iq >= 90) {
+                interpText = "<strong>Desempeño Promedio Estándar:</strong> Adecuada capacidad analítica e intelectual. Equilibrio funcional en la resolución de problemas operacionales y lógicos.";
+            } else {
+                interpText = "<strong>Desempeño Sensible de Mejora:</strong> Se sugiere ejercitar la estimulación cognitiva estructurada en razonamiento espacial y cálculo financiero rápido.";
+            }
+            qualBox.innerHTML = interpText;
+
+            // Render Domain Breakdown
+            const domainContainer = document.getElementById('domain-breakdown-container');
+            domainContainer.innerHTML = '';
+            Object.keys(domainScores).forEach(key => {
+                const dom = domainScores[key];
+                const pct = Math.round((dom.correct / dom.total) * 100);
+                const card = document.createElement('div');
+                card.className = 'p-4 bg-slate-50 dark:bg-slate-700/40 rounded-xl border border-slate-200 dark:border-slate-700 space-y-2';
+                card.innerHTML = `
+                    <div class="flex justify-between items-center text-xs font-semibold">
+                        <span class="text-slate-800 dark:text-slate-200">${dom.name}</span>
+                        <span class="text-brand-600 dark:text-brand-400">${dom.correct}/${dom.total} (${pct}%)</span>
+                    </div>
+                    <div class="w-full bg-slate-200 dark:bg-slate-600 h-2 rounded-full overflow-hidden">
+                        <div class="bg-brand-600 h-full" style="width: ${pct}%"></div>
+                    </div>
+                `;
+                domainContainer.appendChild(card);
+            });
+
+            // Render Detailed Step-by-Step Review List
+            const reviewContainer = document.getElementById('review-list-container');
+            reviewContainer.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[idx];
+                const isCorrect = userAns === q.correct;
+                const item = document.createElement('div');
+                item.className = `p-4 rounded-xl border ${
+                    isCorrect 
+                        ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/40' 
+                        : 'bg-rose-50/50 dark:bg-rose-950/20 border-rose-200 dark:border-rose-800/40'
+                } space-y-2 text-xs sm:text-sm`;
+
+                const userAnsText = userAns !== null ? `${String.fromCharCode(65 + userAns)}) ${q.options[userAns]}` : 'Sin responder';
+                const correctAnsText = `${String.fromCharCode(65 + q.correct)}) ${q.options[q.correct]}`;
+
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <span class="font-bold text-slate-900 dark:text-white">P${q.id}. ${q.question}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
+                            isCorrect ? 'bg-emerald-200 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200' : 'bg-rose-200 text-rose-800 dark:bg-rose-900 dark:text-rose-200'
+                        }">${isCorrect ? 'Correcta' : 'Incorrecta'}</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-1">
+                        <div><strong class="text-slate-500">Tu respuesta:</strong> <span class="${isCorrect ? 'text-emerald-700 dark:text-emerald-300 font-medium' : 'text-rose-700 dark:text-rose-300 font-medium'}">${userAnsText}</span></div>
+                        <div><strong class="text-slate-500">Respuesta Correcta:</strong> <span class="text-emerald-700 dark:text-emerald-300 font-medium">${correctAnsText}</span></div>
+                    </div>
+                    <div class="p-2.5 bg-white/80 dark:bg-slate-800/80 rounded-lg text-slate-600 dark:text-slate-300 text-xs border border-slate-100 dark:border-slate-700 mt-2">
+                        <strong class="text-brand-600 dark:text-brand-400 block mb-0.5">Explicación Paso a Paso:</strong>
+                        ${q.explanation}
+                    </div>
+                `;
+                reviewContainer.appendChild(item);
+            });
+        }
+
+        function restartTest() {
+            document.getElementById('screen-results').classList.add('hidden');
+            document.getElementById('screen-intro').classList.remove('hidden');
+        }
+
+        /* ==========================================================================
+           4. HISTORY & STORAGE
+           ========================================================================== */
+
+        function saveHistory(entry) {
+            let history = JSON.parse(localStorage.getItem('iq_quiz_history') || '[]');
+            history.unshift(entry);
+            if (history.length > 10) history = history.slice(0, 10);
+            localStorage.setItem('iq_quiz_history', JSON.stringify(history));
+        }
+
+        function showHistoryModal() {
+            const history = JSON.parse(localStorage.getItem('iq_quiz_history') || '[]');
+            const container = document.getElementById('history-items-container');
+            container.innerHTML = '';
+
+            if (history.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">No hay intentos registrados anteriormente.</p>`;
+            } else {
+                history.forEach((item) => {
+                    const div = document.createElement('div');
+                    div.className = 'p-3 bg-slate-50 dark:bg-slate-700/50 rounded-xl border border-slate-200 dark:border-slate-600 flex justify-between items-center text-xs';
+                    const mins = Math.floor(item.timeUsed / 60);
+                    div.innerHTML = `
+                        <div>
+                            <div class="font-bold text-slate-800 dark:text-slate-100">${item.date}</div>
+                            <div class="text-slate-500">${item.score} / 50 Aciertos • Tiempo: ${mins} min</div>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-lg font-extrabold text-brand-600 dark:text-brand-400">CI ${item.iq}</span>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+            document.getElementById('modal-history').classList.remove('hidden');
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('modal-history').classList.add('hidden');
+        }
+
+        function clearHistory() {
+            localStorage.removeItem('iq_quiz_history');
+            showHistoryModal();
+        }
+    </script>
+</body>
+</html>

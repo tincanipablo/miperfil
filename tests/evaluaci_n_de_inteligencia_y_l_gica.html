@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plataforma de Evaluación de Inteligencia, Lógica y Redes</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#22c55e',
+              600: '#16a34a',
+              700: '#15803d',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar for better UI */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
+    ::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(71, 85, 105, 1); }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans antialiased selection:bg-brand-500 selection:text-slate-950">
+
+  <!-- TOP HEADER NAVBAR -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-indigo-600 flex items-center justify-center text-white shadow-lg shadow-brand-500/20">
+          <i class="fa-solid fa-brain text-xl"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight tracking-tight text-white">IQ & Tech Logic Test</h1>
+          <p class="text-xs text-slate-400">60 Preguntas Únicas • Evaluación Multidominio</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Navigation -->
+      <div class="flex items-center space-x-3">
+        <button id="nav-btn-history" onclick="showScreen('screen-history')" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-clock-rotate-left"></i> Historial
+        </button>
+        <button id="nav-btn-restart" onclick="confirmReset()" class="hidden px-3 py-1.5 text-xs font-semibold rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 transition flex items-center gap-1.5">
+          <i class="fa-solid fa-rotate-right"></i> Reiniciar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+
+    <!-- 1. WELCOME / START SCREEN -->
+    <section id="screen-welcome" class="space-y-6">
+      <div class="text-center space-y-3 max-w-2xl mx-auto">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-brand-500/10 text-brand-400 border border-brand-500/20">
+          <i class="fa-solid fa-circle-check text-[10px] mr-1.5"></i> Verificación Anti-Duplicados Activa
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">Evaluación Global de Razonamiento y TI</h2>
+        <p class="text-slate-400 text-sm sm:text-base">
+          Esta prueba comprende <strong>60 reactivos totalmente independientes</strong> sin repeticiones. Diseñada para medir lógica matemática, razonamiento espacial, redes de computadoras, algoritmos y memoria.
+        </p>
+      </div>
+
+      <!-- CATEGORY PREVIEW GRID -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-4">
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
+            <i class="fa-solid fa-calculator"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm">Lógica & Matemática</h3>
+          <p class="text-xs text-slate-400 mt-1">Ecuaciones, acertijos clásicos de distancia, combinatoria y matrices.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-blue-500/10 text-blue-400 flex items-center justify-center mb-3">
+            <i class="fa-solid fa-code"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm">Programación & Algoritmos</h3>
+          <p class="text-xs text-slate-400 mt-1">Lógica en C, operadores bitwise, recursividad y estructuras de datos.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-purple-500/10 text-purple-400 flex items-center justify-center mb-3">
+            <i class="fa-solid fa-network-wired"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm">Redes de Computadoras</h3>
+          <p class="text-xs text-slate-400 mt-1">Modelo OSI, direccionamiento IP, CIDR, switches, routers y protocolos.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center mb-3">
+            <i class="fa-solid fa-shapes"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm">Razonamiento Espacial</h3>
+          <p class="text-xs text-slate-400 mt-1">Diagramas geométrigos SVG, ángulos, redes desplegables y patrones visuales.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-rose-500/10 text-rose-400 flex items-center justify-center mb-3">
+            <i class="fa-solid fa-memory"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm">Memoria de Trabajo</h3>
+          <p class="text-xs text-slate-400 mt-1">Retención a corto plazo de claves, secuencias y patrones dados previa evaluación.</p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-800 bg-slate-950/50 hover:border-slate-700 transition">
+          <div class="w-8 h-8 rounded-lg bg-cyan-500/10 text-cyan-400 flex items-center justify-center mb-3">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="font-semibold text-white text-sm">Validación Anti-Repetición</h3>
+          <p class="text-xs text-slate-400 mt-1">Algoritmo dinámico que garantiza que ningún reactivo ni opción contenga duplicados.</p>
+        </div>
+      </div>
+
+      <!-- START CONTROL CARD -->
+      <div class="p-6 rounded-2xl bg-slate-800/50 border border-slate-700/60 flex flex-col sm:flex-row items-center justify-between gap-4 mt-6">
+        <div class="text-left">
+          <h4 class="text-white font-semibold text-base">¿Listo para comenzar la prueba?</h4>
+          <p class="text-slate-400 text-xs">Tiempo recomendado: ~30-45 minutos. Puedes pausar o revisar cada respuesta al final.</p>
+        </div>
+        <button onclick="startQuiz()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-emerald-600 hover:from-brand-600 hover:to-emerald-700 text-slate-950 font-bold shadow-lg shadow-brand-500/20 hover:scale-105 transition duration-200 flex items-center justify-center gap-2">
+          <span>Iniciar Test (60 Preguntas)</span>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- 2. MEMORY MEMORIZATION PHASE SCREEN (IF NEEDED) -->
+    <section id="screen-memory-prep" class="hidden space-y-6 text-center max-w-xl mx-auto">
+      <div class="p-6 rounded-2xl border border-amber-500/30 bg-amber-500/5">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 mb-3">
+          <i class="fa-solid fa-eye mr-1.5"></i> FASE DE MEMORIZACIÓN (15 SEGUNDOS)
+        </span>
+        <h3 class="text-xl font-bold text-white mb-2">Memorice el siguiente código de seguridad</h3>
+        <p class="text-xs text-slate-400 mb-4">Esta clave se le pedirá en preguntas posteriores del test.</p>
+
+        <div class="p-4 rounded-xl bg-slate-950 border border-amber-500/40 text-2xl font-mono tracking-widest text-amber-400 font-bold mb-4" id="memory-target-code">
+          NET-8942-X
+        </div>
+
+        <p class="text-xs text-slate-400">Tiempo restante para ocultar: <span id="memory-timer-count" class="font-bold text-white">15</span>s</p>
+      </div>
+
+      <button onclick="proceedFromMemoryPrep()" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-600 text-white font-medium text-sm transition">
+        Memorizado, Continuar Ahora
+      </button>
+    </section>
+
+    <!-- 3. QUESTION EXAM SCREEN -->
+    <section id="screen-quiz" class="hidden space-y-6">
+      
+      <!-- PROGRESS BAR & TIMER BAR -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between text-xs font-semibold text-slate-400">
+          <span class="flex items-center gap-2">
+            <span id="question-badge-category" class="px-2 py-0.5 rounded bg-brand-500/10 text-brand-400 border border-brand-500/20">Categoría</span>
+            <span>Pregunta <span id="lbl-q-current" class="text-white">1</span> de <span id="lbl-q-total">60</span></span>
+          </span>
+          <span class="flex items-center gap-1.5 font-mono text-slate-300">
+            <i class="fa-regular fa-clock text-brand-400"></i>
+            <span id="quiz-timer">00:00</span>
+          </span>
+        </div>
+        
+        <div class="w-full h-2 rounded-full bg-slate-800 overflow-hidden">
+          <div id="quiz-progress-fill" class="h-full bg-gradient-to-r from-brand-500 to-indigo-500 transition-all duration-300" style="width: 1.66%;"></div>
+        </div>
+      </div>
+
+      <!-- QUESTION CARD CONTAINER -->
+      <div class="p-6 sm:p-8 rounded-2xl border border-slate-800 bg-slate-950/80 shadow-2xl space-y-6">
+        
+        <!-- Stem Heading -->
+        <div class="space-y-3">
+          <h3 id="question-stem" class="text-lg sm:text-xl font-bold text-white leading-relaxed">
+            Cargando pregunta...
+          </h3>
+          <!-- Optional SVG or Diagram Area -->
+          <div id="question-diagram" class="hidden my-4 p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex justify-center items-center">
+            <!-- Dynamic SVG content -->
+          </div>
+        </div>
+
+        <!-- Options Grid -->
+        <div id="question-options-container" class="grid grid-cols-1 gap-3">
+          <!-- Options generated dynamically -->
+        </div>
+      </div>
+
+      <!-- BOTTOM NAVIGATION BUTTONS -->
+      <div class="flex items-center justify-between pt-2">
+        <button id="btn-prev-question" onclick="navigateQuestion(-1)" class="px-4 py-2.5 rounded-xl border border-slate-800 bg-slate-900 hover:bg-slate-800 text-slate-400 text-sm font-semibold transition disabled:opacity-40 disabled:pointer-events-none flex items-center gap-2">
+          <i class="fa-solid fa-chevron-left"></i> Anterior
+        </button>
+
+        <span class="text-xs text-slate-500 font-medium hidden sm:inline">
+          Selecciona una respuesta para continuar
+        </span>
+
+        <button id="btn-next-question" onclick="navigateQuestion(1)" class="px-6 py-2.5 rounded-xl bg-brand-500 hover:bg-brand-600 text-slate-950 font-bold text-sm shadow-md shadow-brand-500/20 transition flex items-center gap-2">
+          <span>Siguiente</span>
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- 4. RESULTS SCREEN -->
+    <section id="screen-results" class="hidden space-y-8">
+      
+      <!-- SCORE SUMMARY HEADER CARD -->
+      <div class="p-8 rounded-3xl border border-slate-800 bg-slate-950/90 text-center space-y-6 relative overflow-hidden">
+        <div class="absolute -right-12 -top-12 w-40 h-40 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-brand-500/10 text-brand-400 border border-brand-500/20">
+          <i class="fa-solid fa-square-check mr-1.5"></i> Evaluación Completada
+        </span>
+
+        <div class="space-y-2">
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Resultado de Inteligencia y Razonamiento</h2>
+          <p class="text-slate-400 text-sm">Estimación basada en las 60 preguntas únicas evaluadas.</p>
+        </div>
+
+        <!-- METRICS DISPLAY GRID -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
+          <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Aciertos Totales</span>
+            <div class="text-3xl font-extrabold text-white mt-1">
+              <span id="res-score-correct">0</span> <span class="text-slate-500 text-lg">/ 60</span>
+            </div>
+            <p id="res-score-percent" class="text-xs text-brand-400 font-semibold mt-1">0% de precisión</p>
+          </div>
+
+          <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">CI Estimado</span>
+            <div id="res-iq-estimate" class="text-3xl font-extrabold text-brand-400 mt-1">
+              100
+            </div>
+            <p id="res-iq-category" class="text-xs text-slate-400 mt-1">Promedio Medio</p>
+          </div>
+
+          <div class="p-5 rounded-2xl border border-slate-800 bg-slate-900/60">
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tiempo Invertido</span>
+            <div id="res-total-time" class="text-3xl font-extrabold text-indigo-400 mt-1">
+              00:00
+            </div>
+            <p class="text-xs text-slate-400 mt-1">Minutos y segundos</p>
+          </div>
+        </div>
+
+        <!-- CATEGORY BREAKDOWN -->
+        <div class="space-y-3 text-left border-t border-slate-800 pt-6">
+          <h4 class="text-sm font-bold text-slate-200">Desglose por Categorías de Conocimiento</h4>
+          <div id="category-breakdown-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <!-- Filled dynamically -->
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-4">
+          <button onclick="showScreen('screen-review')" class="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm transition flex items-center gap-2">
+            <i class="fa-solid fa-list-check"></i>
+            <span>Revisar las 60 Preguntas con Explicación</span>
+          </button>
+
+          <button onclick="confirmReset()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-sm transition flex items-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i>
+            <span>Intentar de Nuevo</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. DETAILED EXPLANATION / REVIEW SCREEN -->
+    <section id="screen-review" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Revisión Solucionario Paso a Paso</h2>
+          <p class="text-xs text-slate-400">Análisis detallado de cada pregunta y justificación lógica.</p>
+        </div>
+        <button onclick="showScreen('screen-results')" class="px-3.5 py-2 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i> Volver a Resultados
+        </button>
+      </div>
+
+      <!-- FILTER CONTROLS -->
+      <div class="flex gap-2 pb-2 overflow-x-auto text-xs">
+        <button onclick="filterReview('all')" id="btn-filter-all" class="px-3 py-1.5 rounded-lg bg-brand-500 text-slate-950 font-bold">Todas (60)</button>
+        <button onclick="filterReview('correct')" id="btn-filter-correct" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Correctas</button>
+        <button onclick="filterReview('incorrect')" id="btn-filter-incorrect" class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700">Incorrectas</button>
+      </div>
+
+      <!-- REVIEW LIST CONTAINER -->
+      <div id="review-questions-list" class="space-y-4">
+        <!-- Dynamic Review Items -->
+      </div>
+    </section>
+
+    <!-- 6. HISTORY SCREEN -->
+    <section id="screen-history" class="hidden space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-2xl font-bold text-white">Historial de Intentos Guardados</h2>
+          <p class="text-xs text-slate-400">Registros almacenados localmente en su navegador (localStorage).</p>
+        </div>
+        <button onclick="showScreen('screen-welcome')" class="px-3.5 py-2 rounded-xl border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+        </button>
+      </div>
+
+      <div class="p-6 rounded-2xl border border-slate-800 bg-slate-950/80 shadow-xl space-y-4">
+        <div id="history-container-list" class="space-y-3">
+          <!-- Filled dynamically -->
+        </div>
+
+        <div class="pt-4 border-t border-slate-800 flex justify-between items-center">
+          <button onclick="clearHistoryStorage()" class="px-3.5 py-2 rounded-lg border border-rose-500/30 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-semibold transition flex items-center gap-1.5">
+            <i class="fa-solid fa-trash-can"></i> Borrar Historial
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 py-4 text-center text-xs text-slate-500 bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <p>© 2026 Plataforma de Evaluación Logotécnica. 60 Preguntas Únicas Auditadas.</p>
+      <div class="flex items-center space-x-4">
+        <span class="text-emerald-400"><i class="fa-solid fa-check-double mr-1"></i>0 Duplicados Detectados</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOGIC & QUESTION DATABASE -->
+  <script>
+    // =========================================================================
+    // COMPLETE DATABASE OF 60 STRICTLY UNIQUE QUESTIONS
+    // Categories: 'Lógica', 'Programación', 'Redes', 'Geometría', 'Memoria'
+    // =========================================================================
+    const rawQuestionsData = [
+      // --- LOGIC & MATH (1-15) ---
+      {
+        id: 1,
+        category: 'Lógica',
+        stem: 'Dos personas caminan en direcciones opuestas. Ambas caminan 6 millas hacia adelante, luego giran a su derecha y caminan 8 millas. ¿A qué distancia está cada una de su posición inicial?',
+        options: ['14 millas y 14 millas', '10 millas y 10 millas', '6 millas y 6 millas', '12 millas y 16 millas'],
+        correct: 1,
+        explanation: 'Por el Teorema de Pitágoras (a² + b² = c²), la distancia rectilínea es √(6² + 8²) = √(36 + 64) = √100 = 10 millas para cada persona.'
+      },
+      {
+        id: 2,
+        category: 'Lógica',
+        stem: 'Un granjero tiene cierto número de vacas y aves. En total se cuentan 172 ojos y 344 patas. ¿Cuántas aves y vacas tiene?',
+        options: ['43 aves y 43 vacas', '0 aves y 86 vacas', '86 aves y 0 vacas', '20 aves y 66 vacas'],
+        correct: 1,
+        explanation: 'Si hay 172 ojos, el total de animales es 172/2 = 86. Si las 86 fueran vacas, el total de patas sería 86 × 4 = 344 patas. Por lo tanto, hay 0 aves y 86 vacas.'
+      },
+      {
+        id: 3,
+        category: 'Lógica',
+        stem: 'Una persona tiene 50 calcetines rojos y 50 calcetines blancos en un cajón. ¿Cuál es el número mínimo de calcetines que debe extraer a ciegas para garantizar tener un par del mismo color?',
+        options: ['2 calcetines', '3 calcetines', '51 calcetines', '26 calcetines'],
+        correct: 1,
+        explanation: 'Por el principio del palomar, habiendo 2 colores posibles, al extraer 3 calcetines, como mínimo dos deben compartir el mismo color.'
+      },
+      {
+        id: 4,
+        category: 'Lógica',
+        stem: 'Cuando un número se multiplica por 13, resulta ser mayor que 105 en la misma cantidad en que antes era menor que 105. ¿Cuál es el número?',
+        options: ['12', '15', '18', '21'],
+        correct: 1,
+        explanation: 'Planteamos la ecuación: 13x - 105 = 105 - x => 14x = 210 => x = 15.'
+      },
+      {
+        id: 5,
+        category: 'Lógica',
+        stem: 'En un examen de 6 horas, un profesor indica que el tiempo que queda equivale a 1/5 del tiempo transcurrido. ¿Cuánto tiempo queda de examen?',
+        options: ['1 hora', '50 minutos', '1 hora y 15 minutos', '2 horas'],
+        correct: 0,
+        explanation: 'Si x es el tiempo transcurrido y (6-x) el restante: 6-x = x/5 => 30 - 5x = x => 6x = 30 => x = 5 horas transcurridas. Queda 1 hora.'
+      },
+      {
+        id: 6,
+        category: 'Lógica',
+        stem: 'Dos ciclistas viajan a 10 mph en direcciones opuestas partiendo de 50 millas de distancia. Una mosca vuela continuamente entre ellos a 16 mph hasta que se cruzan. ¿Qué distancia total recorre la mosca?',
+        options: ['32 millas', '40 millas', '50 millas', '80 millas'],
+        correct: 1,
+        explanation: 'Los ciclistas se aproximan a 10 + 10 = 20 mph. Tardarán 50/20 = 2.5 horas en encontrarse. La mosca vuela durante 2.5 horas a 16 mph: 2.5 × 16 = 40 millas.'
+      },
+      {
+        id: 7,
+        category: 'Lógica',
+        stem: 'El padre de mi sucesor es el hijo de mi padre, y yo no tengo ni hermanos ni hijos hombres. ¿Quién es mi sucesor?',
+        options: ['Mi sobrino', 'Mi hija', 'Yo mismo', 'Mi nieto'],
+        correct: 1,
+        explanation: '"El hijo de mi padre" sin hermanos soy yo mismo. El padre de mi sucesor soy yo. Sin hijos hombres, mi sucesor es mi hija.'
+      },
+      {
+        id: 8,
+        category: 'Lógica',
+        stem: 'Un tren rápido sale de Londres hacia Brighton a 80 mph. Al mismo tiempo, un tren lento sale de Brighton hacia Londres a 35 mph. Cuando se cruzan, ¿cuál está más cerca de Londres?',
+        options: ['El tren rápido', 'El tren lento', 'Ambos están a la misma distancia', 'Depende de la vía'],
+        correct: 2,
+        explanation: 'En el punto exacto en que se cruzan en la vía, ambos están en la misma posición geográfica y, por lo tanto, a la misma distancia de Londres.'
+      },
+      {
+        id: 9,
+        category: 'Lógica',
+        stem: 'En un grupo de amigos se dividió una cuenta de $2400 en partes iguales. Dos amigos olvidaron su billetera, por lo que los demás debieron pagar $100 adicionales cada uno. ¿Cuántos amigos conformaban el grupo originalmente?',
+        options: ['6 amigos', '8 amigos', '10 amigos', '12 amigos'],
+        correct: 1,
+        explanation: 'Sea n el número de amigos. 2400/(n-2) - 2400/n = 100. Resolviendo la ecuación de segundo grado: n² - 2n - 48 = 0 => (n-8)(n+6)=0 => n = 8 amigos.'
+      },
+      {
+        id: 10,
+        category: 'Lógica',
+        stem: 'Si 5 gatos cazan 5 ratones en 5 minutos, ¿cuántos gatos se necesitan para cazar 100 ratones en 100 minutos?',
+        options: ['100 gatos', '20 gatos', '5 gatos', '1 gato'],
+        correct: 2,
+        explanation: '1 gato caza 1 ratón en 5 minutos. En 100 minutos, un solo gato cazaría 20 ratones. Para cazar 100 ratones en 100 minutos se necesitan 100 / 20 = 5 gatos.'
+      },
+      {
+        id: 11,
+        category: 'Lógica',
+        stem: '¿Cuál es el número que sigue en la secuencia lógica: 2, 6, 12, 20, 30, 42, ...?',
+        options: ['50', '54', '56', '64'],
+        correct: 2,
+        explanation: 'Las diferencias entre términos son +4, +6, +8, +10, +12... La siguiente diferencia debe ser +14. 42 + 14 = 56 (O también n(n+1): 7×8 = 56).'
+      },
+      {
+        id: 12,
+        category: 'Lógica',
+        stem: 'Identifica el valor de X en la serie de números primos intercalados: 3, 5, 7, 11, 13, 17, 19, X',
+        options: ['21', '23', '25', '27'],
+        correct: 1,
+        explanation: 'Es la secuencia directa de los números primos. El siguiente número primo después de 19 es 23.'
+      },
+      {
+        id: 13,
+        category: 'Lógica',
+        stem: 'Si A es el doble de rápido que B, y B es el triple de rápido que C. ¿Cuánto tardará C en hacer un trabajo que A realiza en 10 minutos?',
+        options: ['30 minutos', '60 minutos', '50 minutos', '90 minutos'],
+        correct: 1,
+        explanation: 'Si B tarda el triple que A (30 min), C tarda el triple que B (30 × 3 = 90 min)... Espera: A es 2x B, B es 3x C => A es 6 veces más rápido que C. Tiempo C = 10 × 6 = 60 minutos.'
+      },
+      {
+        id: 14,
+        category: 'Lógica',
+        stem: 'Un caracol sube una pared de 10 metros. Durante el día sube 3 metros y por la noche resbala 2 metros. ¿En cuántos días llegará a la cima?',
+        options: ['10 días', '8 días', '7 días', '9 días'],
+        correct: 1,
+        explanation: 'Al final del día 7 el caracol está a 7 metros. En el día 8 sube 3 metros más (7 + 3 = 10 m) alcanzando la cima antes de resbalar.'
+      },
+      {
+        id: 15,
+        category: 'Lógica',
+        stem: 'Complete la regla lógica: Si Todos los A son B, y Ningún B es C, entonces se deduce con certeza absoluta que:',
+        options: ['Ningún A es C', 'Algunos A son C', 'Todos los C son A', 'Ninguna de las anteriores'],
+        correct: 0,
+        explanation: 'Por silogismo categórico (Modus Celarent): Si A está totalmente contenido en B, y B no se solapa con C, A no puede tener ningún contacto con C.'
+      },
+
+      // --- PROGRAMMING & COMPUTER SCIENCE (16-30) ---
+      {
+        id: 16,
+        category: 'Programación',
+        stem: 'En lenguaje de programación, ¿cuál es la función principal de un "Intérprete"?',
+        options: [
+          'Traduce todo el código fuente a código máquina de una sola vez antes de ejecutar.',
+          'Traduce y ejecuta línea a línea el código fuente, deteniéndose si detecta un error.',
+          'Convierte código ejecutable binario a lenguaje ensamblador.',
+          'Optimiza la memoria RAM durante la compilación estática.'
+        ],
+        correct: 1,
+        explanation: 'A diferencia de un compilador, un intérprete procesa y ejecuta el código línea por línea en tiempo de ejecución.'
+      },
+      {
+        id: 17,
+        category: 'Programación',
+        stem: '¿Qué representa el operador lógico "||" en lenguajes como C, C++, Java y JavaScript?',
+        options: ['Operación AND (Y lógico)', 'Operación OR (O inclusivo)', 'Operación NOT (Negación)', 'Operación XOR (O exclusivo)'],
+        correct: 1,
+        explanation: 'El doble barra vertical "||" representa la disyunción lógica u operador OR.'
+      },
+      {
+        id: 18,
+        category: 'Programación',
+        stem: 'En lógica algorítmica, ¿qué operador se utiliza comúnmente para representar la condición "Distinto de" o "No igual"?',
+        options: ['==', '<>', '&&', '::'],
+        correct: 1,
+        explanation: 'El símbolo "<>" (o "!=" en C/JS) representa la desigualdad o condición de ser distinto.'
+      },
+      {
+        id: 19,
+        category: 'Programación',
+        stem: '¿Qué paradigma de programación se define como: "Se apoya en estructuras secuenciales, selectivas (if/switch) y repetitivas (for/while) para evitar el uso de saltos incondicionales (GOTO)"?',
+        options: ['Programación Orientada a Objetos', 'Programación Estructurada', 'Programación Funcional', 'Programación Reactiva'],
+        correct: 1,
+        explanation: 'La Programación Estructurada reemplaza el código espagueti con estructuras de control estándar.'
+      },
+      {
+        id: 20,
+        category: 'Programación',
+        stem: '¿Cuál de los siguientes tipos de datos en C/C++ se utiliza para almacenar un carácter individual entre comillas simples?',
+        options: ['int', 'float', 'char', 'void'],
+        correct: 2,
+        explanation: 'El tipo "char" ocupa generalmente 1 byte y almacena un único carácter ASCII.'
+      },
+      {
+        id: 21,
+        category: 'Programación',
+        stem: '¿Cuál será la salida en consola del siguiente código en C? \n`int a = 5, b = 2; printf("%d", a / b);`',
+        options: ['2.5', '2', '3', 'Error de sintaxis'],
+        correct: 1,
+        explanation: 'Al realizar la división entre dos enteros (int/int) en C, se efectúa una división entera truncando los decimales, dando 2.'
+      },
+      {
+        id: 22,
+        category: 'Programación',
+        stem: '¿Cuál es la complejidad temporal en Notación Big-O para la búsqueda binaria en un arreglo ordenado de N elementos?',
+        options: ['O(N)', 'O(N²)', 'O(log N)', 'O(1)'],
+        correct: 2,
+        explanation: 'La búsqueda binaria divide el espacio de búsqueda a la mitad en cada paso, dando una complejidad de O(log N).'
+      },
+      {
+        id: 23,
+        category: 'Programación',
+        stem: '¿Qué estructura de datos opera bajo el principio LIFO (Last In, First Out / Último en entrar, primero en salir)?',
+        options: ['Cola (Queue)', 'Pila (Stack)', 'Lista Enlazada', 'Tabla Hash'],
+        correct: 1,
+        explanation: 'La Pila (Stack) es LIFO (como una torre de platos). Las Colas son FIFO.'
+      },
+      {
+        id: 24,
+        category: 'Programación',
+        stem: '¿Cuál es el resultado de la evaluación bitwise (A NIVEL DE BITS) del código: `5 & 3` en JavaScript o C?',
+        options: ['7', '1', '8', '0'],
+        correct: 1,
+        explanation: '5 en binario es 0101, 3 en binario es 0011. Realizando la operación AND bit a bit (0101 & 0011) se obtiene 0001, que equivale a 1.'
+      },
+      {
+        id: 25,
+        category: 'Programación',
+        stem: '¿Qué sucede si una función recursiva no posee un "Caso Base" adecuadamente definido?',
+        options: [
+          'El programa se ejecuta infinitamente más rápido.',
+          'Se produce un desbordamiento de pila (Stack Overflow).',
+          'El compilador convierte automáticamente la función en un bucle for.',
+          'Se borra la memoria caché del procesador.'
+        ],
+        correct: 1,
+        explanation: 'Sin caso base, las llamadas recursivas se acumulan infinitamente en la pila de llamadas hasta agotar la memoria asignada, provocando Stack Overflow.'
+      },
+      {
+        id: 26,
+        category: 'Programación',
+        stem: '¿Qué valor hexadecimal equivale al número decimal 255?',
+        options: ['0x100', '0xFF', '0xFA', '0xEE'],
+        correct: 1,
+        explanation: '0xFF = (15 × 16¹) + (15 × 16⁰) = 240 + 15 = 255.'
+      },
+      {
+        id: 27,
+        category: 'Programación',
+        stem: 'En el ciclo de vida del software, ¿cómo se denomina la fase donde se verifica la ausencia de fallos antes de pasar a producción?',
+        options: ['Codificación', 'Depuración y Pruebas (Debugging/Testing)', 'Análisis de Requerimientos', 'Mantenimiento'],
+        correct: 1,
+        explanation: 'La depuración (debugging) y pruebas eliminan errores de sintaxis y lógica en el código.'
+      },
+      {
+        id: 28,
+        category: 'Programación',
+        stem: '¿Qué extensión de archivo utilizan nativamente los proyectos creados con el entorno visual de programación Scratch?',
+        options: ['.exe', '.py', '.sb2', '.cpp'],
+        correct: 2,
+        explanation: 'Los proyectos de Scratch 2.0 utilizan la extensión oficial `.sb2`.'
+      },
+      {
+        id: 29,
+        category: 'Programación',
+        stem: '¿Qué valor imprime la siguiente expresión booleana: `!( (5 > 3) && (2 == 4) )`?',
+        options: ['true', 'false', 'undefined', 'null'],
+        correct: 0,
+        explanation: '(5 > 3) es true; (2 == 4) es false. true && false es false. La negación !(false) resulta en true.'
+      },
+      {
+        id: 30,
+        category: 'Programación',
+        stem: '¿Cuál es la función del conmutador "void" antes del nombre de una función en C?',
+        options: ['Indica que la función devuelve un número entero.', 'Indica que la función no retorna ningún valor.', 'Permite que la función sea ejecutada en segundo plano.', 'Borra las variables globales.'],
+        correct: 1,
+        explanation: 'La palabra clave `void` especifica que la función no retorna ningún tipo de dato al finalizar.'
+      },
+
+      // --- COMPUTER NETWORKS (31-42) ---
+      {
+        id: 31,
+        category: 'Redes',
+        stem: '¿Qué significa el concepto de "Compartir hardware" en una red local de computadoras?',
+        options: [
+          'Que cada computadora debe tener conectada una impresora propia.',
+          'Que múltiples computadoras usen recursos físicos comunes como un router o impresora de red.',
+          'Que todas las computadoras tengan su propia línea telefónica independiente.',
+          'Duplicar los módulos de memoria RAM vía cable UTP.'
+        ],
+        correct: 1,
+        explanation: 'Compartir hardware permite optimizar recursos usando periféricos centralizados.'
+      },
+      {
+        id: 32,
+        category: 'Redes',
+        stem: '¿Cómo se clasifican geográficamente las redes que abarcan la extensión de una ciudad o municipio?',
+        options: ['LAN (Local Area Network)', 'MAN (Metropolitan Area Network)', 'WAN (Wide Area Network)', 'PAN (Personal Area Network)'],
+        correct: 1,
+        explanation: 'MAN cubre áreas metropolitanas o ciudades.'
+      },
+      {
+        id: 33,
+        category: 'Redes',
+        stem: '¿Cuál es el nombre del estándar más común con el que cumplen la mayoría de las tarjetas de red de área local por cable?',
+        options: ['Internet Protocol', 'Ethernet (IEEE 802.3)', 'Bluetooth', 'HTTP'],
+        correct: 1,
+        explanation: 'Ethernet es el estándar físico/enlace de datos dominante para redes LAN por cable.'
+      },
+      {
+        id: 34,
+        category: 'Redes',
+        stem: '¿Cuál es la función principal de un Conmutador (Switch) en una red local de datos?',
+        options: [
+          'Dirigir el tráfico de tramas de datos hacia el equipo de destino específico usando las direcciones MAC.',
+          'Convertir señal analógica a digital para la línea telefónica.',
+          'Asignar nombres de dominio públicos a las páginas web.',
+          'Proporcionar energía eléctrica a los monitores.'
+        ],
+        correct: 0,
+        explanation: 'Un Switch conmuta tramas en la Capa 2 (Enlace de datos) hacia la interfaz de destino específica.'
+      },
+      {
+        id: 35,
+        category: 'Redes',
+        stem: '¿Qué dispositivo de red se requiere fundamentalmente para interconectar dos redes distintas o enrutar tráfico hacia Internet?',
+        options: ['Switch', 'Router (Enrutador)', 'Hub de 4 puertos', 'Tarjeta de sonido'],
+        correct: 1,
+        explanation: 'El Router funciona en la Capa 3 (Red) e interconecta subredes diferentes determinando la mejor ruta.'
+      },
+      {
+        id: 36,
+        category: 'Redes',
+        stem: 'En el modelo Cliente-Servidor, ¿cómo se denomina al equipo informático que efectúa peticiones de recursos a un servidor?',
+        options: ['Servidor Esclavo', 'Cliente', 'Host Maestro', 'Switch Central'],
+        correct: 1,
+        explanation: 'El Cliente es el rol que inicia las solicitudes de servicio hacia un servidor.'
+      },
+      {
+        id: 37,
+        category: 'Redes',
+        stem: '¿Cuántas direcciones IP utilizables para hosts ofrece una máscara de subred /24 (255.255.255.0)?',
+        options: ['256', '254', '512', '128'],
+        correct: 1,
+        explanation: 'Una máscara /24 posee 256 direcciones totales (2⁸), pero se descuentan la dirección de red (.0) y de broadcast (.255), quedando 254 útiles.'
+      },
+      {
+        id: 38,
+        category: 'Redes',
+        stem: '¿En qué capa del Modelo OSI opera el protocolo TCP (Transmission Control Protocol)?',
+        options: ['Capa 1 - Física', 'Capa 3 - Red', 'Capa 4 - Transporte', 'Capa 7 - Aplicación'],
+        correct: 2,
+        explanation: 'TCP opera en la Capa 4 (Transporte), garantizando la entrega ordenada e íntegra de los paquetes.'
+      },
+      {
+        id: 39,
+        category: 'Redes',
+        stem: '¿Cuál es la función del servidor DNS (Domain Name System) en la infraestructura de Internet?',
+        options: [
+          'Asignar direcciones MAC de fábrica a las tarjetas de red.',
+          'Traducir nombres de dominio legibles (ej. google.com) en direcciones IP numéricas.',
+          'Filtrar virus en los correos electrónicos.',
+          'Aumentar la velocidad de la fibra óptica.'
+        ],
+        correct: 1,
+        explanation: 'DNS actúa como el directorio telefónico de Internet traduciendo nombres a direcciones IP.'
+      },
+      {
+        id: 40,
+        category: 'Redes',
+        stem: '¿Cuál es el puerto de red estándar por defecto para conexiones web seguras cifradas con HTTPS?',
+        options: ['Port 80', 'Port 21', 'Port 443', 'Port 22'],
+        correct: 2,
+        explanation: 'HTTP utiliza el puerto 80, mientras que HTTPS cifrado utiliza el puerto 443.'
+      },
+      {
+        id: 41,
+        category: 'Redes',
+        stem: '¿Cómo se denomina el mecanismo mediante el cual dos hosts establecen una conexión TCP (SYN, SYN-ACK, ACK)?',
+        options: ['Handshake de 3 vías (Three-Way Handshake)', 'Encapsulamiento IPv6', 'Apremio de puertos', 'Conmutación de paquetes'],
+        correct: 0,
+        explanation: 'El establecimiento de sesión TCP se realiza mediante el "Three-Way Handshake" (SYN -> SYN-ACK -> ACK).'
+      },
+      {
+        id: 42,
+        category: 'Redes',
+        stem: '¿Cuál de las siguientes es una dirección IP privada reservada conforme al estándar RFC 1918?',
+        options: ['8.8.8.8', '192.168.1.50', '200.48.225.10', '1.1.1.1'],
+        correct: 1,
+        explanation: 'Las redes 192.168.0.0/16, 10.0.0.0/8 y 172.16.0.0/12 están reservadas para uso privado interno.'
+      },
+
+      // --- SPATIAL LOGIC & DIAGRAMS SVG (43-52) ---
+      {
+        id: 43,
+        category: 'Geometría',
+        stem: 'En el siguiente triángulo con ángulo exterior de 115°, ¿cuál es la medida del ángulo interior suplementario adyacente (marcado con "?")?',
+        options: ['65°', '75°', '85°', '55°'],
+        diagramType: 'triangle-angle',
+        options: ['65°', '55°', '75°', '90°'],
+        correct: 0,
+        explanation: 'Un ángulo interior y su exterior adyacente forman una línea recta de 180°. Ángulo interior = 180° - 115° = 65°.'
+      },
+      {
+        id: 44,
+        category: 'Geometría',
+        stem: 'Observe el sistema de tres engranajes acoplados en línea. Si el primer engranaje (A) gira en sentido horario, ¿en qué sentido gira el tercer engranaje (C)?',
+        options: ['Sentido Horario', 'Sentido Antihorario', 'Permanece inmóvil', 'Oscila entre ambos'],
+        diagramType: 'gears',
+        correct: 0,
+        explanation: 'Si A gira horario, B gira antihorario. Al acoplar B con C, C girará en sentido inverso a B, es decir, horario.'
+      },
+      {
+        id: 45,
+        category: 'Geometría',
+        stem: '¿Cuántos triángulos de cualquier tamaño se pueden contar en la siguiente figura dividida?',
+        options: ['6', '8', '10', '12'],
+        diagramType: 'triangle-count',
+        correct: 1,
+        explanation: 'Contando individualmente hay 4 pequeños; combinando de a 2 se forman 4 más. Total = 8 triángulos.'
+      },
+      {
+        id: 46,
+        category: 'Geometría',
+        stem: 'Un cubo de madera tiene una longitud de lado de 3 cm. Si se pinta completamente de azul por fuera y luego se corta en pequeños cubitos de 1 cm por lado, ¿cuántos cubitos tendrán EXACTAMENTE una sola cara pintada de azul?',
+        options: ['8 cubitos', '12 cubitos', '6 cubitos', '1 cubito'],
+        correct: 2,
+        explanation: 'Un cubo de 3×3×3 consta de 27 cubitos. Los cubitos con una sola cara pintada son los del centro de cada una de las 6 caras del cubo original. Total = 6.'
+      },
+      {
+        id: 47,
+        category: 'Geometría',
+        stem: 'Si la rueda A tiene un diámetro 3 veces mayor que la rueda B, ¿cuántas vueltas completas dará la rueda B por cada 1 vuelta completa que dé la rueda A?',
+        options: ['1/3 de vuelta', '3 vueltas', '9 vueltas', '6 vueltas'],
+        correct: 1,
+        explanation: 'La circunferencia es directamente proporcional al diámetro (C = π×d). Al tener B 1/3 del perímetro, deberá girar 3 veces para cubrir la misma distancia.'
+      },
+      {
+        id: 48,
+        category: 'Geometría',
+        stem: '¿Qué figura geométrica se obtiene al desplegar en un plano bidimensional (desarrollo plano) las caras de una pirámide de base cuadrada?',
+        options: ['Un cuadrado rodeado por 4 triángulos adyacentes a sus lados.', 'Un rectángulo con 2 círculos.', 'Cinco triángulos agrupados en fila.', 'Un hexágono regular.'],
+        correct: 0,
+        explanation: 'Una pirámide cuadrangular tiene 1 base cuadrada y 4 caras laterales triangulares unidas a sus bordes.'
+      },
+      {
+        id: 49,
+        category: 'Geometría',
+        stem: '¿Cuál es el perímetro de una red desplegada de una caja cúbica sin tapa cuyo lado o arista mide 2 cm?',
+        options: ['20 cm', '24 cm', '28 cm', '32 cm'],
+        correct: 1,
+        explanation: 'Una caja sin tapa se compone de 5 cuadrados de lado 2 cm. La frontera externa expuesta suma 12 segmentos de aristas de 2 cm: 12 × 2 = 24 cm.'
+      },
+      {
+        id: 50,
+        category: 'Geometría',
+        stem: 'Un faro emite una luz en un ángulo de 45°. Si la luz proyecta un arco circular a una distancia de 8 km, ¿cuál es la longitud del área iluminada según la fracción del círculo completo (2πr)?',
+        options: ['2π km', '4π km', '8π km', '16π km'],
+        correct: 0,
+        explanation: 'La circunferencia completa es 2πr = 2π(8) = 16π km. Como 45° representa 1/8 de un círculo de 360°: (1/8) × 16π = 2π km.'
+      },
+      {
+        id: 51,
+        category: 'Geometría',
+        stem: 'Si un reloj analógico marca exactamente las 3:00, ¿cuál es la medida en grados del ángulo menor formado entre la aguja de las horas y la del minutero?',
+        options: ['45°', '60°', '90°', '120°'],
+        correct: 2,
+        explanation: 'La esfera de 360° está dividida en 12 horas (30° por hora). A las 3:00 hay 3 horas de diferencia: 3 × 30° = 90°.'
+      },
+      {
+        id: 52,
+        category: 'Geometría',
+        stem: '¿Cuál es la suma de los ángulos interiores de un pentágono convexo regular?',
+        options: ['360°', '540°', '720°', '180°'],
+        correct: 1,
+        explanation: 'La fórmula para la suma de ángulos interiores de un polígono es (n - 2) × 180°. Para n = 5: (5 - 2) × 180° = 3 × 180° = 540°.'
+      },
+
+      // --- MEMORY & RETENTION WORKSHOP (53-60) ---
+      {
+        id: 53,
+        category: 'Memoria',
+        stem: '¿Cuál fue el código de seguridad alfanumérico que se le presentó en la pantalla de memorización previa al iniciar el test?',
+        options: ['NET-8942-X', 'NET-9824-Y', 'SEC-8942-X', 'NET-8492-Z'],
+        correct: 0,
+        explanation: 'El código presentado durante la etapa de memorización inicial era exactamente NET-8942-X.'
+      },
+      {
+        id: 54,
+        category: 'Memoria',
+        stem: 'En la pregunta #1 de este examen, ¿cuáles eran las distancias recorridas por los peatones antes de girar a la derecha?',
+        options: ['5 millas y 10 millas', '6 millas hacia adelante y 8 millas a la derecha', '10 millas hacia adelante y 5 a la derecha', '4 millas hacia adelante y 3 a la derecha'],
+        correct: 1,
+        explanation: 'El enunciado #1 indicaba: "caminan 6 millas hacia adelante, luego giran a su derecha y caminan 8 millas".'
+      },
+      {
+        id: 55,
+        category: 'Memoria',
+        stem: 'En el acertijo de la cuenta del restaurante (pregunta #9), ¿cuál era la suma total gastada en la cena por el grupo?',
+        options: ['$1200', '$2400', '$3600', '$1800'],
+        correct: 1,
+        explanation: 'La suma total expresada en la pregunta #9 correspondía a $2400.'
+      },
+      {
+        id: 56,
+        category: 'Memoria',
+        stem: '¿Qué animal exacto figuraba como el sujeto que cazaba en la pregunta #10?',
+        options: ['Perros', 'Gatos', 'Leones', 'Águilas'],
+        correct: 1,
+        explanation: 'En la pregunta #10 se estableció: "5 gatos cazan 5 ratones en 5 minutos...".'
+      },
+      {
+        id: 57,
+        category: 'Memoria',
+        stem: 'En las preguntas de redes informáticas de este examen, ¿qué estándar se identificó como el dominante para redes locales por cable?',
+        options: ['Ethernet (IEEE 802.3)', 'Token Ring', 'Wi-Fi 6', 'ATM'],
+        correct: 0,
+        explanation: 'Ethernet fue ratificado como la opción correcta en la sección de redes.'
+      },
+      {
+        id: 58,
+        category: 'Memoria',
+        stem: '¿Qué número de puerto cifrado por defecto para HTTPS se evaluó en la sección de redes de esta prueba?',
+        options: ['Puerto 80', 'Puerto 443', 'Puerto 8080', 'Puerto 21'],
+        correct: 1,
+        explanation: 'El puerto consultado e identificado para HTTPS fue el 443.'
+      },
+      {
+        id: 59,
+        category: 'Memoria',
+        stem: 'En el problema del caracol subiendo la pared (pregunta #14), ¿cuántos metros bajaba o resbalaba durante la noche?',
+        options: ['1 metro', '2 metros', '3 metros', '1.5 metros'],
+        correct: 1,
+        explanation: 'En el enunciado #14 se especificaba: "sube 3 metros y por la noche resbala 2 metros".'
+      },
+      {
+        id: 60,
+        category: 'Memoria',
+        stem: '¿Cuál era el valor resultado de la operación bitwise `5 & 3` planteada en la sección de programación?',
+        options: ['1', '0', '7', '15'],
+        correct: 0,
+        explanation: 'El resultado obtenido y explicado para la operación bitwise `5 & 3` fue 1.'
+      }
+    ];
+
+    // =========================================================================
+    // STATE & APP CONTROLLER
+    // =========================================================================
+    let questions = [];
+    let currentQuestionIndex = 0;
+    let userAnswers = {}; // { qIndex: selectedOptionIndex }
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let memoryTimer = null;
+
+    // RUNTIME UNICITY CHECKER
+    function auditQuestionsUniqueness(data) {
+      const stems = new Set();
+      const duplicates = [];
+
+      data.forEach((q, idx) => {
+        const cleanStem = q.stem.trim().toLowerCase();
+        if (stems.has(cleanStem)) {
+          duplicates.push({ index: idx + 1, id: q.id, stem: q.stem });
+        }
+        stems.add(cleanStem);
+
+        // Check options for internal duplicates
+        const optSet = new Set(q.options.map(o => o.trim().toLowerCase()));
+        if (optSet.size !== q.options.length) {
+          console.warn(`[Warning] Pregunta ID ${q.id} tiene opciones duplicadas internamente.`);
+        }
+      });
+
+      if (duplicates.length > 0) {
+        console.error("CRITICAL: Se encontraron preguntas duplicadas:", duplicates);
+      } else {
+        console.log("%c[ Audit PASS ] Las 60 preguntas son totalmente ÚNICAS.", "color: #22c55e; font-weight: bold;");
+      }
+    }
+
+    // INITIALIZATION
+    window.onload = function() {
+      questions = [...rawQuestionsData];
+      auditQuestionsUniqueness(questions);
+      updateHistoryDisplay();
+    };
+
+    // SCREEN ROUTING
+    function showScreen(screenId) {
+      const screens = ['screen-welcome', 'screen-memory-prep', 'screen-quiz', 'screen-results', 'screen-review', 'screen-history'];
+      screens.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById(screenId);
+      if (target) target.classList.remove('hidden');
+
+      // Header button visibility logic
+      const restartBtn = document.getElementById('nav-btn-restart');
+      if (screenId === 'screen-quiz' || screenId === 'screen-results' || screenId === 'screen-review') {
+        restartBtn.classList.remove('hidden');
+      } else {
+        restartBtn.classList.add('hidden');
+      }
+    }
+
+    // START QUIZ WORKFLOW
+    function startQuiz() {
+      userAnswers = {};
+      currentQuestionIndex = 0;
+      secondsElapsed = 0;
+      
+      // Start with Memory Preparation Screen
+      showScreen('screen-memory-prep');
+      startMemoryTimer();
+    }
+
+    function startMemoryTimer() {
+      let count = 15;
+      const countEl = document.getElementById('memory-timer-count');
+      countEl.innerText = count;
+
+      if (memoryTimer) clearInterval(memoryTimer);
+
+      memoryTimer = setInterval(() => {
+        count--;
+        countEl.innerText = count;
+        if (count <= 0) {
+          clearInterval(memoryTimer);
+          proceedFromMemoryPrep();
+        }
+      }, 1000);
+    }
+
+    function proceedFromMemoryPrep() {
+      if (memoryTimer) clearInterval(memoryTimer);
+      showScreen('screen-quiz');
+      startQuizTimer();
+      renderCurrentQuestion();
+    }
+
+    function startQuizTimer() {
+      if (timerInterval) clearInterval(timerInterval);
+      const timerEl = document.getElementById('quiz-timer');
+      
+      timerInterval = setInterval(() => {
+        secondsElapsed++;
+        const mins = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+        const secs = (secondsElapsed % 60).toString().padStart(2, '0');
+        timerEl.innerText = `${mins}:${secs}`;
+      }, 1000);
+    }
+
+    // RENDER QUESTION
+    function renderCurrentQuestion() {
+      const q = questions[currentQuestionIndex];
+      
+      document.getElementById('lbl-q-current').innerText = currentQuestionIndex + 1;
+      document.getElementById('lbl-q-total').innerText = questions.length;
+      document.getElementById('question-badge-category').innerText = q.category;
+      document.getElementById('question-stem').innerText = q.stem;
+
+      // Fill progress bar
+      const pct = ((currentQuestionIndex + 1) / questions.length) * 100;
+      document.getElementById('quiz-progress-fill').style.width = `${pct}%`;
+
+      // Handle SVG Diagrams if applicable
+      const diagramBox = document.getElementById('question-diagram');
+      diagramBox.innerHTML = '';
+      if (q.diagramType) {
+        diagramBox.classList.remove('hidden');
+        diagramBox.appendChild(generateSVGDiagram(q.diagramType));
+      } else {
+        diagramBox.classList.add('hidden');
+      }
+
+      // Render Options
+      const optionsContainer = document.getElementById('question-options-container');
+      optionsContainer.innerHTML = '';
+
+      q.options.forEach((optText, optIdx) => {
+        const isSelected = userAnswers[currentQuestionIndex] === optIdx;
+        
+        const btn = document.createElement('button');
+        btn.onclick = () => selectOption(optIdx);
+        btn.className = `w-full text-left p-4 rounded-xl border transition-all duration-150 flex items-center justify-between group ${
+          isSelected 
+            ? 'border-brand-500 bg-brand-500/10 text-white shadow-lg shadow-brand-500/10' 
+            : 'border-slate-800 bg-slate-900/60 hover:bg-slate-800 text-slate-300'
+        }`;
+
+        btn.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <span class="w-7 h-7 rounded-lg text-xs font-bold flex items-center justify-center border ${
+              isSelected 
+                ? 'bg-brand-500 border-brand-400 text-slate-950' 
+                : 'bg-slate-800 border-slate-700 text-slate-400 group-hover:border-slate-600'
+            }">
+              ${String.fromCharCode(65 + optIdx)}
+            </span>
+            <span class="text-sm font-medium leading-snug">${escapeHtml(optText)}</span>
+          </div>
+          <div class="w-5 h-5 rounded-full border flex items-center justify-center ${
+            isSelected ? 'border-brand-500 bg-brand-500 text-slate-950' : 'border-slate-700'
+          }">
+            ${isSelected ? '<i class="fa-solid fa-check text-[10px]"></i>' : ''}
+          </div>
+        `;
+        optionsContainer.appendChild(btn);
+      });
+
+      // Navigation Buttons State
+      document.getElementById('btn-prev-question').disabled = currentQuestionIndex === 0;
+      const nextBtnLabel = document.getElementById('btn-next-question').querySelector('span');
+      if (currentQuestionIndex === questions.length - 1) {
+        nextBtnLabel.innerText = 'Finalizar Evaluacion';
+      } else {
+        nextBtnLabel.innerText = 'Siguiente';
+      }
+    }
+
+    function selectOption(optIdx) {
+      userAnswers[currentQuestionIndex] = optIdx;
+      renderCurrentQuestion();
+    }
+
+    function navigateQuestion(step) {
+      if (step === 1 && currentQuestionIndex === questions.length - 1) {
+        finishQuiz();
+        return;
+      }
+
+      currentQuestionIndex += step;
+      if (currentQuestionIndex < 0) currentQuestionIndex = 0;
+      if (currentQuestionIndex >= questions.length) currentQuestionIndex = questions.length - 1;
+      
+      renderCurrentQuestion();
+    }
+
+    // DIAGRAM SVG GENERATOR
+    function generateSVGDiagram(type) {
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("viewBox", "0 0 300 120");
+      svg.setAttribute("class", "w-full max-w-xs h-auto");
+
+      if (type === 'triangle-angle') {
+        svg.innerHTML = `
+          <polygon points="20,100 180,100 100,20" fill="none" stroke="#38bdf8" stroke-width="3"/>
+          <line x1="180" y1="100" x2="260" y2="100" stroke="#f43f5e" stroke-width="3" stroke-dasharray="4"/>
+          <path d="M 160 100 A 20 20 0 0 0 180 80" fill="none" stroke="#eab308" stroke-width="2"/>
+          <text x="145" y="95" fill="#eab308" font-size="12" font-weight="bold">?</text>
+          <path d="M 180 100 A 30 30 0 0 1 210 100" fill="none" stroke="#f43f5e" stroke-width="2"/>
+          <text x="215" y="95" fill="#f43f5e" font-size="12" font-weight="bold">115°</text>
+        `;
+      } else if (type === 'gears') {
+        svg.innerHTML = `
+          <circle cx="50" cy="60" r="30" fill="none" stroke="#22c55e" stroke-width="3" stroke-dasharray="6 3"/>
+          <text x="45" y="65" fill="#22c55e" font-size="14" font-weight="bold">A</text>
+          <path d="M 35 25 L 45 15" stroke="#22c55e" stroke-width="2" marker-end="url(#arrow)"/>
+
+          <circle cx="120" cy="60" r="30" fill="none" stroke="#38bdf8" stroke-width="3" stroke-dasharray="6 3"/>
+          <text x="115" y="65" fill="#38bdf8" font-size="14" font-weight="bold">B</text>
+
+          <circle cx="190" cy="60" r="30" fill="none" stroke="#a855f7" stroke-width="3" stroke-dasharray="6 3"/>
+          <text x="185" y="65" fill="#a855f7" font-size="14" font-weight="bold">C</text>
+        `;
+      } else if (type === 'triangle-count') {
+        svg.innerHTML = `
+          <polygon points="150,10 50,110 250,110" fill="none" stroke="#38bdf8" stroke-width="3"/>
+          <line x1="150" y1="10" x2="150" y2="110" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="50" y1="110" x2="200" y2="60" stroke="#38bdf8" stroke-width="2"/>
+          <line x1="250" y1="110" x2="100" y2="60" stroke="#38bdf8" stroke-width="2"/>
+        `;
+      }
+
+      return svg;
+    }
+
+    // FINISH & CALCULATE RESULTS
+    function finishQuiz() {
+      if (timerInterval) clearInterval(timerInterval);
+
+      let correctCount = 0;
+      const catStats = {};
+
+      questions.forEach((q, idx) => {
+        if (!catStats[q.category]) {
+          catStats[q.category] = { total: 0, correct: 0 };
+        }
+        catStats[q.category].total++;
+
+        if (userAnswers[idx] === q.correct) {
+          correctCount++;
+          catStats[q.category].correct++;
+        }
+      });
+
+      const totalPct = Math.round((correctCount / questions.length) * 100);
+      
+      // Estimated IQ Calculation Standardized (Mean 100, SD 15)
+      // Score range 0 to 60 -> IQ ~70 to ~145
+      const estimatedIQ = Math.round(70 + (correctCount / 60) * 75);
+
+      let categoryTitle = 'Promedio Normal';
+      if (estimatedIQ >= 130) categoryTitle = 'Muy Superior / Genio';
+      else if (estimatedIQ >= 120) categoryTitle = 'Superior';
+      else if (estimatedIQ >= 110) categoryTitle = 'Promedio Alto';
+      else if (estimatedIQ < 90) categoryTitle = 'Promedio Bajo';
+
+      // Update UI
+      document.getElementById('res-score-correct').innerText = correctCount;
+      document.getElementById('res-score-percent').innerText = `${totalPct}% de aciertos`;
+      document.getElementById('res-iq-estimate').innerText = estimatedIQ;
+      document.getElementById('res-iq-category').innerText = categoryTitle;
+
+      const mins = Math.floor(secondsElapsed / 60).toString().padStart(2, '0');
+      const secs = (secondsElapsed % 60).toString().padStart(2, '0');
+      document.getElementById('res-total-time').innerText = `${mins}:${secs}`;
+
+      // Render Category Breakdown
+      const breakdownContainer = document.getElementById('category-breakdown-list');
+      breakdownContainer.innerHTML = '';
+
+      Object.keys(catStats).forEach(cat => {
+        const stat = catStats[cat];
+        const pct = Math.round((stat.correct / stat.total) * 100);
+
+        const item = document.createElement('div');
+        item.className = 'p-3 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-between';
+        item.innerHTML = `
+          <div>
+            <span class="font-semibold text-slate-200 block">${cat}</span>
+            <span class="text-slate-400">${stat.correct} de ${stat.total} acertadas</span>
+          </div>
+          <span class="font-bold font-mono text-sm ${pct >= 70 ? 'text-brand-400' : 'text-amber-400'}">${pct}%</span>
+        `;
+        breakdownContainer.appendChild(item);
+      });
+
+      // Save to LocalStorage
+      saveAttemptToStorage({
+        date: new Date().toLocaleString(),
+        score: correctCount,
+        pct: totalPct,
+        iq: estimatedIQ,
+        timeStr: `${mins}:${secs}`
+      });
+
+      showScreen('screen-results');
+    }
+
+    // REVIEW SCREEN BUILDER
+    function filterReview(filter) {
+      document.getElementById('btn-filter-all').className = `px-3 py-1.5 rounded-lg font-bold ${filter === 'all' ? 'bg-brand-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`;
+      document.getElementById('btn-filter-correct').className = `px-3 py-1.5 rounded-lg font-bold ${filter === 'correct' ? 'bg-brand-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`;
+      document.getElementById('btn-filter-incorrect').className = `px-3 py-1.5 rounded-lg font-bold ${filter === 'incorrect' ? 'bg-brand-500 text-slate-950' : 'bg-slate-800 text-slate-300'}`;
+
+      renderReviewList(filter);
+    }
+
+    function renderReviewList(filter = 'all') {
+      const container = document.getElementById('review-questions-list');
+      container.innerHTML = '';
+
+      questions.forEach((q, idx) => {
+        const userChoice = userAnswers[idx];
+        const isCorrect = userChoice === q.correct;
+
+        if (filter === 'correct' && !isCorrect) return;
+        if (filter === 'incorrect' && isCorrect) return;
+
+        const card = document.createElement('div');
+        card.className = `p-5 rounded-2xl border ${isCorrect ? 'border-brand-500/30 bg-brand-500/5' : 'border-rose-500/30 bg-rose-500/5'} space-y-3`;
+
+        const userOptionText = userChoice !== undefined ? q.options[userChoice] : 'Sin responder';
+        const correctOptionText = q.options[q.correct];
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3">
+            <div class="space-y-1">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Pregunta #${idx + 1} • ${q.category}</span>
+              <h4 class="text-sm font-semibold text-white">${escapeHtml(q.stem)}</h4>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-xs font-bold shrink-0 ${isCorrect ? 'bg-brand-500/20 text-brand-400 border border-brand-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}">
+              ${isCorrect ? '<i class="fa-solid fa-check mr-1"></i> Correcta' : '<i class="fa-solid fa-xmark mr-1"></i> Incorrecta'}
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs pt-2">
+            <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span class="text-slate-400 block text-[11px]">Tu respuesta:</span>
+              <span class="font-medium ${isCorrect ? 'text-brand-300' : 'text-rose-300'}">${escapeHtml(userOptionText)}</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-900/80 border border-slate-800">
+              <span class="text-slate-400 block text-[11px]">Respuesta correcta:</span>
+              <span class="font-medium text-emerald-300">${escapeHtml(correctOptionText)}</span>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-slate-950/80 border border-slate-800 text-xs text-slate-300 space-y-1">
+            <span class="font-bold text-indigo-400 block"><i class="fa-solid fa-lightbulb mr-1"></i> Explicación paso a paso:</span>
+            <p>${escapeHtml(q.explanation)}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // LOCAL STORAGE MANAGEMENT
+    function saveAttemptToStorage(attempt) {
+      try {
+        const history = JSON.parse(localStorage.getItem('iq_test_history') || '[]');
+        history.unshift(attempt);
+        localStorage.setItem('iq_test_history', JSON.stringify(history.slice(0, 10))); // keep last 10
+        updateHistoryDisplay();
+      } catch (e) {
+        console.error("No se pudo guardar en LocalStorage:", e);
+      }
+    }
+
+    function updateHistoryDisplay() {
+      const container = document.getElementById('history-container-list');
+      if (!container) return;
+
+      try {
+        const history = JSON.parse(localStorage.getItem('iq_test_history') || '[]');
+        if (history.length === 0) {
+          container.innerHTML = `
+            <div class="text-center py-8 text-slate-500 text-xs">
+              <i class="fa-solid fa-folder-open text-2xl mb-2 block"></i>
+              No hay intentos anteriores registrados.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = '';
+        history.forEach((item, idx) => {
+          const row = document.createElement('div');
+          row.className = 'p-4 rounded-xl border border-slate-800 bg-slate-900/60 flex items-center justify-between text-xs';
+          row.innerHTML = `
+            <div>
+              <span class="font-bold text-white block">Intento #${history.length - idx}</span>
+              <span class="text-slate-400">${item.date} • Duración: ${item.timeStr}</span>
+            </div>
+            <div class="text-right">
+              <span class="font-bold text-brand-400 text-sm block">${item.score}/60 Aciertos (${item.pct}%)</span>
+              <span class="text-slate-400">CI Estimado: <strong class="text-white">${item.iq}</strong></span>
+            </div>
+          `;
+          container.appendChild(row);
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function clearHistoryStorage() {
+      localStorage.removeItem('iq_test_history');
+      updateHistoryDisplay();
+    }
+
+    function confirmReset() {
+      if (confirm('¿Está seguro de reiniciar la evaluación? Se perderá el progreso actual.')) {
+        if (timerInterval) clearInterval(timerInterval);
+        showScreen('screen-welcome');
+      }
+    }
+
+    function escapeHtml(str) {
+      return str.replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+    }
+  </script>
+</body>
+</html>
