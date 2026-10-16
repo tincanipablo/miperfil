@@ -55,9 +55,25 @@
   <!-- Test Cognitivo Nivel Intermedio - 25 preguntas (adultos mayores) -->
   <url>
     <loc>https://tincanipablo.github.io/miperfil/tests/test_de_estimulaci_n_cognitiva_inicial.html</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+
+  <!-- Test Asperger Adultos (AAA & AQ) - 73 ítems -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_asperger_adultos.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Test Asperger Infantil (CAST) - 34 preguntas -->
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_asperger_infantil.html</loc>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 
 </urlset>
