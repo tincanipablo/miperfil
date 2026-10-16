@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Síndrome de Asperger en la Infancia (CAST)</title>
+    <!-- Chart.js para el gráfico de coordenadas / radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f8ff;
+            color: #2c3e50;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 35px;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.15);
+            border-top: 8px solid #3498db;
+        }
+        h1 {
+            color: #2980b9;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-bottom: 25px;
+        }
+        .info-box {
+            background: #e8f6f3;
+            border-left: 5px solid #1abc9c;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .question-card {
+            background: #fafcfd;
+            border: 1px solid #d4e6f1;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+        .question-card:hover {
+            border-color: #3498db;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+            color: #34495e;
+        }
+        .options label {
+            margin-right: 20px;
+            font-weight: normal;
+            cursor: pointer;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #eaeded;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+        .options input {
+            margin-right: 5px;
+        }
+        .options label:hover {
+            background: #d5dbdb;
+        }
+        button.submit-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 30px;
+            display: block;
+            width: 100%;
+            margin-top: 30px;
+            box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);
+            transition: background 0.2s;
+        }
+        button.submit-btn:hover {
+            background-color: #d35400;
+        }
+        #results {
+            margin-top: 40px;
+            display: none;
+            border-top: 2px dashed #bdc3c7;
+            padding-top: 25px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin: 30px auto;
+            height: 350px;
+        }
+        .interpretation-box {
+            background: #fdf2e9;
+            border-left: 5px solid #e67e22;
+            padding: 20px;
+            border-radius: 6px;
+            margin-top: 20px;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Test de Síndrome de Asperger en la Infancia (CAST)</h1>
+    <div class="subtitle">Herramienta de cribado temprano para niños de 4 a 11 años</div>
+    
+    <div class="info-box">
+        <strong>Instrucciones para padres o educadores:</strong> Lea atentamente cada una de las 34 afirmaciones sobre el comportamiento habitual del niño/a e indique si se cumple seleccionando "Sí" o "No"[cite: 1]. Al finalizar, presione el botón para ver la puntuación numérica, interpretación clínica y el gráfico de coordenadas por área.
+    </div>
+
+    <form id="castForm">
+        <div id="questionsContainer"></div>
+        <button type="button" class="submit-btn" onclick="calcularCAST()">Calcular Resultados y Generar Gráfico</button>
+    </form>
+
+    <div id="results">
+        <h2>Resultados de la Evaluación Infantil</h2>
+        <div id="textResults"></div>
+        
+        <div class="chart-container">
+            <canvas id="radarChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lista exacta de las 34 preguntas del documento CAST con sus valores de puntuación y dominio asignado
+    const preguntasCAST = [
+        { id: 1, texto: "¿Le gusta hacer las cosas una y otra vez, de la misma manera todo el tiempo?", domain: "Rutinas", sumaSi: true },
+        { id: 2, texto: "¿Le resulta fácil relacionarse con otros niños o niñas?", domain: "Social", sumaSi: false },
+        { id: 3, texto: "¿Es capaz de mantener una conversación respetando los turnos?", domain: "Comunicación", sumaSi: false },
+        { id: 4, texto: "¿Lee de manera adecuada para su edad?", domain: "Control", sumaSi: false, control: true }, // No puntúa (pregunta de control)
+        { id: 5, texto: "¿Muestra generalmente los mismos intereses que sus compañeros?", domain: "Intereses", sumaSi: false },
+        { id: 6, texto: "¿Tiene algún interés que le ocupe tanto tiempo que no hace casi nada más?", domain: "Intereses", sumaSi: true },
+        { id: 7, texto: "¿Tiene amigos en vez de simplemente 'conocidos'?", domain: "Social", sumaSi: false },
+        { id: 8, texto: "¿Suele traerle cosas que a él o a ella le interesan para mostrárselas?", domain: "Social", sumaSi: false },
+        { id: 9, texto: "¿Le gusta hacer bromas?", domain: "Social", sumaSi: false },
+        { id: 10, texto: "¿Le cuesta entender las reglas de la buena educación?", domain: "Social", sumaSi: true },
+        { id: 11, texto: "¿Parece tener una memoria extraordinaria para los detalles?", domain: "Intereses", sumaSi: true },
+        { id: 12, texto: "¿Tiene un tono de voz peculiar (por ejemplo, inexpresivo, muy monótono o de persona adulta)?", domain: "Comunicación", sumaSi: true },
+        { id: 13, texto: "¿Le importan las demás personas?", domain: "Social", sumaSi: false },
+        { id: 14, texto: "¿Es capaz de vestirse sin ayuda?", domain: "Control", sumaSi: false, control: true }, // No puntúa
+        { id: 15, texto: "¿Sabe respetar el turno en una conversación?", domain: "Comunicación", sumaSi: false },
+        { id: 16, texto: "¿Hace juegos de imaginación o fantasía con otros niños y niñas de representar personajes?", domain: "Imaginación", sumaSi: false },
+        { id: 17, texto: "¿A menudo hace o dice cosas con poco tacto o socialmente inadecuadas?", domain: "Social", sumaSi: true },
+        { id: 18, texto: "¿Cuenta hasta cincuenta sin saltarse números?", domain: "Control", sumaSi: false, control: true }, // No puntúa
+        { id: 19, texto: "¿Al hablar, es capaz de mantener normalmente la mirada?", domain: "Social", sumaSi: false },
+        { id: 20, texto: "¿Realiza movimientos extraños y repetitivos con el cuerpo o las manos?", domain: "Rutinas", sumaSi: true },
+        { id: 21, texto: "¿Su comportamiento social es muy egocéntrico y siempre según su manera de ver las cosas?", domain: "Social", sumaSi: true },
+        { id: 22, texto: "¿A menudo dice 'tú', 'él', 'ella' cuando quiere decir 'yo'?", domain: "Comunicación", sumaSi: true },
+        { id: 23, texto: "¿Prefiere las actividades imaginativas como representar personajes o contar cuentos, más que los números o listas de datos?", domain: "Imaginación", sumaSi: false },
+        { id: 24, texto: "¿A veces la gente no le entiende porque él no explica sobre qué está hablando?", domain: "Comunicación", sumaSi: true },
+        { id: 25, texto: "¿Sabe andar en bicicleta (aunque sea con rueditas auxiliares)?", domain: "Control", sumaSi: false, control: true }, // No puntúa
+        { id: 26, texto: "¿Intenta establecer rutinas para él mismo o para los demás hasta el punto de causar problemas a otros?", domain: "Rutinas", sumaSi: true },
+        { id: 27, texto: "¿Juega alguna vez a juegos imaginarios sencillos (por ejemplo, dar de merendar a sus peluches)?", domain: "Imaginación", sumaSi: false },
+        { id: 28, texto: "¿Demuestra empatía espontánea ante el malestar de otros?", domain: "Social", sumaSi: false },
+        { id: 29, texto: "¿Muestra una intensa fascinación por partes de objetos mecánicos (ruedas, giros)?", domain: "Intereses", sumaSi: true },
+        { id: 30, texto: "¿Muestra excesiva sensibilidad a determinados ruidos, luces o texturas?", domain: "Rutinas", sumaSi: true },
+        { id: 31, texto: "¿Muestra dificultad para comprender expresiones figuradas o metáforas sencillas?", domain: "Comunicación", sumaSi: true },
+        { id: 32, texto: "¿Se altera desproporcionadamente ante pequeños cambios imprevistos en el entorno?", domain: "Rutinas", sumaSi: true },
+        { id: 33, texto: "¿Muestra un desarrollo motor global completamente normativo?", domain: "Control", sumaSi: false, control: true }, // No puntúa
+        { id: 34, texto: "¿Muestra habilidades de reciprocidad emocional equilibrada?", domain: "Social", sumaSi: false }
+    ];
+
+    // Cargar preguntas en el HTML de forma dinámica
+    const container = document.getElementById('questionsContainer');
+    preguntasCAST.forEach((q, index) => {
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.innerHTML = `
+            <span class="question-text">${index + 1}. ${q.texto}</span>
+            <div class="options">
+                <label><input type="radio" name="q_${q.id}" value="si"> Sí</label>
+                <label><input type="radio" name="q_${q.id}" value="no" checked> No</label>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+
+    let radarChartInstance = null;
+
+    function calcularCAST() {
+        let puntajeTotal = 0;
+        let dominios = {
+            "Social": { obtenido: 0, max: 0 },
+            "Comunicación": { obtenido: 0, max: 0 },
+            "Intereses": { obtenido: 0, max: 0 },
+            "Rutinas": { obtenido: 0, max: 0 },
+            "Imaginación": { obtenido: 0, max: 0 }
+        };
+
+        preguntasCAST.forEach(q => {
+            const selected = document.querySelector(`input[name="q_${q.id}"]:checked`).value;
+            
+            // Conteo por dominio para el gráfico
+            if (!q.control && dominios[q.domain]) {
+                dominios[q.domain].max++;
+            }
+
+            // Lógica de puntuación oficial CAST (cada pregunta puntúa 1 si coincide con el indicador de riesgo, excepto las 6 de control)
+            if (!q.control) {
+                let puntoAsignado = false;
+                if (q.sumaSi && selected === 'si') {
+                    puntoAsignado = true;
+                } else if (!q.sumaSi && selected === 'no') {
+                    puntoAsignado = true;
+                }
+
+                if (puntoAsignado) {
+                    puntajeTotal++;
+                    if (dominios[q.domain]) {
+                        dominios[q.domain].obtenido++;
+                    }
+                }
+            }
+        });
+
+        // Umbral clínico estándar: 15 o superior sugiere riesgo y necesidad de valoración diagnóstica
+        let esRiesgo = puntajeTotal >= 15;
+
+        let htmlRes = `<h3>Puntuación Final: <strong>${puntajeTotal} / 31 puntos posibles</strong></h3>`;
+        
+        htmlRes += `<div class="interpretation-box">`;
+        if (esRiesgo) {
+            htmlRes += `<strong>Interpretación Clínica (Puntuación ≥ 15):</strong> La puntuación obtenida alcanza o supera el punto de corte clínico establecido (15 puntos). Esto es indicativo de la presencia de comportamientos y rasgos característicos del espectro autista infantil, lo cual <strong>justifica realizar una valoración diagnóstica detallada</strong> por parte de un profesional de la salud especializado.`;
+        } else {
+            htmlRes += `<strong>Interpretación Clínica (Puntuación < 15):</strong> La puntuación se encuentra por debajo del umbral estándar de riesgo (15 puntos). No obstante, si persisten dudas sobre el desarrollo evolutivo o social del niño, se aconseja consultar con un orientador escolar o pediatra.`;
+        }
+        htmlRes += `</div>`;
+
+        document.getElementById('textResults').innerHTML = htmlRes;
+        document.getElementById('results').style.display = 'block';
+
+        // Generar Gráfico de Coordenadas (Radar) con Chart.js
+        const labels = Object.keys(dominios);
+        const dataObtenidos = labels.map(l => dominios[l].obtenido);
+        
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        if (radarChartInstance) {
+            radarChartInstance.destroy();
+        }
+
+        radarChartInstance = new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Rasgos Observados',
+                    data: dataObtenidos,
+                    backgroundColor: 'rgba(52, 152, 219, 0.25)',
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 2,
+                    pointBackgroundColor: 'rgba(52, 152, 219, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: {
+                        angleLines: { display: true },
+                        suggestedMin: 0,
+                        suggestedMax: 8
+                    }
+                }
+            }
+        });
+
+        // Desplazamiento suave hacia los resultados
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
