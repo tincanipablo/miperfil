@@ -3,56 +3,114 @@
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
-    <loc>https://tincanipablo.github.io/miperfil/index.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-
-  <url>
     <loc>https://tincanipablo.github.io/miperfil/diplomas.html</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/donaciones.html</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/etnia.html</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/formulario.html</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/pyme.html</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/1000mlatidos.html</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/DiplomasCursos.pdf</loc>
+    <lastmod>2026-11-14</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/evaluaci_n_de_inteligencia_y_l_gica.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/it_intelligence_agility_test.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_ci_profesional_40_60.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_de_ci_general_y_sociocognitivo.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_de_estimulaci_n_cognitiva_inicial.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_asperger_adultos.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/tests/test_asperger_infantil.html</loc>
+    <lastmod>2026-11-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 
 </urlset>

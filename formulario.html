@@ -8,6 +8,8 @@
     <meta name="description"
         content="Formulario de contacto para consultas, proyectos y colaboraciones con Pablo Tincani.">
     <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#0b0f19">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
     <meta property="og:description"
@@ -15,7 +17,28 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
+    <meta property="og:image:alt" content="Pablo Alejandro Urueña Tincani">
     <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
+    <meta name="twitter:description"
+        content="Formulario de contacto y soporte técnico para consultas, proyectos o seguimiento de servicios de Pablo Urueña Tincani.">
+    <meta name="twitter:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        as="style" onload="this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap">
+    </noscript>
+
+    <!-- Font Awesome Icons -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         :root {
             --bg-dark: #0b0f19;
@@ -195,6 +218,34 @@
             margin-bottom: 16px;
         }
 
+        input:focus-visible,
+        textarea:focus-visible,
+        button:focus-visible,
+        a:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .form-alt {
+            margin-top: 14px;
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+
+        .form-alt a {
+            color: var(--accent);
+        }
+
+        /* Honeypot antispam: invisible para personas, visible para bots */
+        .honeypot {
+            position: absolute !important;
+            left: -10000px !important;
+            width: 1px !important;
+            height: 1px !important;
+            overflow: hidden !important;
+        }
+
         @media (max-width: 768px) {
             .card {
                 padding: 24px;
@@ -244,7 +295,7 @@
                 <i class="fas fa-arrow-left"></i> Volver al Perfil
             </a>
         </div>
-        <nav>
+        <nav aria-label="Navegación principal">
             <a href="index.html">Inicio</a>
             <a href="diplomas.html">Diplomas</a>
             <a href="donaciones.html">Donaciones</a>
@@ -260,90 +311,111 @@
         <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico,
             proyectos o seguimiento de servicios.</p>
         <form id="formSoporte">
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
-            <label>Adjuntar archivo:</label>
-            <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
-            <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG</div>
+            <label for="nombre">Nombre</label>
+            <input type="text" id="nombre" name="nombre" placeholder="Nombre y apellido"
+                autocomplete="name" maxlength="120" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="ejemplo@correo.com"
+                autocomplete="email" inputmode="email" maxlength="254" required>
+
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" placeholder="Describe el problema o consulta..."
+                minlength="10" maxlength="5000" required></textarea>
+
+            <label for="archivo">Adjuntar archivo:</label>
+            <input type="file" id="archivo" name="archivo"
+                accept=".pdf,.doc,.docx,.txt,.jpg,.jpeg,.png,.webp" required aria-describedby="archivoAyuda">
+            <div class="file-info" id="archivoAyuda">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG, WEBP ·
+                máximo 10 MB</div>
+
+            <!-- Honeypot antispam: no lo ve ninguna persona -->
+            <div class="honeypot" aria-hidden="true">
+                <label for="website">No completar</label>
+                <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+
             <button type="submit" id="btnSoporte">Enviar Reporte</button>
-            <div id="msg"></div>
+            <div id="msg" role="status" aria-live="polite"></div>
+            <p class="form-alt">¿Problemas con el formulario?
+                <a href="mailto:tincanipablo@gmail.com">Escríbeme por email</a>.
+            </p>
+            <noscript>
+                <p class="form-alt">El envío requiere JavaScript. Escríbeme a
+                    <a href="mailto:tincanipablo@gmail.com">tincanipablo@gmail.com</a>.
+                </p>
+            </noscript>
         </form>
     </div>
 
+    <!-- Puente de contacto: Google Apps Script -> Dropbox (sin credenciales en el navegador) -->
+    <script src="js/contact-config.js"></script>
+    <script src="js/contact-bridge.js"></script>
     <script>
-        // URL del Web App de Google Apps Script (la reemplazamos cuando la despliegues)
-        // Este JS NO contiene ninguna credencial de Dropbox.
-        const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
+        (function () {
+            'use strict';
 
-        document.getElementById('formSoporte').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const btn = document.getElementById('btnSoporte');
-            const msgDiv = document.getElementById('msg');
+            var form = document.getElementById('formSoporte');
+            if (!form) return;
 
-            btn.disabled = true;
-            msgDiv.style.display = "block";
-            msgDiv.style.backgroundColor = "#e8f0fe";
-            msgDiv.style.color = "#004085";
-            msgDiv.innerText = "⏳ Enviando reporte...";
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
 
-            try {
-                const nombre = document.getElementById('nombre').value;
-                const email = document.getElementById('email').value;
-                const mensaje = document.getElementById('mensaje').value;
-                const file = document.getElementById('archivo').files[0];
+                var btn = document.getElementById('btnSoporte');
+                var msgDiv = document.getElementById('msg');
+                if (btn.disabled) return;
 
-                let archivoBase64 = '';
-                let archivoNombre = '';
-
-                if (file) {
-                    if (file.size > 50 * 1024 * 1024) {
-                        throw new Error('El archivo no puede ser mayor a 50MB');
+                if (!window.ContactBridge) {
+                    if (msgDiv) {
+                        msgDiv.style.display = 'block';
+                        msgDiv.textContent = '❌ No se pudo cargar el módulo de contacto. Recarga la página.';
                     }
-                    archivoBase64 = await leerArchivoBase64(file);
-                    archivoNombre = file.name;
+                    return;
                 }
 
-                msgDiv.innerText = "⏳ Almacenando en el servidor seguro...";
+                var nombre = document.getElementById('nombre').value.trim();
+                var email = document.getElementById('email').value.trim();
+                var mensaje = document.getElementById('mensaje').value.trim();
+                var file = document.getElementById('archivo').files[0];
 
-                const respuesta = await fetch(URL_APPS_SCRIPT, {
-                    method: 'POST',
-                    body: JSON.stringify({ nombre, email, mensaje, archivoBase64, archivoNombre })
-                });
+                btn.disabled = true;
+                ContactBridge.clearFallback();
+                ContactBridge.setStatus(msgDiv, 'info', '⏳ Validando archivo...');
 
-                const datos = await respuesta.json();
+                try {
+                    ContactBridge.validateFile(file, {
+                        maxMB: 10,
+                        allowedExt: ['pdf', 'doc', 'docx', 'txt', 'jpg', 'jpeg', 'png', 'webp']
+                    });
 
-                if (!datos.ok) {
-                    throw new Error(datos.error || 'Error al guardar el reporte');
+                    ContactBridge.setStatus(msgDiv, 'info', '⏳ Subiendo archivo al servidor seguro...');
+
+                    var resultado = await ContactBridge.send({
+                        nombre: nombre,
+                        email: email,
+                        mensaje: mensaje,
+                        file: file,
+                        website: document.getElementById('website').value
+                    });
+
+                    ContactBridge.setStatus(msgDiv, 'success',
+                        '✅ ' + (resultado.mensaje || 'Reporte enviado con éxito.'));
+                    form.reset();
+                } catch (error) {
+                    console.error('Contacto:', error);
+                    ContactBridge.setStatus(msgDiv, 'error',
+                        '❌ ' + (error.message || 'No se pudo enviar el reporte.'));
+                    ContactBridge.showFallback(msgDiv, {
+                        nombre: nombre,
+                        email: email,
+                        mensaje: mensaje,
+                        fileName: file ? file.name : ''
+                    });
+                } finally {
+                    btn.disabled = false;
                 }
-
-                msgDiv.innerText = "✅ ¡Reporte enviado con éxito!";
-                msgDiv.style.backgroundColor = "#d4edda";
-                msgDiv.style.color = "#155724";
-
-                this.reset();
-            } catch (err) {
-                console.error('Error completo:', err);
-                msgDiv.innerText = "❌ Error: " + err.message;
-                msgDiv.style.backgroundColor = "#f8d7da";
-                msgDiv.style.color = "#721c24";
-            } finally {
-                btn.disabled = false;
-            }
-        });
-
-        function leerArchivoBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const result = reader.result;
-                    const base64 = result.split(',')[1] || result;
-                    resolve(base64);
-                };
-                reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
-                reader.readAsDataURL(file);
             });
-        }
+        })();
     </script>
 </body>
 
