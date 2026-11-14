@@ -8,6 +8,11 @@
     <meta name="description"
         content="Proyecto 1000 Mil Latidos. Información y contenido desarrollado por Pablo Tincani.">
     <meta name="robots" content="index,follow">
+<<<<<<< HEAD
+    <meta name="theme-color" content="#0b0f19">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/1000mlatidos.html">
     <meta property="og:title" content="¿Mil Millones de Latidos? | Pablo Urueña Tincani">
     <meta property="og:description"
@@ -409,7 +414,11 @@
         <form id="formLatidos" novalidate>
             <label for="mamifero"><i class="fas fa-paw"></i> Mamífero</label>
             <input type="text" id="mamifero" list="listaMamiferos" placeholder="Elige o escribe un mamífero..."
+<<<<<<< HEAD
+                autocomplete="off" maxlength="60">
+=======
                 autocomplete="off">
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
             <datalist id="listaMamiferos">
                 <option value="Musaraña etrusca"></option>
                 <option value="Ratón de campo"></option>
@@ -666,12 +675,49 @@
             const imgContenido = document.getElementById('imagenContenido');
 
             imgCont.style.display = 'block';
+<<<<<<< HEAD
+            imgContenido.replaceChildren();
+            imgCarga.replaceChildren();
+
+            const spinner = document.createElement('div');
+            spinner.className = 'load-spinner';
+            const loadingText = document.createElement('div');
+            loadingText.style.cssText = 'font-size:0.85rem; color:var(--text-muted);';
+            loadingText.textContent = 'Buscando imagen de "' + mamifero + '"...';
+            imgCarga.append(spinner, loadingText);
+
+            function mostrarAviso(texto, icono) {
+                const div = document.createElement('div');
+                div.style.cssText = 'font-size:0.85rem; color:var(--text-muted);';
+                const icon = document.createElement('i');
+                icon.className = 'fas ' + (icono || 'fa-image');
+                icon.setAttribute('aria-hidden', 'true');
+                div.append(icon, document.createTextNode(' ' + texto));
+                imgContenido.replaceChildren(div);
+            }
+=======
             imgContenido.innerHTML = '';
             imgCarga.innerHTML = '<div class="load-spinner"></div><div style="font-size:0.85rem; color:var(--text-muted);">Buscando imagen de "' + mamifero + '"...</div>';
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
 
             try {
                 let thumbnail = null;
 
+<<<<<<< HEAD
+                async function pageimages(titulo) {
+                    const respuesta = await fetch('https://es.wikipedia.org/w/api.php?action=query&titles=' +
+                        encodeURIComponent(titulo) +
+                        '&prop=pageimages&piprop=thumbnail&pithumbsize=500&format=json&origin=*&redirects=1');
+                    if (!respuesta.ok) throw new Error('Wikipedia respondió ' + respuesta.status);
+                    const datos = await respuesta.json();
+                    const paginas = datos && datos.query && datos.query.pages
+                        ? Object.values(datos.query.pages)
+                        : [];
+                    const fuente = paginas[0] && paginas[0].thumbnail && paginas[0].thumbnail.source;
+                    return typeof fuente === 'string' && /^https:\/\/upload\.wikimedia\.org\//.test(fuente)
+                        ? fuente
+                        : null;
+=======
                 async function pageimages(t) {
                     const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&titles=' + encodeURIComponent(t) + '&prop=pageimages&piprop=thumbnail&pithumbsize=500&format=json&origin=*&redirects=1');
                     const d = await r.json();
@@ -680,20 +726,50 @@
                         return paginas[0].thumbnail.source;
                     }
                     return null;
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                 }
 
                 const directo = await pageimages(mamifero);
                 if (directo) {
                     thumbnail = directo;
                 } else {
+<<<<<<< HEAD
+                    const respuesta = await fetch('https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=' +
+                        encodeURIComponent(mamifero) + '&srlimit=1&format=json&origin=*');
+                    if (!respuesta.ok) throw new Error('Wikipedia respondió ' + respuesta.status);
+                    const datos = await respuesta.json();
+                    if (datos && datos.query && datos.query.search && datos.query.search[0]) {
+                        thumbnail = await pageimages(datos.query.search[0].title);
+=======
                     const r = await fetch('https://es.wikipedia.org/w/api.php?action=query&list=search&srsearch=' + encodeURIComponent(mamifero) + '&srlimit=1&format=json&origin=*');
                     const d = await r.json();
                     if (d.query.search && d.query.search[0]) {
                         thumbnail = await pageimages(d.query.search[0].title);
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                     }
                 }
 
                 if (thumbnail) {
+<<<<<<< HEAD
+                    const img = document.createElement('img');
+                    img.src = thumbnail;
+                    img.alt = 'Imagen de ' + mamifero;
+                    img.loading = 'lazy';
+                    img.referrerPolicy = 'no-referrer';
+                    img.style.maxWidth = '100%';
+                    img.addEventListener('error', function () {
+                        mostrarAviso('No se pudo cargar la imagen.', 'fa-triangle-exclamation');
+                    }, { once: true });
+                    imgContenido.replaceChildren(img);
+                } else {
+                    mostrarAviso('No se encontró imagen en Wikipedia para "' + mamifero + '".');
+                }
+            } catch (error) {
+                mostrarAviso('No se pudo conectar con Wikipedia para buscar la imagen.', 'fa-circle-exclamation');
+            }
+
+            imgCarga.replaceChildren();
+=======
                     imgContenido.innerHTML =
                         '<img src="' + thumbnail + '" alt="' + mamifero + '" onerror="this.parentElement.innerHTML=\'<div style=\'font-size:0.85rem; color:var(--text-muted);\'>No se pudo cargar la imagen.</div>\'">';
                 } else {
@@ -704,6 +780,7 @@
             }
 
             imgCarga.innerHTML = '';
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
         }
 
         function borrar() {

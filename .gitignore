@@ -4,6 +4,12 @@
 .DS_Store
 Thumbs.db
 Desktop.ini
+<<<<<<< HEAD
+desktop.ini
+ehthumbs.db
+*.lnk
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
 .idea/
 .vscode/
 *.swp
@@ -81,4 +87,23 @@ coverage/
 .cache/
 *.tmp
 *.bak
-.DS_Store
+<<<<<<< HEAD
+
+# ---------------------------
+# Descargas del navegador y temporales
+# ---------------------------
+*.descargar
+*.crdownload
+*.part
+*.partial
+~$*
+*.zip
+*.rar
+*.7z
+
+# ---------------------------
+# Archivos generados por pruebas locales
+# ---------------------------
+tests/*.pdf
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
