@@ -1442,123 +1442,77 @@
 
 
 
-    <!-- Envío del formulario: Google Apps Script (ver apps-script/README.md) -->
+    <!-- FORMULARIO QUE USA EL PUENTE APPS SCRIPT (sin credenciales expuestas) -->
     <script>
-        // ⚠️ Pegá acá la URL /exec del despliegue NUEVO de Apps Script.
-        // Si esta URL devuelve 404, el formulario no puede subir archivos.
+        // URL del Web App de Google Apps Script (misma que formulario.html)
+        // Este JS NO contiene ninguna credencial de Dropbox.
         const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
-        const EMAIL_CONTACTO = 'tincanipablo@gmail.com';
-        const MAX_MB = 10;
 
-        function getFileBase64(file) {
+        async function getFileBase64(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
-                reader.onload = () => resolve(String(reader.result).split(',')[1] || reader.result);
+                reader.onload = () => {
+                    const result = reader.result;
+                    const base64 = result.split(',')[1] || result;
+                    resolve(base64);
+                };
                 reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
                 reader.readAsDataURL(file);
             });
         }
 
-        function mostrarEstado(status, tipo, texto, enlace) {
-            const estilos = {
-                info: ['#fff3cd', '#856404'],
-                ok: ['#d4edda', '#155724'],
-                error: ['#f8d7da', '#721c24']
-            };
-            status.style.display = 'block';
-            status.style.backgroundColor = estilos[tipo][0];
-            status.style.color = estilos[tipo][1];
-            status.textContent = texto;
-            if (enlace) {
-                status.appendChild(document.createElement('br'));
-                const a = document.createElement('a');
-                a.href = enlace.href;
-                a.textContent = enlace.texto;
-                status.appendChild(a);
-            }
-        }
-
         document.getElementById('formIndex').addEventListener('submit', async function (e) {
             e.preventDefault();
-            const form = this;
             const btn = document.getElementById('btnEnviar');
             const status = document.getElementById('status');
-            let file = null;
-
             btn.disabled = true;
-            mostrarEstado(status, 'info', '⏳ Preparando el envío...');
+            status.style.display = 'block';
+            status.style.backgroundColor = '#fff3cd';
+            status.style.color = '#856404';
+            status.innerText = '⏳ Enviando reporte...';
 
             try {
-                file = document.getElementById('archivo').files[0];
+                const file = document.getElementById('archivo').files[0];
                 if (!file) {
-                    throw new Error('Seleccioná un archivo PDF.');
+                    throw new Error('Por favor selecciona un archivo PDF');
                 }
+
                 if (file.type !== 'application/pdf') {
-                    throw new Error('Solo se permiten archivos PDF.');
-                }
-                if (file.size > MAX_MB * 1024 * 1024) {
-                    throw new Error('El archivo supera los ' + MAX_MB + ' MB.');
+                    throw new Error('Solo se permiten archivos PDF');
                 }
 
-                mostrarEstado(status, 'info', '⏳ Subiendo el archivo...');
+                status.innerText = '⏳ Almacenando en el servidor seguro...';
 
-                const control = new AbortController();
-                const timeout = setTimeout(() => control.abort(), 90000);
+                const email = document.getElementById('email').value;
 
-                let respuesta;
-                try {
-                    respuesta = await fetch(URL_APPS_SCRIPT, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                        body: JSON.stringify({
-                            nombre: document.getElementById('email').value || 'sin_email',
-                            email: document.getElementById('email').value,
-                            mensaje: 'Asunto: ' + document.getElementById('asunto').value +
-                                '\nMensaje: ' + document.getElementById('mensaje').value,
-                            archivoBase64: await getFileBase64(file),
-                            archivoNombre: file.name
-                        }),
-                        redirect: 'follow',
-                        signal: control.signal
-                    });
-                } finally {
-                    clearTimeout(timeout);
-                }
-
-                const texto = await respuesta.text();
-                let datos = null;
-                try { datos = JSON.parse(texto); } catch (_) { /* respuesta no JSON */ }
-
-                if (!respuesta.ok) {
-                    if (respuesta.status === 404) {
-                        throw new Error('El servicio de envío no está disponible (404). Hay que redesplegar el Apps Script y actualizar la URL.');
-                    }
-                    throw new Error('El servidor respondió ' + respuesta.status + '.');
-                }
-                if (!datos || datos.ok !== true) {
-                    throw new Error((datos && datos.error) || 'El servidor devolvió una respuesta inválida.');
-                }
-
-                mostrarEstado(status, 'ok', '✅ ¡Archivo enviado con éxito!');
-                form.reset();
-            } catch (err) {
-                console.error('Error de envío:', err);
-                const motivo = err.name === 'AbortError'
-                    ? 'La conexión tardó demasiado.'
-                    : (err.message || 'Error desconocido');
-
-                const asunto = encodeURIComponent('Contacto desde el sitio web');
-                const cuerpo = encodeURIComponent(
-                    'Email: ' + document.getElementById('email').value + '\n' +
-                    'Asunto: ' + document.getElementById('asunto').value + '\n\n' +
-                    document.getElementById('mensaje').value + '\n\n' +
-                    '(Adjuntar manualmente: ' + (file ? file.name : 'sin archivo') + ')'
-                );
-
-                mostrarEstado(status, 'error', '❌ No se pudo enviar: ' + motivo, {
-                    href: 'mailto:' + EMAIL_CONTACTO + '?subject=' + asunto + '&body=' + cuerpo,
-                    texto: 'Enviar por correo de respaldo'
+                const respuesta = await fetch(URL_APPS_SCRIPT, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        nombre: email || 'sin_email',
+                        email: email,
+                        mensaje:
+                            `Asunto: ${document.getElementById('asunto').value}\n` +
+                            `Mensaje: ${document.getElementById('mensaje').value}`,
+                        archivoBase64: await getFileBase64(file),
+                        archivoNombre: file.name
+                    })
                 });
+
+                const datos = await respuesta.json();
+                if (!datos.ok) {
+                    throw new Error(datos.error || 'Error al guardar el reporte');
+                }
+
+                status.innerText = '✅ ¡Archivos enviados con éxito!';
+                status.style.backgroundColor = '#d4edda';
+                status.style.color = '#155724';
+                this.reset();
+
+            } catch (err) {
+                console.error('Error completo:', err);
+                status.innerText = '❌ Error: ' + (err.message || JSON.stringify(err));
+                status.style.backgroundColor = '#f8d7da';
+                status.style.color = '#721c24';
             } finally {
                 btn.disabled = false;
             }
