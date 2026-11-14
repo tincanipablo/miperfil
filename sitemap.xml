@@ -3,60 +3,92 @@
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
   <url>
+<<<<<<< HEAD
     <loc>https://tincanipablo.github.io/miperfil/diplomas.html</loc>
     <lastmod>2026-11-14</lastmod>
+=======
+    <loc>https://tincanipablo.github.io/miperfil/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://tincanipablo.github.io/miperfil/diplomas.html</loc>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/donaciones.html</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/etnia.html</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/formulario.html</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/pyme.html</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/1000mlatidos.html</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://tincanipablo.github.io/miperfil/DiplomasCursos.pdf</loc>
+<<<<<<< HEAD
     <lastmod>2026-11-14</lastmod>
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
 
+<<<<<<< HEAD
   <url>
     <loc>https://tincanipablo.github.io/miperfil/tests/</loc>
     <lastmod>2026-11-14</lastmod>
@@ -113,4 +145,6 @@
     <priority>0.7</priority>
   </url>
 
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
 </urlset>

@@ -8,8 +8,11 @@
     <meta name="description"
         content="Formulario de contacto para consultas, proyectos y colaboraciones con Pablo Tincani.">
     <meta name="robots" content="index,follow">
+<<<<<<< HEAD
     <meta name="theme-color" content="#0b0f19">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
     <meta property="og:description"
@@ -17,6 +20,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
+<<<<<<< HEAD
     <meta property="og:image:alt" content="Pablo Alejandro Urueña Tincani">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
@@ -39,6 +43,9 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+=======
+    <meta name="twitter:card" content="summary_large_image">
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <style>
         :root {
             --bg-dark: #0b0f19;
@@ -218,6 +225,7 @@
             margin-bottom: 16px;
         }
 
+<<<<<<< HEAD
         input:focus-visible,
         textarea:focus-visible,
         button:focus-visible,
@@ -246,6 +254,8 @@
             overflow: hidden !important;
         }
 
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
         @media (max-width: 768px) {
             .card {
                 padding: 24px;
@@ -295,7 +305,11 @@
                 <i class="fas fa-arrow-left"></i> Volver al Perfil
             </a>
         </div>
+<<<<<<< HEAD
         <nav aria-label="Navegación principal">
+=======
+        <nav>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
             <a href="index.html">Inicio</a>
             <a href="diplomas.html">Diplomas</a>
             <a href="donaciones.html">Donaciones</a>
@@ -311,6 +325,7 @@
         <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico,
             proyectos o seguimiento de servicios.</p>
         <form id="formSoporte">
+<<<<<<< HEAD
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" placeholder="Nombre y apellido"
                 autocomplete="name" maxlength="120" required>
@@ -416,6 +431,139 @@
                 }
             });
         })();
+=======
+            <input type="text" id="nombre" placeholder="Nombre" required>
+            <input type="email" id="email" placeholder="Email" required>
+            <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
+            <label>Adjuntar archivo:</label>
+            <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
+            <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG · Máximo 10 MB</div>
+            <button type="submit" id="btnSoporte">Enviar Reporte</button>
+            <div id="msg"></div>
+        </form>
+    </div>
+
+    <script>
+        // ⚠️ Pegá acá la URL /exec del despliegue NUEVO de Apps Script (ver apps-script/README.md).
+        // Si esta URL devuelve 404, el formulario no puede subir archivos.
+        const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
+        const EMAIL_CONTACTO = 'tincanipablo@gmail.com';
+        const MAX_MB = 10;
+
+        function leerArchivoBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result).split(',')[1] || reader.result);
+                reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function mostrarEstado(msgDiv, tipo, texto, enlace) {
+            const estilos = {
+                info: ['#e8f0fe', '#004085'],
+                ok: ['#d4edda', '#155724'],
+                error: ['#f8d7da', '#721c24']
+            };
+            msgDiv.style.display = 'block';
+            msgDiv.style.backgroundColor = estilos[tipo][0];
+            msgDiv.style.color = estilos[tipo][1];
+            msgDiv.textContent = texto;
+            if (enlace) {
+                msgDiv.appendChild(document.createElement('br'));
+                const a = document.createElement('a');
+                a.href = enlace.href;
+                a.textContent = enlace.texto;
+                msgDiv.appendChild(a);
+            }
+        }
+
+        document.getElementById('formSoporte').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const form = this;
+            const btn = document.getElementById('btnSoporte');
+            const msgDiv = document.getElementById('msg');
+            let file = null;
+
+            btn.disabled = true;
+            mostrarEstado(msgDiv, 'info', '⏳ Preparando el envío...');
+
+            try {
+                const nombre = document.getElementById('nombre').value;
+                const email = document.getElementById('email').value;
+                const mensaje = document.getElementById('mensaje').value;
+                file = document.getElementById('archivo').files[0];
+
+                if (!file) {
+                    throw new Error('Adjuntá un archivo.');
+                }
+                if (file.size > MAX_MB * 1024 * 1024) {
+                    throw new Error('El archivo supera los ' + MAX_MB + ' MB.');
+                }
+
+                mostrarEstado(msgDiv, 'info', '⏳ Subiendo el archivo...');
+
+                const control = new AbortController();
+                const timeout = setTimeout(() => control.abort(), 90000);
+
+                let respuesta;
+                try {
+                    respuesta = await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            nombre: nombre,
+                            email: email,
+                            mensaje: mensaje,
+                            archivoBase64: await leerArchivoBase64(file),
+                            archivoNombre: file.name
+                        }),
+                        redirect: 'follow',
+                        signal: control.signal
+                    });
+                } finally {
+                    clearTimeout(timeout);
+                }
+
+                const texto = await respuesta.text();
+                let datos = null;
+                try { datos = JSON.parse(texto); } catch (_) { /* respuesta no JSON */ }
+
+                if (!respuesta.ok) {
+                    if (respuesta.status === 404) {
+                        throw new Error('El servicio de envío no está disponible (404). Hay que redesplegar el Apps Script y actualizar la URL.');
+                    }
+                    throw new Error('El servidor respondió ' + respuesta.status + '.');
+                }
+                if (!datos || datos.ok !== true) {
+                    throw new Error((datos && datos.error) || 'El servidor devolvió una respuesta inválida.');
+                }
+
+                mostrarEstado(msgDiv, 'ok', '✅ ¡Reporte enviado con éxito!');
+                form.reset();
+            } catch (err) {
+                console.error('Error de envío:', err);
+                const motivo = err.name === 'AbortError'
+                    ? 'La conexión tardó demasiado.'
+                    : (err.message || 'Error desconocido');
+
+                const asunto = encodeURIComponent('Reporte desde el sitio web');
+                const cuerpo = encodeURIComponent(
+                    'Nombre: ' + document.getElementById('nombre').value + '\n' +
+                    'Email: ' + document.getElementById('email').value + '\n\n' +
+                    document.getElementById('mensaje').value + '\n\n' +
+                    '(Adjuntar manualmente: ' + (file ? file.name : 'sin archivo') + ')'
+                );
+
+                mostrarEstado(msgDiv, 'error', '❌ No se pudo enviar: ' + motivo, {
+                    href: 'mailto:' + EMAIL_CONTACTO + '?subject=' + asunto + '&body=' + cuerpo,
+                    texto: 'Enviar por correo de respaldo'
+                });
+            } finally {
+                btn.disabled = false;
+            }
+        });
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     </script>
 </body>
 

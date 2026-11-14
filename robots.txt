@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 User-agent: *
 Allow: /
 
 Sitemap: https://tincanipablo.github.io/miperfil/sitemap.xml
 Sitemap: https://tincanipablo.github.io/miperfil/tests/sitemap.xml
+=======
+User-agent: *
+Allow: /
+Sitemap: https://tincanipablo.github.io/miperfil/sitemap.xml
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972

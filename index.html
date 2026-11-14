@@ -11,6 +11,7 @@
         content="Pablo Urueña Tincani, Analista en Sistemas de Información, consultor IT freelance, desarrollo de software, bases de datos, infraestructura IT, soporte técnico, transformación digital, Argentina, España, San Miguel de Tucumán, Murcia">
     <meta name="author" content="Pablo Alejandro Urueña Tincani">
     <meta name="robots" content="index,follow,max-image-preview:large">
+<<<<<<< HEAD
     <meta name="geo.region" content="AR-T">
     <meta name="geo.country" content="AR">
     <meta name="geo.placename" content="San Miguel de Tucumán">
@@ -22,6 +23,16 @@
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/">
     <link rel="alternate" hreflang="x-default" href="https://tincanipablo.github.io/miperfil/">
     <meta property="og:site_name" content="Pablo Urueña Tincani">
+=======
+    <meta name="geo.region" content="AR">
+    <meta name="geo.country" content="AR">
+    <meta name="geo.placename" content="Argentina">
+    <meta name="geo.region" content="ES">
+    <meta name="geo.placename" content="España">
+    <meta http-equiv="content-language" content="es">
+    <link rel="canonical" href="https://tincanipablo.github.io/miperfil/">
+    <link rel="alternate" hreflang="x-default" href="https://tincanipablo.github.io/miperfil/">
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <meta property="og:title" content="Consultor IT Freelance en Argentina y España | Pablo Urueña Tincani">
     <meta property="og:description"
         content="Consultor IT freelance en Argentina y España. Desarrollo de software, bases de datos, redes e infraestructura, soporte técnico y transformación digital.">
@@ -29,13 +40,19 @@
     <meta property="og:url" content="https://tincanipablo.github.io/miperfil/">
     <meta property="og:locale" content="es_AR">
     <meta property="og:locale:alternate" content="es_ES">
+<<<<<<< HEAD
     <meta property="og:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
     <meta property="og:image:alt" content="Pablo Alejandro Urueña Tincani">
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Consultor IT Freelance en Argentina y España | Pablo Urueña Tincani">
     <meta name="twitter:description"
         content="Consultor IT freelance en Argentina y España. Desarrollo de software, bases de datos, redes e infraestructura, soporte técnico y transformación digital.">
+<<<<<<< HEAD
     <meta name="twitter:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
+=======
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -823,6 +840,7 @@
             transition: all 0.3s ease;
         }
 
+<<<<<<< HEAD
         .file-info {
             font-size: 0.8rem;
             color: var(--text-dim);
@@ -847,6 +865,102 @@
             width: 1px !important;
             height: 1px !important;
             overflow: hidden !important;
+=======
+        /* PDF Floating Modal Overlay */
+        .pdf-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 8, 16, 0.94);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 99999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .pdf-modal-overlay.active {
+            display: flex !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .pdf-modal-container {
+            width: 92%;
+            max-width: 1100px;
+            height: 88vh;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 35px var(--accent-glow);
+            transform: scale(0.95) translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .pdf-modal-overlay.active .pdf-modal-container {
+            transform: scale(1) translateY(0);
+        }
+
+        .pdf-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: rgba(11, 15, 25, 0.95);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pdf-modal-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pdf-modal-close {
+            padding: 8px 18px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            color: #f87171;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .pdf-modal-close:hover {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+
+        .pdf-modal-body {
+            flex: 1;
+            width: 100%;
+            height: 100%;
+            background: #111;
+        }
+
+        .pdf-viewer-frame {
+            width: 100%;
+            height: 100%;
+            border: none;
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
         }
 
         /* Footer */
@@ -966,8 +1080,12 @@
                 <span>Pablo Urueña Tincani</span>
             </a>
             <div class="nav-actions">
+<<<<<<< HEAD
                 <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Abrir menú"
                     aria-expanded="false" aria-controls="nav-menu">
+=======
+                <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                     <span class="nav-toggle-bar"></span>
                     <span class="nav-toggle-bar"></span>
                     <span class="nav-toggle-bar"></span>
@@ -984,6 +1102,11 @@
                 <a href="#contacto" class="btn-nav"><i class="fas fa-envelope"></i> Contactar</a>
             </div>
         </div>
+<<<<<<< HEAD
+=======
+        <nav>
+        </nav>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     </header>
 
     <!-- Main Content -->
@@ -1014,7 +1137,11 @@
 
                 <div class="hero-image-wrapper">
                     <img src="img/FotoCV.jpg" alt="Pablo Alejandro Urueña Tincani" class="profile-img" width="260"
+<<<<<<< HEAD
                         height="260" decoding="async" fetchpriority="high">
+=======
+                        height="260" decoding="async" importance="high">
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                     <div class="experience-pill">
                         <i class="fas fa-award"></i>
                         <div class="experience-pill-text">
@@ -1067,8 +1194,13 @@
                                 <div class="contact-icon"><i class="fab fa-linkedin-in"></i></div>
                                 <div class="contact-detail">
                                     <strong>LinkedIn</strong>
+<<<<<<< HEAD
                                     <a href="https://www.linkedin.com/in/pablo-urue%C3%B1a-838680185"
                                         target="_blank" rel="noopener noreferrer">LinkedIn
+=======
+                                    <a href="https://www.linkedin.com/in/pablo-urueña-838680185"
+                                        target="_blank">LinkedIn
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                                         Pablo Urueña Tincani</a>
                                 </div>
                             </li>
@@ -1304,30 +1436,51 @@
                 </div>
 
                 <div class="contact-card-wrapper">
+<<<<<<< HEAD
                     <form id="formIndex">
                         <div class="form-group">
                             <label for="email"><i class="fas fa-envelope"></i> Tu Email:</label>
                             <input type="email" id="email" name="email" autocomplete="email" inputmode="email"
                                 placeholder="ejemplo@correo.com" maxlength="254" required>
+=======
+                    <!-- EXACT Dropbox HTML Form preserved -->
+                    <form id="formIndex">
+                        <div class="form-group">
+                            <label for="email"><i class="fas fa-envelope"></i> Tu Email:</label>
+                            <input type="email" id="email" autocomplete="email" placeholder="ejemplo@correo.com"
+                                required>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                         </div>
 
                         <div class="form-group">
                             <label for="asunto"><i class="fas fa-tag"></i> Asunto:</label>
+<<<<<<< HEAD
                             <input type="text" id="asunto" name="asunto" autocomplete="off"
                                 placeholder="Ej: Consulta por Desarrollo o Consultoría IT" minlength="3"
                                 maxlength="150" required>
+=======
+                            <input type="text" id="asunto" autocomplete="off"
+                                placeholder="Ej: Consulta por Desarrollo o Consultoría IT" required>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                         </div>
 
                         <div class="form-group">
                             <label for="mensaje"><i class="fas fa-comment-alt"></i> Mensaje:</label>
+<<<<<<< HEAD
                             <textarea id="mensaje" name="mensaje" autocomplete="off" rows="5"
                                 placeholder="Describe los detalles de tu consulta o requerimiento..." minlength="10"
                                 maxlength="5000" required></textarea>
+=======
+                            <textarea id="mensaje" autocomplete="off" rows="4"
+                                placeholder="Describe los detalles de tu consulta o requerimiento..."
+                                required></textarea>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                         </div>
 
                         <div class="form-group">
                             <label for="archivo" style="font-weight: bold;"><i class="fas fa-file-pdf"></i> Adjuntar
                                 archivo PDF:</label>
+<<<<<<< HEAD
                             <input type="file" id="archivo" name="archivo" accept=".pdf,application/pdf" required
                                 aria-describedby="archivoAyuda">
                             <span class="file-info" id="archivoAyuda">Solo PDF · máximo 10 MB.</span>
@@ -1337,12 +1490,16 @@
                         <div class="honeypot" aria-hidden="true">
                             <label for="website">No completar</label>
                             <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+=======
+                            <input type="file" id="archivo" accept=".pdf" required>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                         </div>
 
                         <button type="submit" id="btnEnviar">
                             <i class="fas fa-paper-plane"></i> Enviar Mensaje
                         </button>
 
+<<<<<<< HEAD
                         <div id="status" role="status" aria-live="polite"></div>
                         <p class="form-alt">¿Problemas con el formulario?
                             <a href="mailto:tincanipablo@gmail.com">Escríbeme por email</a>.
@@ -1352,6 +1509,9 @@
                                 <a href="mailto:tincanipablo@gmail.com">tincanipablo@gmail.com</a>.
                             </p>
                         </noscript>
+=======
+                        <div id="status"></div>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
                     </form>
                 </div>
             </div>
@@ -1363,6 +1523,7 @@
         const navMenu = document.getElementById('nav-menu');
 
         if (navToggle && navMenu) {
+<<<<<<< HEAD
             const setMenu = (open) => {
                 navMenu.classList.toggle('is-open', open);
                 navToggle.classList.toggle('is-active', open);
@@ -1383,6 +1544,20 @@
                     setMenu(false);
                     navToggle.focus();
                 }
+=======
+            navToggle.addEventListener('click', () => {
+                const isOpen = navMenu.classList.toggle('is-open');
+                navToggle.classList.toggle('is-active', isOpen);
+                navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
+
+            navMenu.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    navMenu.classList.remove('is-open');
+                    navToggle.classList.remove('is-active');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
             });
         }
     </script>
@@ -1390,6 +1565,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
+<<<<<<< HEAD
             <nav aria-label="Enlaces del pie de página">
                 <a href="index.html">Inicio</a>
                 <a href="diplomas.html">Diplomas</a>
@@ -1398,6 +1574,9 @@
                 <a href="formulario.html">Contacto</a>
                 <a href="pyme.html">PYME</a>
                 <a href="1000mlatidos.html">1000 Mil Latidos</a>
+=======
+            <nav>
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
             </nav>
             <p>&copy; 2026 Pablo Alejandro Urueña Tincani. Todos los derechos reservados.</p>
             <p style="margin-top: 6px; font-size: 0.8rem; color: var(--text-dim);">
@@ -1408,6 +1587,7 @@
 
 
 
+<<<<<<< HEAD
     <!-- Puente de contacto: Google Apps Script -> Dropbox (sin credenciales en el navegador) -->
     <script src="js/contact-config.js"></script>
     <script src="js/contact-bridge.js"></script>
@@ -1477,6 +1657,129 @@
                 }
             });
         })();
+=======
+    <!-- Envío del formulario: Google Apps Script (ver apps-script/README.md) -->
+    <script>
+        // ⚠️ Pegá acá la URL /exec del despliegue NUEVO de Apps Script.
+        // Si esta URL devuelve 404, el formulario no puede subir archivos.
+        const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
+        const EMAIL_CONTACTO = 'tincanipablo@gmail.com';
+        const MAX_MB = 10;
+
+        function getFileBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result).split(',')[1] || reader.result);
+                reader.onerror = () => reject(new Error('No se pudo leer el archivo'));
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function mostrarEstado(status, tipo, texto, enlace) {
+            const estilos = {
+                info: ['#fff3cd', '#856404'],
+                ok: ['#d4edda', '#155724'],
+                error: ['#f8d7da', '#721c24']
+            };
+            status.style.display = 'block';
+            status.style.backgroundColor = estilos[tipo][0];
+            status.style.color = estilos[tipo][1];
+            status.textContent = texto;
+            if (enlace) {
+                status.appendChild(document.createElement('br'));
+                const a = document.createElement('a');
+                a.href = enlace.href;
+                a.textContent = enlace.texto;
+                status.appendChild(a);
+            }
+        }
+
+        document.getElementById('formIndex').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const form = this;
+            const btn = document.getElementById('btnEnviar');
+            const status = document.getElementById('status');
+            let file = null;
+
+            btn.disabled = true;
+            mostrarEstado(status, 'info', '⏳ Preparando el envío...');
+
+            try {
+                file = document.getElementById('archivo').files[0];
+                if (!file) {
+                    throw new Error('Seleccioná un archivo PDF.');
+                }
+                if (file.type !== 'application/pdf') {
+                    throw new Error('Solo se permiten archivos PDF.');
+                }
+                if (file.size > MAX_MB * 1024 * 1024) {
+                    throw new Error('El archivo supera los ' + MAX_MB + ' MB.');
+                }
+
+                mostrarEstado(status, 'info', '⏳ Subiendo el archivo...');
+
+                const control = new AbortController();
+                const timeout = setTimeout(() => control.abort(), 90000);
+
+                let respuesta;
+                try {
+                    respuesta = await fetch(URL_APPS_SCRIPT, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            nombre: document.getElementById('email').value || 'sin_email',
+                            email: document.getElementById('email').value,
+                            mensaje: 'Asunto: ' + document.getElementById('asunto').value +
+                                '\nMensaje: ' + document.getElementById('mensaje').value,
+                            archivoBase64: await getFileBase64(file),
+                            archivoNombre: file.name
+                        }),
+                        redirect: 'follow',
+                        signal: control.signal
+                    });
+                } finally {
+                    clearTimeout(timeout);
+                }
+
+                const texto = await respuesta.text();
+                let datos = null;
+                try { datos = JSON.parse(texto); } catch (_) { /* respuesta no JSON */ }
+
+                if (!respuesta.ok) {
+                    if (respuesta.status === 404) {
+                        throw new Error('El servicio de envío no está disponible (404). Hay que redesplegar el Apps Script y actualizar la URL.');
+                    }
+                    throw new Error('El servidor respondió ' + respuesta.status + '.');
+                }
+                if (!datos || datos.ok !== true) {
+                    throw new Error((datos && datos.error) || 'El servidor devolvió una respuesta inválida.');
+                }
+
+                mostrarEstado(status, 'ok', '✅ ¡Archivo enviado con éxito!');
+                form.reset();
+            } catch (err) {
+                console.error('Error de envío:', err);
+                const motivo = err.name === 'AbortError'
+                    ? 'La conexión tardó demasiado.'
+                    : (err.message || 'Error desconocido');
+
+                const asunto = encodeURIComponent('Contacto desde el sitio web');
+                const cuerpo = encodeURIComponent(
+                    'Email: ' + document.getElementById('email').value + '\n' +
+                    'Asunto: ' + document.getElementById('asunto').value + '\n\n' +
+                    document.getElementById('mensaje').value + '\n\n' +
+                    '(Adjuntar manualmente: ' + (file ? file.name : 'sin archivo') + ')'
+                );
+
+                mostrarEstado(status, 'error', '❌ No se pudo enviar: ' + motivo, {
+                    href: 'mailto:' + EMAIL_CONTACTO + '?subject=' + asunto + '&body=' + cuerpo,
+                    texto: 'Enviar por correo de respaldo'
+                });
+            } finally {
+                btn.disabled = false;
+            }
+        });
+>>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     </script>
 </body>
 
