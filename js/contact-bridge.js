@@ -173,6 +173,7 @@
         var payload = {
             nombre: String((data && data.nombre) || '').trim(),
             email: String((data && data.email) || '').trim(),
+            asunto: String((data && data.asunto) || '').trim(),
             mensaje: String((data && data.mensaje) || '').trim(),
             website: String((data && data.website) || ''),
             archivoNombre: file ? file.name : '',

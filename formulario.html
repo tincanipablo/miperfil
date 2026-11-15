@@ -390,6 +390,7 @@
                     var resultado = await ContactBridge.send({
                         nombre: nombre,
                         email: email,
+                        asunto: 'Formulario de contacto',
                         mensaje: mensaje,
                         file: file,
                         website: document.getElementById('website').value

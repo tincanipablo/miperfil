@@ -2,12 +2,9 @@
 /*
  * Configuración del puente de contacto.
  *
- * El formulario del sitio envía los datos a un Web App de Google Apps Script.
- * El código de ese backend no está incluido en este repositorio, así que aquí
- * no se puede verificar cómo guarda los archivos ni cómo protege sus secretos.
- *
+ * El formulario del sitio envía los datos al backend de apps-script/Codigo.gs.
  * El despliegue de Apps Script se comprobó y respondió correctamente.
- * El backend y sus secretos se administran fuera de este repositorio.
+ * Sus credenciales permanecen en las propiedades privadas del proyecto.
  *
  * Este archivo es público (GitHub Pages): nunca pongas aquí tokens,
  * contraseñas ni claves de Dropbox.

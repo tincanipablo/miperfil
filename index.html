@@ -1542,9 +1542,10 @@
                 ContactBridge.setStatus(status, 'info', '⏳ Enviando el formulario...');
 
                 const result = await ContactBridge.send({
-                    nombre: email,
+                    nombre: 'Formulario principal',
                     email: email,
-                    mensaje: 'Asunto: ' + asunto + '\nMensaje: ' + mensaje,
+                    asunto: asunto,
+                    mensaje: mensaje,
                     file: file,
                     website: document.getElementById('website').value
                 });
