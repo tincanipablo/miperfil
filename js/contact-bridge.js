@@ -1,3 +1,4 @@
+// Configurado por PAUT
 /*
  * Puente de contacto: navegador -> Google Apps Script -> Dropbox.
  *
@@ -8,7 +9,7 @@
  *    que Apps Script no soporta).
  *  - Interpretar correctamente errores HTTP, redirecciones y páginas HTML
  *    (por ejemplo, un despliegue eliminado o privado).
- *  - Ofrecer un plan B por email/Dropbox si el servicio no responde.
+ *  - Ofrecer un plan B por Dropbox si el servicio no responde.
  *
  * No contiene credenciales. No usa innerHTML con datos del usuario.
  */
@@ -19,7 +20,6 @@
         appsScriptUrl: '',
         maxFileMB: 10,
         timeoutMs: 180000,
-        contactEmail: 'tincanipablo@gmail.com',
         dropboxFileRequestUrl: ''
     };
 
@@ -116,25 +116,7 @@
         }
     }
 
-    function buildMailto(data) {
-        var to = String(config.contactEmail || '').trim();
-        if (!to) return '';
-
-        var subject = 'Contacto desde el sitio web';
-        var body = 'Nombre: ' + (data && data.nombre ? data.nombre : '') + '\n' +
-            'Email: ' + (data && data.email ? data.email : '') + '\n\n' +
-            (data && data.mensaje ? data.mensaje : '');
-
-        if (data && data.fileName) {
-            body += '\n\n[Adjunta manualmente este archivo: ' + data.fileName + ']';
-        }
-
-        return 'mailto:' + to +
-            '?subject=' + encodeURIComponent(subject) +
-            '&body=' + encodeURIComponent(body.slice(0, 1800));
-    }
-
-    function showFallback(statusElement, data) {
+    function showFallback(statusElement) {
         if (!statusElement || !statusElement.parentNode) return;
 
         clearFallback();
@@ -147,19 +129,12 @@
 
         var text = document.createElement('p');
         text.style.margin = '0 0 10px';
-        text.textContent = '¿El formulario no responde? Envía tu consulta directamente por email' +
+        text.textContent = 'No se pudo completar el envío. Inténtalo más tarde' +
             (config.dropboxFileRequestUrl ? ' o sube el archivo a Dropbox.' : '.');
         box.appendChild(text);
 
         var actions = document.createElement('div');
         actions.style.cssText = 'display:flex;flex-wrap:wrap;gap:10px;';
-
-        var mailLink = document.createElement('a');
-        mailLink.href = buildMailto(data);
-        mailLink.textContent = '✉️ Enviar por email';
-        mailLink.style.cssText = 'display:inline-block;padding:9px 14px;border-radius:8px;' +
-            'background:#2563eb;color:#fff;text-decoration:none;font-weight:600;';
-        actions.appendChild(mailLink);
 
         if (config.dropboxFileRequestUrl && isHttpUrl(config.dropboxFileRequestUrl)) {
             var dropboxLink = document.createElement('a');
@@ -280,6 +255,5 @@
         setStatus: setStatus,
         showFallback: showFallback,
         clearFallback: clearFallback,
-        buildMailto: buildMailto
     };
 })();

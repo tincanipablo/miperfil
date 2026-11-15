@@ -1,3 +1,4 @@
+<!-- Configurado por PAUT -->
 <!DOCTYPE html>
 <html lang="es">
 
@@ -8,11 +9,8 @@
     <meta name="description"
         content="Formulario de contacto para consultas, proyectos y colaboraciones con Pablo Tincani.">
     <meta name="robots" content="index,follow">
-<<<<<<< HEAD
     <meta name="theme-color" content="#0b0f19">
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-=======
->>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <link rel="canonical" href="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
     <meta property="og:description"
@@ -20,7 +18,6 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tincanipablo.github.io/miperfil/formulario.html">
     <meta property="og:image" content="https://tincanipablo.github.io/miperfil/img/FotoCV.jpg">
-<<<<<<< HEAD
     <meta property="og:image:alt" content="Pablo Alejandro Urueña Tincani">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Formulario de Contacto y Soporte | Pablo Urueña Tincani">
@@ -43,9 +40,6 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-=======
-    <meta name="twitter:card" content="summary_large_image">
->>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
     <style>
         :root {
             --bg-dark: #0b0f19;
@@ -225,7 +219,6 @@
             margin-bottom: 16px;
         }
 
-<<<<<<< HEAD
         input:focus-visible,
         textarea:focus-visible,
         button:focus-visible,
@@ -254,8 +247,6 @@
             overflow: hidden !important;
         }
 
-=======
->>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
         @media (max-width: 768px) {
             .card {
                 padding: 24px;
@@ -305,11 +296,8 @@
                 <i class="fas fa-arrow-left"></i> Volver al Perfil
             </a>
         </div>
-<<<<<<< HEAD
         <nav aria-label="Navegación principal">
-=======
         <nav>
->>>>>>> cd9e2bc15e3d42834e75a9293538e9c9a396b972
             <a href="index.html">Inicio</a>
             <a href="diplomas.html">Diplomas</a>
             <a href="donaciones.html">Donaciones</a>
@@ -325,7 +313,6 @@
         <p class="intro">Este formulario permite contactar a Pablo Urueña Tincani para consultas, soporte técnico,
             proyectos o seguimiento de servicios.</p>
         <form id="formSoporte">
-<<<<<<< HEAD
             <label for="nombre">Nombre</label>
             <input type="text" id="nombre" name="nombre" placeholder="Nombre y apellido"
                 autocomplete="name" maxlength="120" required>
@@ -352,13 +339,8 @@
 
             <button type="submit" id="btnSoporte">Enviar Reporte</button>
             <div id="msg" role="status" aria-live="polite"></div>
-            <p class="form-alt">¿Problemas con el formulario?
-                <a href="mailto:tincanipablo@gmail.com">Escríbeme por email</a>.
-            </p>
             <noscript>
-                <p class="form-alt">El envío requiere JavaScript. Escríbeme a
-                    <a href="mailto:tincanipablo@gmail.com">tincanipablo@gmail.com</a>.
-                </p>
+                <p class="form-alt">El envío requiere JavaScript. Actívalo para enviar el formulario.</p>
             </noscript>
         </form>
     </div>
@@ -431,78 +413,6 @@
                 }
             });
         })();
-=======
-            <input type="text" id="nombre" placeholder="Nombre" required>
-            <input type="email" id="email" placeholder="Email" required>
-            <textarea id="mensaje" rows="4" placeholder="Describe el problema..." required></textarea>
-            <label>Adjuntar archivo:</label>
-            <input type="file" id="archivo" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required>
-            <div class="file-info">Formatos permitidos: PDF, DOC, DOCX, TXT, JPG, PNG</div>
-            <button type="submit" id="btnSoporte">Enviar Reporte</button>
-            <div id="msg"></div>
-        </form>
-    </div>
-
-    <script>
-        // URL del Web App de Google Apps Script (la reemplazamos cuando la despliegues)
-        // Este JS NO contiene ninguna credencial de Dropbox.
-        const URL_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwS2lcFIwkkkluk3orwgDjVHvAPkCOsT_Y3PPBXiTFr3uZE39DpOCW-8doJbHgZ7ko/exec';
-
-        document.getElementById('formSoporte').addEventListener('submit', async function (e) {
-            e.preventDefault();
-            const btn = document.getElementById('btnSoporte');
-            const msgDiv = document.getElementById('msg');
-
-            btn.disabled = true;
-            msgDiv.style.display = "block";
-            msgDiv.style.backgroundColor = "#e8f0fe";
-            msgDiv.style.color = "#004085";
-            msgDiv.innerText = "⏳ Enviando reporte...";
-
-            try {
-                const nombre = document.getElementById('nombre').value;
-                const email = document.getElementById('email').value;
-                const mensaje = document.getElementById('mensaje').value;
-                const file = document.getElementById('archivo').files[0];
-
-                let archivoBase64 = '';
-                let archivoNombre = '';
-
-                if (file) {
-                    if (file.size > 50 * 1024 * 1024) {
-                        throw new Error('El archivo no puede ser mayor a 50MB');
-                    }
-                    archivoBase64 = await leerArchivoBase64(file);
-                    archivoNombre = file.name;
-                }
-
-                msgDiv.innerText = "⏳ Almacenando en el servidor seguro...";
-
-                const respuesta = await fetch(URL_APPS_SCRIPT, {
-                    method: 'POST',
-                    body: JSON.stringify({ nombre, email, mensaje, archivoBase64, archivoNombre })
-                });
-
-                const datos = await respuesta.json();
-
-                if (!datos.ok) {
-                    throw new Error(datos.error || 'Error al guardar el reporte');
-                }
-
-                msgDiv.innerText = "✅ ¡Reporte enviado con éxito!";
-                msgDiv.style.backgroundColor = "#d4edda";
-                msgDiv.style.color = "#155724";
-
-                this.reset();
-            } catch (err) {
-                console.error('Error completo:', err);
-                msgDiv.innerText = "❌ Error: " + err.message;
-                msgDiv.style.backgroundColor = "#f8d7da";
-                msgDiv.style.color = "#721c24";
-            } finally {
-                btn.disabled = false;
-            }
-        });
     </script>
 </body>
 

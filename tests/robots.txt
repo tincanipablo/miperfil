@@ -1,3 +1,4 @@
+# Configurado por PAUT
 # robots.txt - Tests de IQ y Cognición (subcarpeta /tests)
 # Sitio: https://tincanipablo.github.io/miperfil/tests/
 

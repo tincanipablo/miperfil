@@ -1,3 +1,4 @@
+// Configurado por PAUT
 const { createElement } = React;
 
 // Componente para la tarjeta de etnia con el marcador de color
