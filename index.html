@@ -1055,6 +1055,68 @@
             text-decoration: underline;
         }
     </style>
+    <style>
+        .mobile-nav-contact {
+            display: none;
+        }
+
+        @media (max-width: 900px) {
+            .nav-wrapper {
+                position: relative;
+            }
+
+            .nav-actions {
+                gap: 8px;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 78px;
+                left: 14px;
+                right: 14px;
+                flex-direction: column;
+                gap: 6px;
+                padding: 12px;
+                background: rgba(11, 15, 25, 0.98);
+                border: 1px solid var(--border-color);
+                border-radius: 14px;
+                display: none;
+                box-shadow: 0 18px 36px rgba(0, 0, 0, 0.35);
+                z-index: 1100;
+            }
+
+            .nav-menu.is-open {
+                display: flex;
+            }
+
+            .nav-menu li {
+                width: 100%;
+            }
+
+            .nav-link {
+                display: block;
+                padding: 10px 12px;
+                border-radius: 10px;
+                font-size: 0.9rem;
+            }
+
+            .nav-link:hover {
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .btn-nav {
+                display: none;
+            }
+
+            .mobile-nav-contact {
+                display: list-item;
+            }
+        }
+    </style>
     <link rel="preload" as="image" href="img/FotoCV.jpg">
 </head>
 
@@ -1083,6 +1145,7 @@
                     <li><a href="diplomas.html" class="nav-link">Diplomas y Certificaciones</a></li>
                     <li><a href="pyme.html" class="nav-link">Mi PYME Digital</a></li>
                     <li><a href="donaciones.html" class="nav-link">Apoyo al Proyecto</a></li>
+                    <li class="mobile-nav-contact"><a href="#contacto" class="nav-link">Contactar</a></li>
                 </ul>
                 <a href="#contacto" class="btn-nav"><i class="fas fa-envelope"></i> Contactar</a>
             </div>
